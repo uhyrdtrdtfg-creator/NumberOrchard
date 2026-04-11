@@ -23,6 +23,7 @@ struct AdventureSessionView: View {
         .onAppear {
             let profile = profiles.first ?? createDefaultProfile()
             viewModel = AdventureSessionViewModel(profile: profile, modelContext: modelContext)
+            AudioManager.shared.playMusic("adventure_bgm.wav")
         }
     }
 

@@ -64,7 +64,11 @@ class PickFruitScene: SKScene {
         addChild(questionLabel)
 
         // Basket on the right
-        basketNode = SKSpriteNode(color: .brown.withAlphaComponent(0.3), size: CGSize(width: 160, height: 120))
+        if let basketTexture = SKTexture(imageNamed: "Basket/basket") as SKTexture? {
+            basketNode = SKSpriteNode(texture: basketTexture, size: CGSize(width: 160, height: 120))
+        } else {
+            basketNode = SKSpriteNode(color: .brown.withAlphaComponent(0.3), size: CGSize(width: 160, height: 120))
+        }
         basketNode.position = CGPoint(x: sceneWidth * 0.7, y: sceneHeight * 0.4)
         basketNode.name = "basket"
         addChild(basketNode)
@@ -82,8 +86,9 @@ class PickFruitScene: SKScene {
         addChild(treeNode)
 
         // Fruits on tree
+        let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
         for i in 0..<gameState.fruitsOnTree {
-            let fruit = SKSpriteNode(color: .red, size: CGSize(width: 50, height: 50))
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 50, height: 50))
             fruit.name = "fruit_\(i)"
             let xOffset = CGFloat(i % 3 - 1) * 60
             let yOffset = CGFloat(i / 3) * 60
@@ -91,7 +96,6 @@ class PickFruitScene: SKScene {
                 x: sceneWidth * 0.25 + xOffset,
                 y: sceneHeight * 0.5 + yOffset
             )
-            fruit.texture = SKTexture(image: createCircleImage(color: .systemRed, size: 50))
             addChild(fruit)
             fruitNodes.append(fruit)
         }
@@ -122,6 +126,7 @@ class PickFruitScene: SKScene {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
+                run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
             }
         }
@@ -145,6 +150,7 @@ class PickFruitScene: SKScene {
                 SKAction.move(to: basketNode.position, duration: 0.2),
                 SKAction.removeFromParent()
             ]))
+            run(SKAction.playSoundFileNamed("fruit_drop.wav", waitForCompletion: false))
 
             gameState.pickFruit()
             basketLabel.text = "\(gameState.basketCount)"
@@ -177,6 +183,8 @@ class PickFruitScene: SKScene {
     }
 
     private func showCelebration() {
+        run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
+
         basketNode.run(SKAction.sequence([
             SKAction.scale(to: 1.2, duration: 0.2),
             SKAction.scale(to: 1.0, duration: 0.2)

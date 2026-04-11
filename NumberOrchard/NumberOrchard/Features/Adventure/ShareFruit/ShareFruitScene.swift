@@ -73,10 +73,10 @@ class ShareFruitScene: SKScene {
         plateLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight * 0.55 - 110)
         addChild(plateLabel)
 
+        let fruitTexture = SKTexture(imageNamed: "Fruits/strawberry")
         for i in 0..<gameState.plateCount {
-            let fruit = SKSpriteNode(color: .systemPink, size: CGSize(width: 40, height: 40))
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
             fruit.name = "fruit_\(i)"
-            fruit.texture = SKTexture(image: createCircleImage(color: .systemPink, size: 40))
             let col = i % 4
             let row = i / 4
             fruit.position = CGPoint(
@@ -113,6 +113,7 @@ class ShareFruitScene: SKScene {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
+                run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
             }
         }
@@ -136,6 +137,7 @@ class ShareFruitScene: SKScene {
                 SKAction.move(to: animalNode.position, duration: 0.15),
                 SKAction.removeFromParent()
             ]))
+            run(SKAction.playSoundFileNamed("fruit_drop.wav", waitForCompletion: false))
 
             animalNode.run(SKAction.sequence([
                 SKAction.scale(to: 1.1, duration: 0.1),
@@ -155,6 +157,7 @@ class ShareFruitScene: SKScene {
 
     private func handleCompletion() {
         let responseTime = Date().timeIntervalSince(startTime)
+        run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
 
         let equation = SKLabelNode(text: "\(gameState.question.operand1) - \(gameState.question.operand2) = \(gameState.question.correctAnswer)")
         equation.fontSize = 40

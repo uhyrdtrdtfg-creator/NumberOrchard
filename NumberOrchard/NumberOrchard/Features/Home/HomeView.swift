@@ -83,6 +83,7 @@ struct HomeView: View {
             }
         }
         .onAppear {
+            AudioManager.shared.playMusic("home_bgm.wav")
             viewModel.checkDailyLogin(profile: profile)
         }
         .fullScreenCover(isPresented: $viewModel.showCheckIn) {
