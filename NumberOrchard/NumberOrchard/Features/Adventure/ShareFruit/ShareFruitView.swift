@@ -6,6 +6,7 @@ struct ShareFruitView: View {
     let onComplete: (Bool, TimeInterval) -> Void
 
     @State private var scene: ShareFruitScene?
+    @State private var coordinator: ShareFruitCoordinator?
 
     var body: some View {
         GeometryReader { geo in
@@ -18,7 +19,9 @@ struct ShareFruitView: View {
             let newScene = ShareFruitScene(size: CGSize(width: 1194, height: 834))
             newScene.scaleMode = .aspectFill
             newScene.configure(with: question)
-            newScene.gameDelegate = ShareFruitCoordinator(onComplete: onComplete)
+            let newCoordinator = ShareFruitCoordinator(onComplete: onComplete)
+            newScene.gameDelegate = newCoordinator
+            coordinator = newCoordinator
             scene = newScene
         }
     }

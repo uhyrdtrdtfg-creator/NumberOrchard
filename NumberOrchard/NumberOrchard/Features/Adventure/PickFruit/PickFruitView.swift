@@ -6,6 +6,7 @@ struct PickFruitView: View {
     let onComplete: (Bool, TimeInterval) -> Void
 
     @State private var scene: PickFruitScene?
+    @State private var coordinator: PickFruitCoordinator?
 
     var body: some View {
         GeometryReader { geo in
@@ -18,7 +19,9 @@ struct PickFruitView: View {
             let newScene = PickFruitScene(size: CGSize(width: 1194, height: 834))
             newScene.scaleMode = .aspectFill
             newScene.configure(with: question)
-            newScene.gameDelegate = PickFruitCoordinator(onComplete: onComplete)
+            let newCoordinator = PickFruitCoordinator(onComplete: onComplete)
+            newScene.gameDelegate = newCoordinator
+            coordinator = newCoordinator
             scene = newScene
         }
     }
