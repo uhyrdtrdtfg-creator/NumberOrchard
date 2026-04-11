@@ -4,7 +4,11 @@ import SwiftData
 @main
 struct NumberOrchardApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([])
+        let schema = Schema([
+            ChildProfile.self,
+            LearningSession.self,
+            QuestionRecord.self,
+        ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false
