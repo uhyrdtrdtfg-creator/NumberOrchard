@@ -12,76 +12,128 @@ struct DecorateOrchardView: View {
     private var profile: ChildProfile? { profiles.first }
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                HStack {
-                    Label("\(profile?.stars ?? 0)", systemImage: "star.fill")
-                        .font(.title2)
-                        .foregroundStyle(.orange)
-                    Spacer()
-                }
-                .padding(.horizontal)
+        ZStack {
+            CartoonSkyBackground()
 
+            VStack(spacing: 16) {
+                // Top bar
+                HStack {
+                    backButton
+                    Spacer()
+                    Text("🎨 装饰商店")
+                        .font(.system(size: 32, weight: .black, design: .rounded))
+                        .foregroundStyle(CartoonColor.text)
+                    Spacer()
+                    CartoonHUD(icon: "star.fill", value: "\(profile?.stars ?? 0)", tint: CartoonColor.gold)
+                }
+                .padding(.horizontal, 30)
+                .padding(.top, 20)
+
+                // Category tabs
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 10) {
                         ForEach(DecorationCategory.allCases, id: \.self) { category in
-                            Button(action: { selectedCategory = category }) {
-                                Text(category.rawValue)
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                                    .padding(.horizontal, 22).padding(.vertical, 12)
-                                    .background(selectedCategory == category ? Color.green : Color.gray.opacity(0.2), in: Capsule())
-                                    .foregroundStyle(selectedCategory == category ? .white : .primary)
-                            }
+                            categoryTab(category)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 30)
                 }
 
+                // Grid
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], spacing: 24) {
                         ForEach(DecorationCatalog.items(in: selectedCategory)) { item in
-                            decorationCard(for: item)
+                            decorationCard(item)
                         }
                     }
-                    .padding()
-                }
-            }
-            .navigationTitle("装饰商店")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("返回", action: onDismiss)
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 16)
                 }
             }
         }
     }
 
+    private var backButton: some View {
+        Button(action: onDismiss) {
+            ZStack {
+                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
+                Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
+                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 26, weight: .black))
+                    .foregroundStyle(CartoonColor.text)
+            }
+        }
+    }
+
+    private func categoryTab(_ category: DecorationCategory) -> some View {
+        let selected = selectedCategory == category
+        return Button(action: {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                selectedCategory = category
+            }
+        }) {
+            ZStack {
+                Capsule().fill(CartoonColor.ink.opacity(0.9)).frame(height: 48).offset(y: 4)
+                Capsule()
+                    .fill(selected ? CartoonColor.coral : CartoonColor.paper)
+                    .frame(height: 48)
+                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(height: 48)
+                Text(category.rawValue)
+                    .font(.system(size: 20, weight: .black, design: .rounded))
+                    .foregroundStyle(selected ? .white : CartoonColor.text)
+                    .padding(.horizontal, 24)
+            }
+            .fixedSize()
+            .offset(y: selected ? 0 : -2)
+        }
+        .buttonStyle(.plain)
+    }
+
     @ViewBuilder
-    private func decorationCard(for item: DecorationItem) -> some View {
+    private func decorationCard(_ item: DecorationItem) -> some View {
         let owned = profile?.decorations.filter { $0.itemId == item.id }.count ?? 0
         let stars = profile?.stars ?? 0
         let canAfford = stars >= item.cost
 
-        VStack(spacing: 10) {
-            Text(item.emoji).font(.system(size: 90))
-            Text(item.name).font(.title3).fontWeight(.medium)
-            Text("\(item.cost) ⭐").font(.body).foregroundStyle(.orange)
-            if owned > 0 {
-                Text("已有 x\(owned)").font(.callout).foregroundStyle(.green)
+        VStack(spacing: 12) {
+            ZStack {
+                Circle().fill(CartoonColor.ink.opacity(0.85)).frame(width: 130, height: 130).offset(y: 4)
+                Circle().fill(CartoonColor.paper).frame(width: 130, height: 130)
+                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 130, height: 130)
+                Text(item.emoji).font(.system(size: 74))
+                if owned > 0 {
+                    Text("×\(owned)")
+                        .font(.system(size: 18, weight: .black, design: .rounded))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 10).padding(.vertical, 4)
+                        .background(Capsule().fill(CartoonColor.leaf))
+                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 2))
+                        .offset(x: 44, y: -44)
+                }
             }
-            Button(action: { purchase(item) }) {
-                Text(canAfford ? "购买" : "不够")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .padding(.horizontal, 20).padding(.vertical, 10)
-                    .background(canAfford ? Color.green : Color.gray, in: Capsule())
-                    .foregroundStyle(.white)
+
+            Text(item.name)
+                .font(.system(size: 20, weight: .black, design: .rounded))
+                .foregroundStyle(CartoonColor.text)
+
+            CartoonButton(
+                tint: canAfford ? CartoonColor.gold : CartoonColor.ink.opacity(0.3),
+                shadowOffset: 4,
+                cornerRadius: 20,
+                action: { purchase(item) }
+            ) {
+                HStack(spacing: 6) {
+                    Image(systemName: "star.fill").font(.system(size: 18, weight: .black))
+                    Text("\(item.cost)")
+                        .font(.system(size: 22, weight: .black, design: .rounded))
+                }
+                .foregroundStyle(.white)
+                .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                .frame(width: 110, height: 50)
             }
             .disabled(!canAfford)
         }
-        .padding(14)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18))
     }
 
     private func purchase(_ item: DecorationItem) {
@@ -90,7 +142,6 @@ struct DecorateOrchardView: View {
         if result.success {
             profile.stars = result.remainingStars
             let decoration = CollectedDecoration(itemId: item.id)
-            // Auto-place at random position in top 70% of orchard
             decoration.isPlaced = true
             decoration.positionX = Double.random(in: 0.1...0.9)
             decoration.positionY = Double.random(in: 0.2...0.7)

@@ -67,6 +67,7 @@
 		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
 		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
 		9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510E8D7639394AE33EDFCDC /* OrchardState.swift */; };
+		9CEEF7A1A1EB0E54D83352A2 /* CartoonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */; };
 		A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */; };
 		B0A143F5AF18EFF07724DCC6 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A259DE212DCA85208D39566 /* level_up.wav */; };
 		B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */; };
@@ -121,6 +122,7 @@
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3A6F591402A2A70FC6588965 /* ExplorationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorationMapViewModel.swift; sourceTree = "<group>"; };
+		3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonUI.swift; sourceTree = "<group>"; };
 		41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentBattleTests.swift; sourceTree = "<group>"; };
 		43B5F110839E77BCA7F6E418 /* MapCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCatalog.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +282,7 @@
 				55D137ADC16E4DD996D73FDE /* Models */,
 				CB2B176CB49B90D1C34E11A4 /* ParentalGate */,
 				ECACDB2A65B0C1CF7B41E63A /* Rewards */,
+				8FA5118F9360AFC949BDB6D8 /* UI */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -444,6 +447,14 @@
 				9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */,
 			);
 			path = Voice;
+			sourceTree = "<group>";
+		};
+		8FA5118F9360AFC949BDB6D8 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		A15EF6736F741F1C89D2D7FB /* Audio */ = {
@@ -745,6 +756,7 @@
 				0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */,
 				E61761F7D616149824277D14 /* BattleView.swift in Sources */,
 				4E39CA0413A41901DD1F2FC2 /* BattleViewModel.swift in Sources */,
+				9CEEF7A1A1EB0E54D83352A2 /* CartoonUI.swift in Sources */,
 				B685D99B1591521148186507 /* CheckInView.swift in Sources */,
 				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,
 				F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */,

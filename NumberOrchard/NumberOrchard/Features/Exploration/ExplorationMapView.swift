@@ -12,39 +12,37 @@ struct ExplorationMapView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.65, green: 0.85, blue: 0.95),
-                    Color(red: 0.85, green: 0.95, blue: 0.75),
-                ],
-                startPoint: .top, endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            CartoonSkyBackground()
 
             if let viewModel {
                 mapContent(viewModel: viewModel)
             }
 
             VStack {
-                HStack {
+                HStack(spacing: 12) {
                     Button(action: onDismiss) {
-                        Image(systemName: "chevron.left")
-                            .font(.title2)
-                            .padding()
-                            .background(.thinMaterial, in: Circle())
+                        ZStack {
+                            Circle()
+                                .fill(CartoonColor.ink.opacity(0.9))
+                                .frame(width: 60, height: 60)
+                                .offset(y: 4)
+                            Circle()
+                                .fill(CartoonColor.paper)
+                                .frame(width: 60, height: 60)
+                            Circle()
+                                .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
+                                .frame(width: 60, height: 60)
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 26, weight: .black))
+                                .foregroundStyle(CartoonColor.text)
+                        }
                     }
                     Spacer()
-                    HStack(spacing: 12) {
-                        Label("\(profile.stars)", systemImage: "star.fill")
-                            .foregroundStyle(.orange)
-                        Label("\(profile.seeds)", systemImage: "leaf.fill")
-                            .foregroundStyle(.green)
-                    }
-                    .font(.title3)
-                    .padding()
-                    .background(.thinMaterial, in: Capsule())
+                    CartoonHUD(icon: "star.fill", value: "\(profile.stars)", tint: CartoonColor.gold)
+                    CartoonHUD(icon: "leaf.fill", value: "\(profile.seeds)", tint: CartoonColor.leaf)
                 }
-                .padding()
+                .padding(.horizontal, 30)
+                .padding(.top, 20)
                 Spacer()
             }
         }
@@ -138,44 +136,56 @@ struct StationNodeView: View {
 
     @State private var pulsing = false
 
-    /// Call-to-action: unlocked AND not yet completed (stars == 0)
     private var isCTA: Bool { isUnlocked && stars == 0 }
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             ZStack {
-                // Pulsing glow ring for current-available station
                 if isCTA {
                     Circle()
-                        .stroke(.yellow, lineWidth: 6)
-                        .frame(width: 130, height: 130)
-                        .scaleEffect(pulsing ? 1.15 : 1.0)
-                        .opacity(pulsing ? 0.0 : 0.8)
+                        .stroke(CartoonColor.gold, lineWidth: 8)
+                        .frame(width: 140, height: 140)
+                        .scaleEffect(pulsing ? 1.2 : 1.0)
+                        .opacity(pulsing ? 0.0 : 0.9)
                         .animation(.easeOut(duration: 1.4).repeatForever(autoreverses: false), value: pulsing)
                 }
 
+                // Shadow circle
                 Circle()
-                    .fill(isUnlocked ? Color.white : Color.gray.opacity(0.3))
-                    .frame(width: 110, height: 110)
-                    .shadow(radius: 4)
+                    .fill(CartoonColor.ink.opacity(0.9))
+                    .frame(width: 118, height: 118)
+                    .offset(y: 5)
+
+                // Surface circle
+                Circle()
+                    .fill(isUnlocked ? CartoonColor.paper : Color.gray.opacity(0.4))
+                    .frame(width: 118, height: 118)
+
+                // Ink outline
+                Circle()
+                    .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4)
+                    .frame(width: 118, height: 118)
+
                 Text(station.emoji)
-                    .font(.system(size: 60))
+                    .font(.system(size: 62))
                     .opacity(isUnlocked ? 1.0 : 0.3)
-                    .scaleEffect(isCTA && pulsing ? 1.08 : 1.0)
+                    .scaleEffect(isCTA && pulsing ? 1.1 : 1.0)
                     .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: pulsing)
             }
             .onAppear { pulsing = true }
+
             Text(station.displayName)
-                .font(.callout)
-                .fontWeight(.medium)
-                .foregroundStyle(isUnlocked ? .primary : .secondary)
+                .font(.system(size: 18, weight: .black, design: .rounded))
+                .foregroundStyle(isUnlocked ? CartoonColor.text : CartoonColor.text.opacity(0.4))
+                .padding(.horizontal, 10).padding(.vertical, 4)
+                .background(Capsule().fill(CartoonColor.paper.opacity(isUnlocked ? 0.9 : 0.5)))
 
             if stars > 0 {
                 HStack(spacing: 4) {
                     ForEach(0..<3) { i in
                         Image(systemName: i < stars ? "star.fill" : "star")
-                            .font(.body)
-                            .foregroundStyle(i < stars ? .orange : .gray)
+                            .font(.system(size: 20, weight: .black))
+                            .foregroundStyle(i < stars ? CartoonColor.gold : CartoonColor.ink.opacity(0.2))
                     }
                 }
             }
