@@ -33,14 +33,18 @@ struct AdventureSessionView: View {
         VStack(spacing: 0) {
             HStack {
                 Text("第 \(viewModel.questionsCompleted + 1)/\(viewModel.totalQuestions) 题")
-                    .font(.callout)
+                    .font(.headline)
                     .foregroundStyle(.secondary)
                 Spacer()
                 Button("暂停") {
                     viewModel.finishSession()
                     onFinish()
                 }
-                .font(.callout)
+                .font(.headline)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .contentShape(Rectangle())
+                .accessibilityHint("暂停并返回")
             }
             .padding(.horizontal, 20)
             .padding(.top, 8)
@@ -112,14 +116,15 @@ struct AdventureSessionView: View {
                 }
 
                 Button(action: onFinish) {
-                    Text("回到果园")
+                    Text("🌳 回到果园")
                         .font(.title2)
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 60)
-                        .padding(.vertical, 22)
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 64)
+                        .padding(.vertical, 24)
                         .background(.green, in: Capsule())
                         .foregroundStyle(.white)
                 }
+                .accessibilityLabel("回到果园")
                 .modifier(PopInModifier(delay: 1.1))
             }
         }
@@ -153,7 +158,8 @@ struct PopInModifier: ViewModifier {
 
 struct ConfettiView: View {
     @State private var animate = false
-    private let pieces: [ConfettiPiece] = (0..<30).map { _ in
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private let pieces: [ConfettiPiece] = (0..<16).map { _ in
         ConfettiPiece(
             emoji: ["⭐", "🎉", "✨", "🌟", "💫", "🎊"].randomElement()!,
             xOffset: Double.random(in: -180...180),
@@ -168,22 +174,25 @@ struct ConfettiView: View {
 
     var body: some View {
         ZStack {
-            ForEach(pieces) { piece in
-                Text(piece.emoji)
-                    .font(.system(size: piece.size))
-                    .offset(
-                        x: piece.xOffset,
-                        y: animate ? piece.yEnd : piece.yStart
-                    )
-                    .rotationEffect(.degrees(animate ? piece.rotation : 0))
-                    .opacity(animate ? 0 : 1)
-                    .animation(
-                        .easeIn(duration: piece.duration).delay(piece.delay),
-                        value: animate
-                    )
+            if !reduceMotion {
+                ForEach(pieces) { piece in
+                    Text(piece.emoji)
+                        .font(.system(size: piece.size))
+                        .offset(
+                            x: piece.xOffset,
+                            y: animate ? piece.yEnd : piece.yStart
+                        )
+                        .rotationEffect(.degrees(animate ? piece.rotation : 0))
+                        .opacity(animate ? 0 : 1)
+                        .animation(
+                            .easeIn(duration: piece.duration).delay(piece.delay),
+                            value: animate
+                        )
+                }
             }
         }
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
         .onAppear { animate = true }
     }
 }

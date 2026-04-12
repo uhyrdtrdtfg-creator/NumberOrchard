@@ -79,7 +79,7 @@ class ShareFruitScene: SKScene {
 
         questionLabel = SKNode.cartoonPillLabel(
             text: gameState.question.displayText,
-            fontSize: 26
+            fontSize: 34
         )
         questionLabel.position = CGPoint(x: w / 2, y: h - 80)
         addChild(questionLabel)
@@ -132,8 +132,8 @@ class ShareFruitScene: SKScene {
 
         // Animal pointer hint
         let hint = SKNode.cartoonPillLabel(
-            text: "给小兔 \(gameState.targetGiveCount) 个",
-            fontSize: 22,
+            text: "🐰 给小兔 \(gameState.targetGiveCount) 个",
+            fontSize: 28,
             fill: CartoonSK.coral.lighter(by: 0.3)
         )
         hint.position = CGPoint(x: animalNode.position.x, y: animalNode.position.y - 110)

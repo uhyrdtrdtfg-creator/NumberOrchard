@@ -100,7 +100,7 @@ class BalanceScene: SKScene {
         // Question pill at top
         questionLabel = SKNode.cartoonPillLabel(
             text: gameState.question.displayText,
-            fontSize: 24
+            fontSize: 34
         )
         questionLabel.position = CGPoint(x: w/2, y: h - 80)
         addChild(questionLabel)
@@ -160,33 +160,39 @@ class BalanceScene: SKScene {
             rightBlocks.append(block)
         }
 
-        // Pool area at bottom with cartoon tray background
-        let poolWidth: CGFloat = w * 0.7
-        let poolHeight: CGFloat = 110
+        // Pool blocks: just enough + 2 buffer. Use FIXED spacing for reliability.
+        let totalCount = max(gameState.targetRightAdd + 2, 4)
+        let blockSpacing: CGFloat = 92  // larger than block width (60+8 texture) so they never overlap
+        let groupWidth = CGFloat(totalCount - 1) * blockSpacing
+
+        // Tray sized to exactly hold all blocks with margins, capped to screen width
+        let trayMargin: CGFloat = 40
+        let poolHeight: CGFloat = 140
+        let poolWidth = min(w - 60, groupWidth + trayMargin * 2 + blockSize.width)
+        let poolY: CGFloat = 120
+
         let poolTexture = SKTexture(image: renderPoolTray(size: CGSize(width: poolWidth, height: poolHeight)))
         let poolBG = SKSpriteNode(texture: poolTexture, size: CGSize(width: poolWidth + 8, height: poolHeight + 10))
-        poolBG.position = CGPoint(x: w/2, y: 110)
+        poolBG.position = CGPoint(x: w/2, y: poolY)
         poolBG.zPosition = -1
         addChild(poolBG)
 
-        // Pool label
+        // Pool label at top of tray
         let poolLabel = SKLabelNode(fontNamed: CartoonSK.chineseFont())
         poolLabel.text = "🟦 积木池"
         poolLabel.fontSize = 22
         poolLabel.fontColor = CartoonSK.text
         poolLabel.verticalAlignmentMode = .center
-        poolLabel.position = CGPoint(x: w/2, y: poolBG.position.y + poolHeight / 2 - 8)
+        poolLabel.horizontalAlignmentMode = .center
+        poolLabel.position = CGPoint(x: w/2, y: poolY + poolHeight / 2 - 16)
         addChild(poolLabel)
 
-        // Pool blocks: enough to answer the question with a small buffer (so kid always has extras).
-        // Evenly distributed inside the tray so none get clipped.
-        let totalCount = max(gameState.targetRightAdd + 2, 4)
-        let usableWidth = poolWidth - 60  // inner margin
-        let blockStepX: CGFloat = totalCount > 1 ? usableWidth / CGFloat(totalCount - 1) : 0
-        let firstX = poolBG.position.x - usableWidth / 2
+        // Blocks: centered horizontally, below label, with fixed spacing
+        let firstX = w/2 - groupWidth / 2
+        let blockY = poolY - 16
         for i in 0..<totalCount {
             let block = SKNode.cartoonBlock(size: blockSize, fill: CartoonSK.coral)
-            block.position = CGPoint(x: firstX + CGFloat(i) * blockStepX, y: poolBG.position.y - 10)
+            block.position = CGPoint(x: firstX + CGFloat(i) * blockSpacing, y: blockY)
             block.name = "pool_\(i)"
             addChild(block)
             poolBlocks.append(block)

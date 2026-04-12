@@ -47,7 +47,8 @@ struct BattleView: View {
                         .fontWeight(.bold)
                     if viewModel.roundComplete {
                         Button("下一轮") { viewModel.nextRound() }
-                            .padding(.horizontal, 12).padding(.vertical, 4)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 18).padding(.vertical, 10)
                             .background(.green, in: Capsule())
                             .foregroundStyle(.white)
                     }
@@ -88,22 +89,28 @@ struct BattleView: View {
                 .frame(minWidth: 80)
                 .padding(.horizontal, 12).padding(.vertical, 6)
                 .background(.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 8))
-            HStack(spacing: 8) {
+            HStack(spacing: 10) {
                 ForEach(0..<10) { i in
                     Button(action: { onDigit("\(i)") }) {
                         Text("\(i)")
-                            .font(.title3)
-                            .frame(width: 40 * keypadScale, height: 40 * keypadScale)
-                            .background(color.opacity(0.2), in: RoundedRectangle(cornerRadius: 8))
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: max(44, 52 * keypadScale), height: max(44, 52 * keypadScale))
+                            .background(color.opacity(0.2), in: RoundedRectangle(cornerRadius: 10))
                     }
+                    .accessibilityLabel("数字 \(i)")
                 }
             }
             HStack(spacing: 20) {
                 Button("清空", action: onClear)
+                    .padding(.horizontal, 18).padding(.vertical, 10)
+                    .background(.gray.opacity(0.25), in: Capsule())
+                    .foregroundStyle(.primary)
                 Button("提交", action: onSubmit)
-                    .padding(.horizontal, 16).padding(.vertical, 8)
+                    .padding(.horizontal, 20).padding(.vertical, 12)
                     .background(color, in: Capsule())
                     .foregroundStyle(.white)
+                    .fontWeight(.bold)
             }
         }
         .padding()
@@ -119,6 +126,7 @@ struct BattleView: View {
                 case .child:
                     Text("🎆")
                         .font(.system(size: 160))
+                        .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1, fromScale: 0.0, rotate: true))
                     Text("你比爸爸/妈妈还厉害！")
                         .font(.title)
@@ -127,6 +135,7 @@ struct BattleView: View {
                 case .parent:
                     Text("🤗")
                         .font(.system(size: 160))
+                        .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1))
                     Text("差一点就赢了，下次一定！")
                         .font(.title)
@@ -135,6 +144,7 @@ struct BattleView: View {
                 case .tie, nil:
                     Text("🙌")
                         .font(.system(size: 160))
+                        .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1))
                     Text("你们都很棒！")
                         .font(.title)

@@ -17,25 +17,28 @@ struct CheckInView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.brown)
 
-                HStack(spacing: 4) {
+                HStack(spacing: 8) {
                     ForEach(1...7, id: \.self) { day in
                         VStack {
                             Circle()
                                 .fill(day <= (consecutiveDays % 7 == 0 ? 7 : consecutiveDays % 7) ? .orange : .gray.opacity(0.3))
-                                .frame(width: 40, height: 40)
+                                .frame(width: 48, height: 48)
                                 .overlay {
                                     Text("\(day)")
-                                        .font(.caption)
+                                        .font(.headline)
                                         .foregroundStyle(.white)
                                 }
                         }
                     }
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("连续登录 \(consecutiveDays) 天")
 
                 if showReward {
                     VStack(spacing: 12) {
                         Text("🌱")
                             .font(.system(size: 110))
+                            .accessibilityHidden(true)
                         Text("获得种子 ×1")
                             .font(.title)
                             .fontWeight(.medium)
@@ -45,14 +48,15 @@ struct CheckInView: View {
                 }
 
                 Button(action: onDismiss) {
-                    Text("开始今天的冒险")
+                    Text("🚀 开始今天的冒险")
                         .font(.title)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                         .padding(.horizontal, 60)
-                        .padding(.vertical, 22)
+                        .padding(.vertical, 24)
                         .background(.green, in: Capsule())
                         .foregroundStyle(.white)
                 }
+                .accessibilityLabel("开始今天的冒险")
             }
         }
         .onAppear {

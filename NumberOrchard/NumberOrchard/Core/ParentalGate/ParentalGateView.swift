@@ -29,7 +29,12 @@ struct ParentalGateView: View {
                 Button("取消") {
                     onCancel()
                 }
-                .foregroundStyle(.white.opacity(0.7))
+                .font(.headline)
+                .foregroundStyle(.white.opacity(0.85))
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+                .contentShape(Rectangle())
+                .accessibilityLabel("取消")
 
                 Text("剩余时间: \(timeRemaining)秒")
                     .font(.caption)

@@ -61,14 +61,17 @@ struct FruitCollectionView: View {
     private var backButton: some View {
         Button(action: onDismiss) {
             ZStack {
-                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
-                Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
-                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
+                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 68, height: 68).offset(y: 4)
+                Circle().fill(CartoonColor.paper).frame(width: 68, height: 68)
+                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 68, height: 68)
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 26, weight: .black))
+                    .font(.system(size: 28, weight: .black))
                     .foregroundStyle(CartoonColor.text)
             }
+            .frame(width: 72, height: 72)
+            .contentShape(Circle())
         }
+        .accessibilityLabel("返回")
     }
 
     private func rarityTab(rarity: FruitRarity, label: String, color: Color) -> some View {
@@ -129,6 +132,8 @@ struct FruitCollectionView: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(collected ? "\(fruit.name),已收集" : "未收集的水果")
+        .accessibilityHint(collected ? "双击查看详情" : "")
     }
 }
 
@@ -136,6 +141,7 @@ struct FruitDetailSheet: View {
     let fruit: FruitItem
     let onDismiss: () -> Void
     @State private var popped = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -146,11 +152,11 @@ struct FruitDetailSheet: View {
                     Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 240, height: 240).offset(y: 6)
                     Circle().fill(CartoonColor.gold.opacity(0.25)).frame(width: 240, height: 240)
                     Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 5).frame(width: 240, height: 240)
-                    Text(fruit.emoji).font(.system(size: 140))
+                    Text(fruit.emoji).font(.system(size: 140)).accessibilityHidden(true)
                 }
-                .scaleEffect(popped ? 1 : 0.3)
-                .rotationEffect(.degrees(popped ? 0 : -30))
-                .animation(.spring(response: 0.5, dampingFraction: 0.55), value: popped)
+                .scaleEffect(reduceMotion ? 1 : (popped ? 1 : 0.3))
+                .rotationEffect(.degrees(reduceMotion ? 0 : (popped ? 0 : -30)))
+                .animation(reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.55), value: popped)
 
                 Text(fruit.name)
                     .font(.system(size: 42, weight: .black, design: .rounded))

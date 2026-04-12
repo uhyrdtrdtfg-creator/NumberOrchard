@@ -26,17 +26,20 @@ struct ExplorationMapView: View {
                 HStack(spacing: 12) {
                     Button(action: onDismiss) {
                         ZStack {
-                            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
-                            Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
-                            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
+                            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 68, height: 68).offset(y: 4)
+                            Circle().fill(CartoonColor.paper).frame(width: 68, height: 68)
+                            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 68, height: 68)
                             Image(systemName: "chevron.left")
-                                .font(.system(size: 26, weight: .black))
+                                .font(.system(size: 28, weight: .black))
                                 .foregroundStyle(CartoonColor.text)
                         }
+                        .frame(width: 72, height: 72)
+                        .contentShape(Circle())
                     }
+                    .accessibilityLabel("返回")
                     Spacer()
-                    CartoonHUD(icon: "star.fill", value: "\(profile.stars)", tint: CartoonColor.gold)
-                    CartoonHUD(icon: "leaf.fill", value: "\(profile.seeds)", tint: CartoonColor.leaf)
+                    CartoonHUD(icon: "star.fill", value: "\(profile.stars)", tint: CartoonColor.gold, accessibilityLabel: "星星 \(profile.stars)")
+                    CartoonHUD(icon: "leaf.fill", value: "\(profile.seeds)", tint: CartoonColor.leaf, accessibilityLabel: "种子 \(profile.seeds)")
                 }
                 .padding(.horizontal, 30)
                 .padding(.top, 20)
@@ -147,7 +150,7 @@ struct ExplorationMapView: View {
                 Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 120, height: 120).offset(y: 5)
                 Circle().fill(CartoonColor.gold).frame(width: 120, height: 120)
                 Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4).frame(width: 120, height: 120)
-                Text("🏆").font(.system(size: 60))
+                Text("🏆").font(.system(size: 60)).accessibilityHidden(true)
             }
             Text("终点果园")
                 .font(.system(size: 20, weight: .black, design: .rounded))
@@ -156,6 +159,8 @@ struct ExplorationMapView: View {
                 .background(Capsule().fill(CartoonColor.paper))
                 .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3))
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("终点果园")
     }
 }
 
@@ -165,6 +170,7 @@ struct StationNodeView: View {
     let isUnlocked: Bool
 
     @State private var pulsing = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var isCTA: Bool { isUnlocked && stars == 0 }
     private let size: CGFloat = 100
@@ -185,7 +191,7 @@ struct StationNodeView: View {
         VStack(spacing: 6) {
             ZStack {
                 // Pulsing glow ring for current-available
-                if isCTA {
+                if isCTA && !reduceMotion {
                     Circle()
                         .stroke(CartoonColor.gold, lineWidth: 8)
                         .frame(width: size + 22, height: size + 22)
@@ -215,8 +221,8 @@ struct StationNodeView: View {
                     .font(.system(size: 54))
                     .saturation(isUnlocked ? 1 : 0.3)
                     .opacity(isUnlocked ? 1 : 0.6)
-                    .scaleEffect(isCTA && pulsing ? 1.08 : 1.0)
-                    .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: pulsing)
+                    .scaleEffect(reduceMotion ? 1.0 : (isCTA && pulsing ? 1.08 : 1.0))
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: pulsing)
 
                 // Lock overlay for locked stations
                 if !isUnlocked {
@@ -253,5 +259,8 @@ struct StationNodeView: View {
                 }
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(isUnlocked ? "\(station.displayName),\(stars) 颗星" : "\(station.displayName),未解锁")
+        .accessibilityAddTraits(.isButton)
     }
 }

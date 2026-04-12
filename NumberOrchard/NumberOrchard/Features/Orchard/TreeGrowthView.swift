@@ -16,6 +16,7 @@ struct TreeGrowthView: View {
                     Text(viewModel.stageEmoji)
                         .font(.system(size: 120))
                         .shadow(radius: 5)
+                        .accessibilityHidden(true)
 
                     Text(viewModel.stageName)
                         .font(.title3)
@@ -23,8 +24,8 @@ struct TreeGrowthView: View {
 
                     VStack(spacing: 4) {
                         ProgressView(value: viewModel.progress)
-                            .frame(width: 200)
                             .tint(.green)
+                            .padding(.horizontal, 40)
                         Text(viewModel.experienceText)
                             .font(.caption)
                             .foregroundStyle(.secondary)

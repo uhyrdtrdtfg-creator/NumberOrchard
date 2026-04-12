@@ -8,6 +8,7 @@ struct StationDetailView: View {
     let onDismiss: () -> Void
 
     @State private var popped = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -27,9 +28,10 @@ struct StationDetailView: View {
                         .frame(width: 220, height: 220)
                     Text(station.emoji)
                         .font(.system(size: 130))
+                        .accessibilityHidden(true)
                 }
-                .scaleEffect(popped ? 1.0 : 0.4)
-                .animation(.spring(response: 0.5, dampingFraction: 0.55), value: popped)
+                .scaleEffect(reduceMotion ? 1.0 : (popped ? 1.0 : 0.4))
+                .animation(reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.55), value: popped)
 
                 Text(station.displayName)
                     .font(.system(size: 44, weight: .black, design: .rounded))
@@ -44,6 +46,8 @@ struct StationDetailView: View {
                             .shadow(color: CartoonColor.ink.opacity(i < stars ? 0.4 : 0), radius: 0, x: 0, y: 3)
                     }
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("已获得 \(stars) 颗星,共 3 颗")
 
                 // Info panel
                 CartoonPanel(cornerRadius: 24) {
@@ -75,7 +79,7 @@ struct StationDetailView: View {
 
                 // Action
                 if isUnlocked {
-                    CartoonButton(tint: CartoonColor.leaf, action: onStart) {
+                    CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "开始挑战 \(station.displayName)", action: onStart) {
                         Text("开始挑战！")
                             .font(.system(size: 32, weight: .black, design: .rounded))
                             .foregroundStyle(.white)
@@ -91,11 +95,13 @@ struct StationDetailView: View {
 
                 Button(action: onDismiss) {
                     Text("返回")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
-                        .foregroundStyle(CartoonColor.text.opacity(0.7))
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 8)
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundStyle(CartoonColor.text.opacity(0.75))
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 14)
+                        .contentShape(Rectangle())
                 }
+                .accessibilityLabel("返回")
             }
             .padding(30)
         }
