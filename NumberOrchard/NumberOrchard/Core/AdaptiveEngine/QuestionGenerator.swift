@@ -99,9 +99,27 @@ struct QuestionGenerator: Sendable {
     }
 
     private func generateAdditionOperands(maxSum: Int, subDifficulty: Int) -> (Int, Int) {
+        // For maxSum=20 (L5/L6), use extended ranges and optionally force carry
+        if maxSum == 20 {
+            // Phase 1 (sub 1-2): no carry (digit sum < 10)
+            // Phase 2 (sub 3-5): allow carry
+            let allowCarry = subDifficulty >= 3
+            for _ in 0..<10 {
+                let op1 = Int.random(in: 1...min(9, maxSum - 1))
+                let maxOp2 = maxSum - op1
+                guard maxOp2 >= 1 else { continue }
+                let op2 = Int.random(in: 1...maxOp2)
+                let unitsCarry = (op1 % 10 + op2 % 10) >= 10
+                if allowCarry || !unitsCarry {
+                    return (op1, op2)
+                }
+            }
+            return (5, 5)
+        }
+
+        // Original L1-L4 logic
         let minOperand = 1
         let maxOperand = max(1, min(maxSum - 1, subDifficulty + 1))
-
         let op1 = Int.random(in: minOperand...maxOperand)
         let maxOp2 = maxSum - op1
         guard maxOp2 >= 1 else { return (1, 1) }
@@ -110,6 +128,22 @@ struct QuestionGenerator: Sendable {
     }
 
     private func generateSubtractionOperands(maxMinuend: Int, subDifficulty: Int) -> (Int, Int) {
+        if maxMinuend == 20 {
+            // Phase 1 (sub 1-2): no borrow (op1 units >= op2 units)
+            // Phase 2 (sub 3-5): allow borrow
+            let allowBorrow = subDifficulty >= 3
+            for _ in 0..<10 {
+                let op1 = Int.random(in: 11...maxMinuend)  // 11-20 minuend
+                let op2 = Int.random(in: 1...(op1 - 1))
+                let unitsBorrow = (op1 % 10) < (op2 % 10)
+                if allowBorrow || !unitsBorrow {
+                    return (op1, op2)
+                }
+            }
+            return (15, 5)
+        }
+
+        // Original L1-L4 logic
         let minMinuend = max(2, subDifficulty)
         let op1 = Int.random(in: minMinuend...maxMinuend)
         let op2 = Int.random(in: 1...(op1))
