@@ -1,10 +1,14 @@
 import SwiftUI
 import SwiftData
 
-enum AppScreen {
+enum AppScreen: Equatable {
     case home
-    case adventure
+    case adventure(station: Station?)
     case parentCenter
+    case map
+    case collection
+    case decorate
+    case battle
 }
 
 struct AppCoordinator: View {
@@ -21,22 +25,31 @@ struct AppCoordinator: View {
                 switch currentScreen {
                 case .home:
                     HomeView(
-                        onStartAdventure: { },
+                        onStartAdventure: { startAdventure(station: nil) },
                         onOpenParentCenter: { currentScreen = .parentCenter },
-                        onOpenMap: { },
-                        onOpenCollection: { },
-                        onOpenDecorate: { },
-                        onOpenBattle: { }
+                        onOpenMap: { currentScreen = .map },
+                        onOpenCollection: { currentScreen = .collection },
+                        onOpenDecorate: { currentScreen = .decorate },
+                        onOpenBattle: { currentScreen = .battle }
                     )
-                case .adventure:
+                case .adventure(let station):
                     AdventureSessionView(
-                        station: nil,
+                        station: station,
                         onFinish: { stopAdventure() }
                     )
                 case .parentCenter:
-                    ParentCenterView(
-                        onDismiss: { currentScreen = .home }
+                    ParentCenterView(onDismiss: { currentScreen = .home })
+                case .map:
+                    ExplorationMapView(
+                        onDismiss: { currentScreen = .home },
+                        onStartStation: { station in startAdventure(station: station) }
                     )
+                case .collection:
+                    FruitCollectionView(onDismiss: { currentScreen = .home })
+                case .decorate:
+                    DecorateOrchardView(onDismiss: { currentScreen = .home })
+                case .battle:
+                    BattleView(onFinish: { currentScreen = .home })
                 }
             }
 
@@ -50,41 +63,28 @@ struct AppCoordinator: View {
 
     private var eyeCareOverlay: some View {
         ZStack {
-            Color.black.opacity(0.7)
-                .ignoresSafeArea()
-
+            Color.black.opacity(0.7).ignoresSafeArea()
             VStack(spacing: 20) {
-                Text("🌳")
-                    .font(.system(size: 60))
-
-                Text("小果农休息一下吧！")
-                    .font(.title)
-                    .foregroundStyle(.white)
-
-                Text("站起来看看窗外～")
-                    .font(.title3)
-                    .foregroundStyle(.white.opacity(0.8))
-
+                Text("🌳").font(.system(size: 60))
+                Text("小果农休息一下吧！").font(.title).foregroundStyle(.white)
+                Text("站起来看看窗外～").font(.title3).foregroundStyle(.white.opacity(0.8))
                 if !eyeCareManager.hasUsedExtension {
                     Button {
                         eyeCareManager.useExtension()
                         showEyeCareAlert = false
                     } label: {
                         Text("再玩 5 分钟")
-                            .padding(.horizontal, 24)
-                            .padding(.vertical, 12)
+                            .padding(.horizontal, 24).padding(.vertical, 12)
                             .background(.orange, in: Capsule())
                             .foregroundStyle(.white)
                     }
                 }
-
                 Button {
                     stopAdventure()
                     showEyeCareAlert = false
                 } label: {
                     Text("结束今天的学习")
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 12)
+                        .padding(.horizontal, 24).padding(.vertical, 12)
                         .background(.green, in: Capsule())
                         .foregroundStyle(.white)
                 }
@@ -92,11 +92,11 @@ struct AppCoordinator: View {
         }
     }
 
-    private func startAdventure() {
+    private func startAdventure(station: Station?) {
         let timeLimit = profiles.first?.dailyTimeLimitMinutes ?? 20
         eyeCareManager = EyeCareManager(timeLimitMinutes: timeLimit)
         eyeCareManager.startSession()
-        currentScreen = .adventure
+        currentScreen = .adventure(station: station)
         startEyeCareMonitoring()
     }
 
