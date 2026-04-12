@@ -30,6 +30,7 @@
 		3699E75146A40F203610453B /* FruitCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */; };
 		38827EF7F89FB3860E7AFE68 /* correct_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE486D1905D0928C0C65380F /* correct_03.aiff */; };
 		3937E775F90238CF3C265E70 /* balance.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6BF89DFC78ABA035C5FD2687 /* balance.wav */; };
+		3A924772A2997942BE464F32 /* NumberTrainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2612A326CC5ACD9F2B62D /* NumberTrainScene.swift */; };
 		3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5F110839E77BCA7F6E418 /* MapCatalog.swift */; };
 		3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B032E93606C6F6A5C51AE38A /* L5L6GenerationTests.swift */; };
 		3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */; };
@@ -51,6 +52,7 @@
 		809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */; };
 		8146CECFFE7FBE2EAF6949E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C086DE626E123BF698F83460 /* Assets.xcassets */; };
 		8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */; };
+		845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */; };
 		8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */; };
 		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
 		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
@@ -65,6 +67,7 @@
 		CE1BF32BBC91FAFD41CED993 /* AdventureSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */; };
 		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
 		D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */; };
+		D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */; };
 		DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */; };
 		EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */; };
 		EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83825F84A8F221612AB7A3B3 /* combo_07.aiff */; };
@@ -122,9 +125,11 @@
 		A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManagerTests.swift; sourceTree = "<group>"; };
 		A833ED9961A1756FCB64C057 /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
 		A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_05.aiff; sourceTree = "<group>"; };
+		AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainView.swift; sourceTree = "<group>"; };
 		AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRecord.swift; sourceTree = "<group>"; };
 		B032E93606C6F6A5C51AE38A /* L5L6GenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L5L6GenerationTests.swift; sourceTree = "<group>"; };
 		B0A3499562F1D16E7DAEB485 /* welcome.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = welcome.aiff; sourceTree = "<group>"; };
+		B4C2612A326CC5ACD9F2B62D /* NumberTrainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainScene.swift; sourceTree = "<group>"; };
 		B856776C53534150F3C9334F /* LearningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProfile.swift; sourceTree = "<group>"; };
 		B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedFruit.swift; sourceTree = "<group>"; };
 		BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateView.swift; sourceTree = "<group>"; };
@@ -150,6 +155,7 @@
 		F1613B849416E796B62C00C6 /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
 		F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitView.swift; sourceTree = "<group>"; };
 		F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedDecoration.swift; sourceTree = "<group>"; };
+		F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainLogicTests.swift; sourceTree = "<group>"; };
 		F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManager.swift; sourceTree = "<group>"; };
 		F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitLogicTests.swift; sourceTree = "<group>"; };
 		F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = adventure_bgm.wav; sourceTree = "<group>"; };
@@ -312,6 +318,15 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		7E45E63B878198F3BBADE359 /* NumberTrain */ = {
+			isa = PBXGroup;
+			children = (
+				B4C2612A326CC5ACD9F2B62D /* NumberTrainScene.swift */,
+				AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */,
+			);
+			path = NumberTrain;
+			sourceTree = "<group>";
+		};
 		8C2B3691E48416E33D7438E0 /* Voice */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +372,7 @@
 		BE89C3DAEA39988A4F184B56 /* Adventure */ = {
 			isa = PBXGroup;
 			children = (
+				F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */,
 				867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */,
 				F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */,
 			);
@@ -424,6 +440,7 @@
 			children = (
 				A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */,
 				5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */,
+				7E45E63B878198F3BBADE359 /* NumberTrain */,
 				26460A6923C6D4F7BF76B310 /* PickFruit */,
 				1EA1C7DEA2FE67C56D929AC7 /* ShareFruit */,
 			);
@@ -572,6 +589,7 @@
 				FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */,
 				B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */,
 				3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */,
+				D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */,
 				8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */,
 				3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */,
 				65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */,
@@ -604,6 +622,8 @@
 				3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */,
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */,
+				3A924772A2997942BE464F32 /* NumberTrainScene.swift in Sources */,
+				845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */,
 				9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */,
 				EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */,
 				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
