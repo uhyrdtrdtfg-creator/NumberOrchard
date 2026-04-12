@@ -45,15 +45,19 @@ struct HomeView: View {
             }
             .ignoresSafeArea()
 
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 20) {
                         Label("\(profile.stars)", systemImage: "star.fill")
                             .foregroundStyle(.orange)
                         Label("\(profile.seeds)", systemImage: "leaf.fill")
                             .foregroundStyle(.green)
                     }
-                    .font(.title3)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 10)
+                    .background(.white.opacity(0.6), in: Capsule())
 
                     Spacer()
 
@@ -61,24 +65,32 @@ struct HomeView: View {
                         viewModel.showParentalGate = true
                     } label: {
                         Image(systemName: "gearshape")
-                            .font(.title2)
+                            .font(.system(size: 32))
                             .foregroundStyle(.gray)
+                            .padding(12)
+                            .background(.white.opacity(0.6), in: Circle())
                     }
                 }
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+                .padding(.horizontal, 40)
+                .padding(.top, 30)
 
                 Spacer()
 
-                VStack(spacing: 10) {
-                    Text(viewModel.treeStageEmoji).font(.system(size: 90))
-                    ProgressView(value: viewModel.treeProgress).frame(width: 180).tint(.green)
-                    Text(profile.difficultyLevel.displayName).font(.caption).foregroundStyle(.secondary)
+                VStack(spacing: 16) {
+                    Text(viewModel.treeStageEmoji).font(.system(size: 140))
+                    ProgressView(value: viewModel.treeProgress)
+                        .frame(width: 260)
+                        .tint(.green)
+                        .scaleEffect(y: 2.0)
+                    Text(profile.difficultyLevel.displayName)
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
 
-                HStack(spacing: 20) {
+                HStack(spacing: 40) {
                     featureButton(emoji: "🗺️", label: "探险", color: .green) { onOpenMap() }
                     featureButton(emoji: "🎨", label: "装饰", color: .purple) { onOpenDecorate() }
                     featureButton(emoji: "🍎", label: "图鉴", color: .red) { onOpenCollection() }
@@ -87,7 +99,7 @@ struct HomeView: View {
                         viewModel.parentGateIntent = .battle
                     }
                 }
-                .padding(.bottom, 40)
+                .padding(.bottom, 60)
             }
         }
         .onAppear {
@@ -120,14 +132,20 @@ struct HomeView: View {
 
     private func featureButton(emoji: String, label: String, color: Color, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            VStack(spacing: 4) {
-                Text(emoji).font(.system(size: 40))
-                Text(label).font(.footnote).fontWeight(.medium)
+            VStack(spacing: 10) {
+                Text(emoji).font(.system(size: 72))
+                Text(label)
+                    .font(.title3)
+                    .fontWeight(.semibold)
             }
-            .frame(width: 80, height: 80)
-            .background(color.opacity(0.2), in: RoundedRectangle(cornerRadius: 16))
+            .frame(width: 160, height: 160)
+            .background(color.opacity(0.25), in: RoundedRectangle(cornerRadius: 28))
+            .overlay(
+                RoundedRectangle(cornerRadius: 28)
+                    .stroke(color.opacity(0.5), lineWidth: 2)
+            )
             .foregroundStyle(.primary)
-            .shadow(color: color.opacity(0.3), radius: 6, y: 3)
+            .shadow(color: color.opacity(0.4), radius: 10, y: 5)
         }
     }
 }
