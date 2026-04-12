@@ -8,6 +8,9 @@ struct NumberOrchardApp: App {
             ChildProfile.self,
             LearningSession.self,
             QuestionRecord.self,
+            StationProgress.self,
+            CollectedDecoration.self,
+            CollectedFruit.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

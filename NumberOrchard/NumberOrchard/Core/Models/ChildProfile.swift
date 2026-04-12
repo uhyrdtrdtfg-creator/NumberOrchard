@@ -24,6 +24,15 @@ final class ChildProfile {
     @Relationship(deleteRule: .cascade)
     var sessions: [LearningSession] = []
 
+    @Relationship(deleteRule: .cascade)
+    var stationProgress: [StationProgress] = []
+
+    @Relationship(deleteRule: .cascade)
+    var decorations: [CollectedDecoration] = []
+
+    @Relationship(deleteRule: .cascade)
+    var collectedFruits: [CollectedFruit] = []
+
     init(name: String, avatarIndex: Int = 0) {
         self.name = name
         self.avatarIndex = avatarIndex
