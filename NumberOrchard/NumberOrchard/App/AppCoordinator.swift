@@ -26,6 +26,7 @@ struct AppCoordinator: View {
                     )
                 case .adventure:
                     AdventureSessionView(
+                        station: nil,
                         onFinish: { stopAdventure() }
                     )
                 case .parentCenter:

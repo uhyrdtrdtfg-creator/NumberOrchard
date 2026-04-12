@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct AdventureSessionView: View {
+    let station: Station?
     let onFinish: () -> Void
 
     @Environment(\.modelContext) private var modelContext
@@ -22,7 +23,7 @@ struct AdventureSessionView: View {
         }
         .onAppear {
             let profile = profiles.first ?? createDefaultProfile()
-            viewModel = AdventureSessionViewModel(profile: profile, modelContext: modelContext)
+            viewModel = AdventureSessionViewModel(profile: profile, station: station, modelContext: modelContext)
             AudioManager.shared.playMusic("adventure_bgm.wav")
         }
     }
@@ -54,14 +55,18 @@ struct AdventureSessionView: View {
                     ShareFruitView(question: question) { correct, time in
                         viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
                     }
-                case .numberTrain, .balance:
-                    // Placeholder: full scenes implemented in Phase 2b/2c
-                    PickFruitView(question: question) { correct, time in
+                case .numberTrain:
+                    let countingMode = (viewModel.station?.level.rawValue ?? 1) <= 3
+                    NumberTrainView(question: question, countingMode: countingMode) { correct, time in
+                        viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
+                    }
+                case .balance:
+                    BalanceView(question: question) { correct, time in
                         viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
                     }
                 }
             }
-            .id("\(question.operand1)-\(question.operand2)-\(question.operation.rawValue)-\(viewModel.questionsCompleted)")
+            .id("\(question.operand1)-\(question.operand2)-\(question.operation.rawValue)-\(question.gameMode.rawValue)-\(viewModel.questionsCompleted)")
         }
     }
 
@@ -71,12 +76,30 @@ struct AdventureSessionView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
-            Text("今天完成了 \(viewModel.questionsCompleted) 道题")
-                .font(.title2)
-
-            Text("获得经验 +\(viewModel.experienceGained)")
-                .font(.title3)
-                .foregroundStyle(.orange)
+            if let reward = viewModel.lastReward {
+                VStack(spacing: 8) {
+                    Text("获得 ⭐ +\(reward.starsEarned)")
+                        .font(.title2)
+                        .foregroundStyle(.orange)
+                    if reward.seedsEarned > 0 {
+                        Text("获得 🌱 +\(reward.seedsEarned)")
+                            .font(.title3)
+                            .foregroundStyle(.green)
+                    }
+                    if let fruit = viewModel.newlyUnlockedFruit {
+                        VStack(spacing: 4) {
+                            Text(fruit.emoji).font(.system(size: 80))
+                            Text("解锁新水果: \(fruit.name)")
+                                .font(.headline)
+                                .foregroundStyle(.purple)
+                        }
+                    }
+                }
+            } else {
+                Text("获得经验 +\(viewModel.experienceGained)")
+                    .font(.title3)
+                    .foregroundStyle(.orange)
+            }
 
             Button(action: onFinish) {
                 Text("回到果园")
