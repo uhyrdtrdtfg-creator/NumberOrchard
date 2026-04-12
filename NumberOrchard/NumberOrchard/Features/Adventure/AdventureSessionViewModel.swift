@@ -61,8 +61,14 @@ final class AdventureSessionViewModel {
             profile.treeExperience += exp
             profile.treeStage = TreeGrowthCalculator.stageFor(experience: profile.treeExperience)
             profile.totalCorrect += 1
+
+            // Play voice encouragement
+            playCorrectVoice()
         } else {
             consecutiveCorrect = 0
+            // Play wrong answer sound + voice
+            AudioManager.shared.playSound("Sounds/SFX/wrong.wav")
+            AudioManager.shared.playVoice("Sounds/Voice/wrong_hint.aiff")
         }
 
         profile.totalQuestions += 1
@@ -72,6 +78,8 @@ final class AdventureSessionViewModel {
             learningProfile = difficultyManager.promote(profile: learningProfile)
             profile.difficultyLevel = learningProfile.currentLevel
             profile.subDifficulty = learningProfile.subDifficulty
+            // Play level up sound
+            AudioManager.shared.playSound("Sounds/SFX/level_up.wav")
         } else {
             profile.subDifficulty = learningProfile.subDifficulty
         }
@@ -82,5 +90,20 @@ final class AdventureSessionViewModel {
     func finishSession() {
         session.durationSeconds = Date().timeIntervalSince(session.date)
         isSessionComplete = true
+    }
+
+    private func playCorrectVoice() {
+        switch consecutiveCorrect {
+        case 3:
+            AudioManager.shared.playVoice("Sounds/Voice/combo_03.aiff")
+        case 5:
+            AudioManager.shared.playVoice("Sounds/Voice/combo_05.aiff")
+        case 7:
+            AudioManager.shared.playVoice("Sounds/Voice/combo_07.aiff")
+        default:
+            // Random basic encouragement
+            let index = Int.random(in: 1...5)
+            AudioManager.shared.playVoice("Sounds/Voice/correct_0\(index).aiff")
+        }
     }
 }
