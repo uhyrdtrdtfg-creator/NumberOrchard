@@ -127,7 +127,7 @@ class PickFruitScene: SKScene {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
-                run(SKAction.playSoundFileNamed("Sounds/SFX/fruit_pick.wav", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
             }
         }
@@ -151,7 +151,7 @@ class PickFruitScene: SKScene {
                 SKAction.move(to: basketNode.position, duration: 0.2),
                 SKAction.removeFromParent()
             ]))
-            run(SKAction.playSoundFileNamed("Sounds/SFX/fruit_drop.wav", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("fruit_drop.wav", waitForCompletion: false))
 
             gameState.pickFruit()
             basketLabel.text = "\(gameState.basketCount)"
@@ -184,7 +184,7 @@ class PickFruitScene: SKScene {
     }
 
     private func showCelebration() {
-        run(SKAction.playSoundFileNamed("Sounds/SFX/correct.wav", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
         // Speak the equation aloud
         Task { @MainActor in
             AudioManager.shared.speakEquation(gameState.question)

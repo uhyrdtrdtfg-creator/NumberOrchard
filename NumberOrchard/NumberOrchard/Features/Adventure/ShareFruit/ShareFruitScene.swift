@@ -114,7 +114,7 @@ class ShareFruitScene: SKScene {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
-                run(SKAction.playSoundFileNamed("Sounds/SFX/fruit_pick.wav", waitForCompletion: false))
+                run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
             }
         }
@@ -138,7 +138,7 @@ class ShareFruitScene: SKScene {
                 SKAction.move(to: animalNode.position, duration: 0.15),
                 SKAction.removeFromParent()
             ]))
-            run(SKAction.playSoundFileNamed("Sounds/SFX/fruit_drop.wav", waitForCompletion: false))
+            run(SKAction.playSoundFileNamed("fruit_drop.wav", waitForCompletion: false))
 
             animalNode.run(SKAction.sequence([
                 SKAction.scale(to: 1.1, duration: 0.1),
@@ -158,7 +158,7 @@ class ShareFruitScene: SKScene {
 
     private func handleCompletion() {
         let responseTime = Date().timeIntervalSince(startTime)
-        run(SKAction.playSoundFileNamed("Sounds/SFX/correct.wav", waitForCompletion: false))
+        run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
         // Speak the equation aloud
         Task { @MainActor in
             AudioManager.shared.speakEquation(gameState.question)
