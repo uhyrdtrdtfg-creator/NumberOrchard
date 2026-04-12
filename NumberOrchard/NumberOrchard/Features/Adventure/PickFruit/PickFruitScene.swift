@@ -24,6 +24,7 @@ struct PickFruitGameState: Sendable {
     }
 }
 
+@MainActor
 protocol PickFruitSceneDelegate: AnyObject {
     func pickFruitSceneDidComplete(correct: Bool, responseTime: TimeInterval)
 }

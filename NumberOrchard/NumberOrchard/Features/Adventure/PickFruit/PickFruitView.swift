@@ -27,6 +27,7 @@ struct PickFruitView: View {
     }
 }
 
+@MainActor
 private class PickFruitCoordinator: NSObject, PickFruitSceneDelegate {
     let onComplete: (Bool, TimeInterval) -> Void
 
@@ -35,8 +36,6 @@ private class PickFruitCoordinator: NSObject, PickFruitSceneDelegate {
     }
 
     func pickFruitSceneDidComplete(correct: Bool, responseTime: TimeInterval) {
-        Task { @MainActor in
-            onComplete(correct, responseTime)
-        }
+        onComplete(correct, responseTime)
     }
 }

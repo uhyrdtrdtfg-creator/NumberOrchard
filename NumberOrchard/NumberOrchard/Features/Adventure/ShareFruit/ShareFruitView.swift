@@ -27,6 +27,7 @@ struct ShareFruitView: View {
     }
 }
 
+@MainActor
 private class ShareFruitCoordinator: NSObject, ShareFruitSceneDelegate {
     let onComplete: (Bool, TimeInterval) -> Void
 
@@ -35,8 +36,6 @@ private class ShareFruitCoordinator: NSObject, ShareFruitSceneDelegate {
     }
 
     func shareFruitSceneDidComplete(correct: Bool, responseTime: TimeInterval) {
-        Task { @MainActor in
-            onComplete(correct, responseTime)
-        }
+        onComplete(correct, responseTime)
     }
 }

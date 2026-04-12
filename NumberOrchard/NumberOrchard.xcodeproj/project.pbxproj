@@ -7,11 +7,66 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00C6C802DB77AA322E48EB1B /* ShareFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */; };
+		05E9E883F9EA4E8B2FCECA6B /* fruit_pick.wav in Resources */ = {isa = PBXBuildFile; fileRef = DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */; };
+		0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */; };
+		087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */; };
+		09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3346700B718F8495EE4352 /* EyeCareManager.swift */; };
+		09FDE69EE1B2EA4E2D36452B /* eye_care.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */; };
 		0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31873A70D02219C3C54E64A9 /* HomeView.swift */; };
+		185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */; };
+		1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */; };
+		1D97DFC6CF221E41A3CA3D08 /* correct_02.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 225B71C728EF8634CFFA8920 /* correct_02.aiff */; };
+		1F6D8246E9F38FAA301AF234 /* correct_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4E4EDC77EC71DB9F41595670 /* correct_05.aiff */; };
 		28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */; };
+		2BEA113849052AD21A1C2DA3 /* combo_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D06D30700762F4165EBD7CE3 /* combo_03.aiff */; };
+		2EDC9FAA6BA46D1E812F7CFE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F26120F1022C22185A90 /* SettingsView.swift */; };
+		3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADC8A418254297E72F86954 /* PickFruitScene.swift */; };
+		31C1B5B12043369C95EAD022 /* home_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = A45D7E24218840C081D2711C /* home_bgm.wav */; };
+		3429843323A048D9A3E03C64 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9452C4C6F4C0CBA089556782 /* correct.wav */; };
+		35626976F61FA247618FFFCD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF67ED2B785DD79D28846F /* AudioManager.swift */; };
+		367C8CF3CDBBC9D1F677E156 /* fruit_drop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6716849999AC43443891C7D4 /* fruit_drop.wav */; };
+		38827EF7F89FB3860E7AFE68 /* correct_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE486D1905D0928C0C65380F /* correct_03.aiff */; };
+		3937E775F90238CF3C265E70 /* balance.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6BF89DFC78ABA035C5FD2687 /* balance.wav */; };
+		3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */; };
+		3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */; };
+		4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B856776C53534150F3C9334F /* LearningProfile.swift */; };
+		44B006F9FAA275C62DD55DE8 /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = A833ED9961A1756FCB64C057 /* wrong.wav */; };
+		4B982840B4B8DC7F66D1356B /* correct_04.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FA44B685768E893018DAF829 /* correct_04.aiff */; };
+		4FAA3D31D9B0FC8C7421DCD7 /* star_collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */; };
+		5051AF2EDE3B6BB5078C9E4F /* TreeGrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */; };
+		5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */; };
+		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
+		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
+		69DA0892B5865BD4CBBE6779 /* idle_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FC5747B52D2567AB5400E83D /* idle_hint.aiff */; };
+		75A384440A662CAEF58C193A /* welcome.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B0A3499562F1D16E7DAEB485 /* welcome.aiff */; };
+		7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6DF7776B757FA1C3868920B /* wrong_help.aiff */; };
+		7FD391BDEC66EC23F8DA48C7 /* combo_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */; };
+		809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */; };
+		8146CECFFE7FBE2EAF6949E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C086DE626E123BF698F83460 /* Assets.xcassets */; };
+		8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */; };
 		8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */; };
+		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
+		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
+		9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510E8D7639394AE33EDFCDC /* OrchardState.swift */; };
+		A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */; };
+		B0A143F5AF18EFF07724DCC6 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A259DE212DCA85208D39566 /* level_up.wav */; };
+		B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */; };
+		B685D99B1591521148186507 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1613B849416E796B62C00C6 /* CheckInView.swift */; };
 		C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */; };
+		C8B92790BC03E6B291AF3ECD /* share_check.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 98D5BD2AA2C845AF8576A096 /* share_check.aiff */; };
+		CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */; };
+		CE1BF32BBC91FAFD41CED993 /* AdventureSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */; };
+		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
+		D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */; };
+		DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */; };
+		EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */; };
+		EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83825F84A8F221612AB7A3B3 /* combo_07.aiff */; };
+		EDF37794BDD6E171477CA3D7 /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 095FAB413CFAC3FAFC822D28 /* button_click.wav */; };
 		EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F088ACB345D48F488B3658A /* ParentCenterView.swift */; };
+		F6D66B016584FA7C89D58F94 /* pick_too_many.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 840B2D04C9C6D135F31D444D /* pick_too_many.aiff */; };
+		FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */; };
+		FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,16 +80,80 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02BF67ED2B785DD79D28846F /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		04066175F83F93B3EA8399FE /* ShareFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitScene.swift; sourceTree = "<group>"; };
+		0510E8D7639394AE33EDFCDC /* OrchardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardState.swift; sourceTree = "<group>"; };
+		095FAB413CFAC3FAFC822D28 /* button_click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_click.wav; sourceTree = "<group>"; };
+		0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = eye_care.aiff; sourceTree = "<group>"; };
+		1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeCareManagerTests.swift; sourceTree = "<group>"; };
+		225B71C728EF8634CFFA8920 /* correct_02.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_02.aiff; sourceTree = "<group>"; };
+		2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicReportView.swift; sourceTree = "<group>"; };
+		2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGenerator.swift; sourceTree = "<group>"; };
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
+		5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionViewModel.swift; sourceTree = "<group>"; };
+		5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star_collect.wav; sourceTree = "<group>"; };
+		650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardStateTests.swift; sourceTree = "<group>"; };
+		6716849999AC43443891C7D4 /* fruit_drop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_drop.wav; sourceTree = "<group>"; };
+		6A259DE212DCA85208D39566 /* level_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_up.wav; sourceTree = "<group>"; };
+		6BF89DFC78ABA035C5FD2687 /* balance.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = balance.wav; sourceTree = "<group>"; };
+		7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGeneratorTests.swift; sourceTree = "<group>"; };
 		74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOrchardApp.swift; sourceTree = "<group>"; };
+		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
+		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
+		867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitLogicTests.swift; sourceTree = "<group>"; };
+		9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_hint.aiff; sourceTree = "<group>"; };
+		9452C4C6F4C0CBA089556782 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
+		94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthViewModel.swift; sourceTree = "<group>"; };
 		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98D5BD2AA2C845AF8576A096 /* share_check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = share_check.aiff; sourceTree = "<group>"; };
+		A45D7E24218840C081D2711C /* home_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = home_bgm.wav; sourceTree = "<group>"; };
 		A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionView.swift; sourceTree = "<group>"; };
+		A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManagerTests.swift; sourceTree = "<group>"; };
+		A833ED9961A1756FCB64C057 /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
+		A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_05.aiff; sourceTree = "<group>"; };
+		AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRecord.swift; sourceTree = "<group>"; };
+		B0A3499562F1D16E7DAEB485 /* welcome.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = welcome.aiff; sourceTree = "<group>"; };
+		B856776C53534150F3C9334F /* LearningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProfile.swift; sourceTree = "<group>"; };
+		BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateView.swift; sourceTree = "<group>"; };
+		C086DE626E123BF698F83460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
+		C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitView.swift; sourceTree = "<group>"; };
+		CADC8A418254297E72F86954 /* PickFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitScene.swift; sourceTree = "<group>"; };
+		CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
+		CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		CD3346700B718F8495EE4352 /* EyeCareManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EyeCareManager.swift; sourceTree = "<group>"; };
+		CE486D1905D0928C0C65380F /* correct_03.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_03.aiff; sourceTree = "<group>"; };
+		D06D30700762F4165EBD7CE3 /* combo_03.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_03.aiff; sourceTree = "<group>"; };
 		D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		D4D0F26120F1022C22185A90 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyLevel.swift; sourceTree = "<group>"; };
+		D6DF7776B757FA1C3868920B /* wrong_help.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_help.aiff; sourceTree = "<group>"; };
+		D85156F893459A7FB65A2E06 /* MathQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathQuestion.swift; sourceTree = "<group>"; };
+		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
+		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
+		F1613B849416E796B62C00C6 /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
+		F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitView.swift; sourceTree = "<group>"; };
+		F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManager.swift; sourceTree = "<group>"; };
+		F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitLogicTests.swift; sourceTree = "<group>"; };
+		F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = adventure_bgm.wav; sourceTree = "<group>"; };
+		FA44B685768E893018DAF829 /* correct_04.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_04.aiff; sourceTree = "<group>"; };
+		FC5747B52D2567AB5400E83D /* idle_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = idle_hint.aiff; sourceTree = "<group>"; };
+		FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_01.aiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		02E0D9626C323931E5E01118 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C086DE626E123BF698F83460 /* Assets.xcassets */,
+				D77F6335A5F7C01441E072D2 /* Sounds */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		091F9E241BD46B2D6D08092C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -47,14 +166,62 @@
 		0EA2549DA49A7E4C162B1599 /* NumberOrchardTests */ = {
 			isa = PBXGroup;
 			children = (
+				40CF67C42C305E1FE828DBA7 /* Core */,
+				F1DF74FF908AB4EE255B1046 /* Features */,
 			);
 			path = NumberOrchardTests;
+			sourceTree = "<group>";
+		};
+		1EA1C7DEA2FE67C56D929AC7 /* ShareFruit */ = {
+			isa = PBXGroup;
+			children = (
+				04066175F83F93B3EA8399FE /* ShareFruitScene.swift */,
+				C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */,
+			);
+			path = ShareFruit;
+			sourceTree = "<group>";
+		};
+		23889553F7FE8F468EAD51EE /* SFX */ = {
+			isa = PBXGroup;
+			children = (
+				6BF89DFC78ABA035C5FD2687 /* balance.wav */,
+				095FAB413CFAC3FAFC822D28 /* button_click.wav */,
+				9452C4C6F4C0CBA089556782 /* correct.wav */,
+				6716849999AC43443891C7D4 /* fruit_drop.wav */,
+				DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */,
+				6A259DE212DCA85208D39566 /* level_up.wav */,
+				5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */,
+				A833ED9961A1756FCB64C057 /* wrong.wav */,
+			);
+			path = SFX;
+			sourceTree = "<group>";
+		};
+		26460A6923C6D4F7BF76B310 /* PickFruit */ = {
+			isa = PBXGroup;
+			children = (
+				CADC8A418254297E72F86954 /* PickFruitScene.swift */,
+				F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */,
+			);
+			path = PickFruit;
+			sourceTree = "<group>";
+		};
+		33ED031A4A67D08A9EFCDC5E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				C9D4300F012F1FFEAE1A30C9 /* AdaptiveEngine */,
+				A15EF6736F741F1C89D2D7FB /* Audio */,
+				55D137ADC16E4DD996D73FDE /* Models */,
+				CB2B176CB49B90D1C34E11A4 /* ParentalGate */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		37B3FF3B0E15EBD4C1D2341C /* ParentCenter */ = {
 			isa = PBXGroup;
 			children = (
+				2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */,
 				2F088ACB345D48F488B3658A /* ParentCenterView.swift */,
+				D4D0F26120F1022C22185A90 /* SettingsView.swift */,
 			);
 			path = ParentCenter;
 			sourceTree = "<group>";
@@ -68,12 +235,52 @@
 			);
 			sourceTree = "<group>";
 		};
+		40CF67C42C305E1FE828DBA7 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E40FFAE35C028ABC8FE81D8B /* AdaptiveEngine */,
+				F3FF9737B69A1CBCCFA815A8 /* Models */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		495F0B04FE2A72EB1D9A516C /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				31873A70D02219C3C54E64A9 /* HomeView.swift */,
+				CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		5378E50D7439E6740DF9A1F3 /* DailyFlow */ = {
+			isa = PBXGroup;
+			children = (
+				F1613B849416E796B62C00C6 /* CheckInView.swift */,
+				CD3346700B718F8495EE4352 /* EyeCareManager.swift */,
+			);
+			path = DailyFlow;
+			sourceTree = "<group>";
+		};
+		5541ABB2040346C3C03B80E6 /* DailyFlow */ = {
+			isa = PBXGroup;
+			children = (
+				1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */,
+			);
+			path = DailyFlow;
+			sourceTree = "<group>";
+		};
+		55D137ADC16E4DD996D73FDE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */,
+				D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */,
+				CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */,
+				D85156F893459A7FB65A2E06 /* MathQuestion.swift */,
+				0510E8D7639394AE33EDFCDC /* OrchardState.swift */,
+				AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5601866819D0E921342E63A4 /* App */ = {
@@ -85,20 +292,119 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		8C2B3691E48416E33D7438E0 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				D06D30700762F4165EBD7CE3 /* combo_03.aiff */,
+				A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */,
+				83825F84A8F221612AB7A3B3 /* combo_07.aiff */,
+				FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */,
+				225B71C728EF8634CFFA8920 /* correct_02.aiff */,
+				CE486D1905D0928C0C65380F /* correct_03.aiff */,
+				FA44B685768E893018DAF829 /* correct_04.aiff */,
+				4E4EDC77EC71DB9F41595670 /* correct_05.aiff */,
+				0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */,
+				FC5747B52D2567AB5400E83D /* idle_hint.aiff */,
+				840B2D04C9C6D135F31D444D /* pick_too_many.aiff */,
+				98D5BD2AA2C845AF8576A096 /* share_check.aiff */,
+				B0A3499562F1D16E7DAEB485 /* welcome.aiff */,
+				D6DF7776B757FA1C3868920B /* wrong_help.aiff */,
+				9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */,
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
+		A15EF6736F741F1C89D2D7FB /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				02BF67ED2B785DD79D28846F /* AudioManager.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		B399E474F8CEB7E31F6026A0 /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				E6BD89A78358A5321B5CB21F /* Adventure */,
+				5378E50D7439E6740DF9A1F3 /* DailyFlow */,
 				495F0B04FE2A72EB1D9A516C /* Home */,
+				CC4E86C7B1E6BF8104E301B8 /* Orchard */,
 				37B3FF3B0E15EBD4C1D2341C /* ParentCenter */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		BE89C3DAEA39988A4F184B56 /* Adventure */ = {
+			isa = PBXGroup;
+			children = (
+				867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */,
+				F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */,
+			);
+			path = Adventure;
+			sourceTree = "<group>";
+		};
+		C19B033641493877E6627937 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */,
+				A45D7E24218840C081D2711C /* home_bgm.wav */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		C9D4300F012F1FFEAE1A30C9 /* AdaptiveEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */,
+				B856776C53534150F3C9334F /* LearningProfile.swift */,
+				2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */,
+			);
+			path = AdaptiveEngine;
+			sourceTree = "<group>";
+		};
+		CB2B176CB49B90D1C34E11A4 /* ParentalGate */ = {
+			isa = PBXGroup;
+			children = (
+				BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */,
+			);
+			path = ParentalGate;
+			sourceTree = "<group>";
+		};
+		CC4E86C7B1E6BF8104E301B8 /* Orchard */ = {
+			isa = PBXGroup;
+			children = (
+				E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */,
+				94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */,
+			);
+			path = Orchard;
+			sourceTree = "<group>";
+		};
+		D77F6335A5F7C01441E072D2 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C19B033641493877E6627937 /* Music */,
+				23889553F7FE8F468EAD51EE /* SFX */,
+				8C2B3691E48416E33D7438E0 /* Voice */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		E40FFAE35C028ABC8FE81D8B /* AdaptiveEngine */ = {
+			isa = PBXGroup;
+			children = (
+				A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */,
+				7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */,
+			);
+			path = AdaptiveEngine;
 			sourceTree = "<group>";
 		};
 		E6BD89A78358A5321B5CB21F /* Adventure */ = {
 			isa = PBXGroup;
 			children = (
 				A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */,
+				5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */,
+				26460A6923C6D4F7BF76B310 /* PickFruit */,
+				1EA1C7DEA2FE67C56D929AC7 /* ShareFruit */,
 			);
 			path = Adventure;
 			sourceTree = "<group>";
@@ -107,37 +413,28 @@
 			isa = PBXGroup;
 			children = (
 				5601866819D0E921342E63A4 /* App */,
+				33ED031A4A67D08A9EFCDC5E /* Core */,
 				B399E474F8CEB7E31F6026A0 /* Features */,
+				02E0D9626C323931E5E01118 /* Resources */,
 			);
 			path = NumberOrchard;
 			sourceTree = "<group>";
 		};
-		"TEMP_485B97CC-A94D-44FF-B00F-E0DA213085FF" /* Features */ = {
+		F1DF74FF908AB4EE255B1046 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				BE89C3DAEA39988A4F184B56 /* Adventure */,
+				5541ABB2040346C3C03B80E6 /* DailyFlow */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		"TEMP_6C9D55B6-604B-4B4D-9E99-FE25822DCE4C" /* Core */ = {
+		F3FF9737B69A1CBCCFA815A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */,
 			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		"TEMP_C547F507-3840-4FF5-89E1-F21D0E9BBB18" /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		"TEMP_E33B6ADD-C46F-43D9-8177-D8065A888864" /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +445,7 @@
 			buildConfigurationList = FAA600E00EE41C5AD1DF764E /* Build configuration list for PBXNativeTarget "NumberOrchard" */;
 			buildPhases = (
 				78A33DAD2A645554D177F269 /* Sources */,
+				2799982185CD9CE579480BF2 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -209,11 +507,53 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		2799982185CD9CE579480BF2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8146CECFFE7FBE2EAF6949E8 /* Assets.xcassets in Resources */,
+				5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */,
+				3937E775F90238CF3C265E70 /* balance.wav in Resources */,
+				EDF37794BDD6E171477CA3D7 /* button_click.wav in Resources */,
+				2BEA113849052AD21A1C2DA3 /* combo_03.aiff in Resources */,
+				7FD391BDEC66EC23F8DA48C7 /* combo_05.aiff in Resources */,
+				EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */,
+				3429843323A048D9A3E03C64 /* correct.wav in Resources */,
+				185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */,
+				1D97DFC6CF221E41A3CA3D08 /* correct_02.aiff in Resources */,
+				38827EF7F89FB3860E7AFE68 /* correct_03.aiff in Resources */,
+				4B982840B4B8DC7F66D1356B /* correct_04.aiff in Resources */,
+				1F6D8246E9F38FAA301AF234 /* correct_05.aiff in Resources */,
+				09FDE69EE1B2EA4E2D36452B /* eye_care.aiff in Resources */,
+				367C8CF3CDBBC9D1F677E156 /* fruit_drop.wav in Resources */,
+				05E9E883F9EA4E8B2FCECA6B /* fruit_pick.wav in Resources */,
+				31C1B5B12043369C95EAD022 /* home_bgm.wav in Resources */,
+				69DA0892B5865BD4CBBE6779 /* idle_hint.aiff in Resources */,
+				B0A143F5AF18EFF07724DCC6 /* level_up.wav in Resources */,
+				F6D66B016584FA7C89D58F94 /* pick_too_many.aiff in Resources */,
+				C8B92790BC03E6B291AF3ECD /* share_check.aiff in Resources */,
+				4FAA3D31D9B0FC8C7421DCD7 /* star_collect.wav in Resources */,
+				75A384440A662CAEF58C193A /* welcome.aiff in Resources */,
+				44B006F9FAA275C62DD55DE8 /* wrong.wav in Resources */,
+				7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */,
+				97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4FF6B60F1A2109164CBBC30D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */,
+				B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */,
+				8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */,
+				3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */,
+				65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */,
+				00C6C802DB77AA322E48EB1B /* ShareFruitLogicTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,10 +562,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */,
+				CE1BF32BBC91FAFD41CED993 /* AdventureSessionViewModel.swift in Sources */,
 				8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */,
+				35626976F61FA247618FFFCD /* AudioManager.swift in Sources */,
+				0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */,
+				B685D99B1591521148186507 /* CheckInView.swift in Sources */,
+				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,
+				DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */,
+				EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */,
+				09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */,
 				0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */,
+				A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */,
+				4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */,
+				FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */,
+				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */,
+				9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */,
 				EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */,
+				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
+				3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */,
+				CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */,
+				D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */,
+				087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */,
+				2EDC9FAA6BA46D1E812F7CFE /* SettingsView.swift in Sources */,
+				699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */,
+				809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */,
+				5051AF2EDE3B6BB5078C9E4F /* TreeGrowthView.swift in Sources */,
+				1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +669,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -323,9 +687,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -388,6 +754,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -399,9 +766,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
