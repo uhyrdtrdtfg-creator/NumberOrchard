@@ -81,9 +81,15 @@ struct ExplorationMapView: View {
                                     path.move(to: CGPoint(x: station.mapX * size.width, y: station.mapY * size.height))
                                     path.addLine(to: CGPoint(x: target.mapX * size.width, y: target.mapY * size.height))
                                     let completed = viewModel.completedStationIds.contains(station.id)
+                                    // Outer stroke (darker border for contrast)
                                     ctx.stroke(path,
-                                              with: .color(completed ? .green : .gray.opacity(0.4)),
-                                              lineWidth: 4)
+                                              with: .color(completed ? .green.opacity(0.9) : .brown.opacity(0.5)),
+                                              style: StrokeStyle(lineWidth: 28, lineCap: .round, lineJoin: .round))
+                                    // Inner stroke (lighter fill on top)
+                                    ctx.stroke(path,
+                                              with: .color(completed ? .yellow.opacity(0.8) : .white.opacity(0.7)),
+                                              style: StrokeStyle(lineWidth: 18, lineCap: .round, lineJoin: .round,
+                                                                 dash: completed ? [] : [12, 10]))
                                 }
                             }
                         }
