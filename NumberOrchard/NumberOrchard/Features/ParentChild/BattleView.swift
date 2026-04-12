@@ -110,34 +110,50 @@ struct BattleView: View {
     }
 
     private func battleResultView(viewModel: BattleViewModel) -> some View {
-        VStack(spacing: 24) {
-            switch viewModel.finalWinner {
-            case .child:
-                Text("🎆").font(.system(size: 160))
-                Text("你比爸爸/妈妈还厉害！")
-                    .font(.title)
-                    .fontWeight(.bold)
-            case .parent:
-                Text("🤗").font(.system(size: 160))
-                Text("差一点就赢了，下次一定！")
-                    .font(.title)
-                    .fontWeight(.bold)
-            case .tie, nil:
-                Text("🙌").font(.system(size: 160))
-                Text("你们都很棒！")
-                    .font(.title)
-                    .fontWeight(.bold)
+        ZStack {
+            if viewModel.finalWinner == .child {
+                ConfettiView()
             }
-            Text("最终 孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
-                .font(.title)
-                .fontWeight(.medium)
-                .foregroundStyle(.secondary)
-            Button(action: onFinish) {
-                Text("返回主页")
-                    .font(.title2).fontWeight(.semibold)
-                    .padding(.horizontal, 50).padding(.vertical, 20)
-                    .background(.green, in: Capsule())
-                    .foregroundStyle(.white)
+            VStack(spacing: 24) {
+                switch viewModel.finalWinner {
+                case .child:
+                    Text("🎆")
+                        .font(.system(size: 160))
+                        .modifier(PopInModifier(delay: 0.1, fromScale: 0.0, rotate: true))
+                    Text("你比爸爸/妈妈还厉害！")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .modifier(PopInModifier(delay: 0.4))
+                case .parent:
+                    Text("🤗")
+                        .font(.system(size: 160))
+                        .modifier(PopInModifier(delay: 0.1))
+                    Text("差一点就赢了，下次一定！")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .modifier(PopInModifier(delay: 0.3))
+                case .tie, nil:
+                    Text("🙌")
+                        .font(.system(size: 160))
+                        .modifier(PopInModifier(delay: 0.1))
+                    Text("你们都很棒！")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .modifier(PopInModifier(delay: 0.3))
+                }
+                Text("最终 孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
+                    .font(.title)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+                    .modifier(PopInModifier(delay: 0.6))
+                Button(action: onFinish) {
+                    Text("返回主页")
+                        .font(.title2).fontWeight(.semibold)
+                        .padding(.horizontal, 50).padding(.vertical, 20)
+                        .background(.green, in: Capsule())
+                        .foregroundStyle(.white)
+                }
+                .modifier(PopInModifier(delay: 0.8))
             }
         }
     }

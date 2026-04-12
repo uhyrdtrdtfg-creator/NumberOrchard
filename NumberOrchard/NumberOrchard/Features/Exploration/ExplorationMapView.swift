@@ -136,9 +136,24 @@ struct StationNodeView: View {
     let stars: Int
     let isUnlocked: Bool
 
+    @State private var pulsing = false
+
+    /// Call-to-action: unlocked AND not yet completed (stars == 0)
+    private var isCTA: Bool { isUnlocked && stars == 0 }
+
     var body: some View {
         VStack(spacing: 6) {
             ZStack {
+                // Pulsing glow ring for current-available station
+                if isCTA {
+                    Circle()
+                        .stroke(.yellow, lineWidth: 6)
+                        .frame(width: 130, height: 130)
+                        .scaleEffect(pulsing ? 1.15 : 1.0)
+                        .opacity(pulsing ? 0.0 : 0.8)
+                        .animation(.easeOut(duration: 1.4).repeatForever(autoreverses: false), value: pulsing)
+                }
+
                 Circle()
                     .fill(isUnlocked ? Color.white : Color.gray.opacity(0.3))
                     .frame(width: 110, height: 110)
@@ -146,7 +161,10 @@ struct StationNodeView: View {
                 Text(station.emoji)
                     .font(.system(size: 60))
                     .opacity(isUnlocked ? 1.0 : 0.3)
+                    .scaleEffect(isCTA && pulsing ? 1.08 : 1.0)
+                    .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: pulsing)
             }
+            .onAppear { pulsing = true }
             Text(station.displayName)
                 .font(.callout)
                 .fontWeight(.medium)
