@@ -17,6 +17,7 @@
 		0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31873A70D02219C3C54E64A9 /* HomeView.swift */; };
 		185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */; };
 		1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */; };
+		1AB00DEF60A8CAB67510C272 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D12D41600FAE9DAFD3D5E4B /* BalanceView.swift */; };
 		1D97DFC6CF221E41A3CA3D08 /* correct_02.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 225B71C728EF8634CFFA8920 /* correct_02.aiff */; };
 		1F6D8246E9F38FAA301AF234 /* correct_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4E4EDC77EC71DB9F41595670 /* correct_05.aiff */; };
 		28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */; };
@@ -46,6 +47,7 @@
 		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
 		69DA0892B5865BD4CBBE6779 /* idle_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FC5747B52D2567AB5400E83D /* idle_hint.aiff */; };
+		6C8CD1ED18BC4F15CDC91317 /* BalanceLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EC017E169CEF105B83409D /* BalanceLogicTests.swift */; };
 		75A384440A662CAEF58C193A /* welcome.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B0A3499562F1D16E7DAEB485 /* welcome.aiff */; };
 		7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6DF7776B757FA1C3868920B /* wrong_help.aiff */; };
 		7FD391BDEC66EC23F8DA48C7 /* combo_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */; };
@@ -68,6 +70,7 @@
 		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
 		D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */; };
 		D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */; };
+		D99FBEC5776E93A193F488B6 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75777EE9293B57CE69E74078 /* BalanceScene.swift */; };
 		DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */; };
 		EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */; };
 		EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83825F84A8F221612AB7A3B3 /* combo_07.aiff */; };
@@ -106,12 +109,14 @@
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionViewModel.swift; sourceTree = "<group>"; };
 		5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star_collect.wav; sourceTree = "<group>"; };
+		61EC017E169CEF105B83409D /* BalanceLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceLogicTests.swift; sourceTree = "<group>"; };
 		650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardStateTests.swift; sourceTree = "<group>"; };
 		6716849999AC43443891C7D4 /* fruit_drop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_drop.wav; sourceTree = "<group>"; };
 		6A259DE212DCA85208D39566 /* level_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_up.wav; sourceTree = "<group>"; };
 		6BF89DFC78ABA035C5FD2687 /* balance.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = balance.wav; sourceTree = "<group>"; };
 		7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGeneratorTests.swift; sourceTree = "<group>"; };
 		74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOrchardApp.swift; sourceTree = "<group>"; };
+		75777EE9293B57CE69E74078 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
 		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
 		867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitLogicTests.swift; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 		94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthViewModel.swift; sourceTree = "<group>"; };
 		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D5BD2AA2C845AF8576A096 /* share_check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = share_check.aiff; sourceTree = "<group>"; };
+		9D12D41600FAE9DAFD3D5E4B /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
 		A45D7E24218840C081D2711C /* home_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = home_bgm.wav; sourceTree = "<group>"; };
 		A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionView.swift; sourceTree = "<group>"; };
 		A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManagerTests.swift; sourceTree = "<group>"; };
@@ -318,6 +324,15 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		56EDFFEBC5B174764BA2E1B7 /* Balance */ = {
+			isa = PBXGroup;
+			children = (
+				75777EE9293B57CE69E74078 /* BalanceScene.swift */,
+				9D12D41600FAE9DAFD3D5E4B /* BalanceView.swift */,
+			);
+			path = Balance;
+			sourceTree = "<group>";
+		};
 		7E45E63B878198F3BBADE359 /* NumberTrain */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +387,7 @@
 		BE89C3DAEA39988A4F184B56 /* Adventure */ = {
 			isa = PBXGroup;
 			children = (
+				61EC017E169CEF105B83409D /* BalanceLogicTests.swift */,
 				F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */,
 				867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */,
 				F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */,
@@ -440,6 +456,7 @@
 			children = (
 				A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */,
 				5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */,
+				56EDFFEBC5B174764BA2E1B7 /* Balance */,
 				7E45E63B878198F3BBADE359 /* NumberTrain */,
 				26460A6923C6D4F7BF76B310 /* PickFruit */,
 				1EA1C7DEA2FE67C56D929AC7 /* ShareFruit */,
@@ -586,6 +603,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C8CD1ED18BC4F15CDC91317 /* BalanceLogicTests.swift in Sources */,
 				FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */,
 				B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */,
 				3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */,
@@ -605,6 +623,8 @@
 				CE1BF32BBC91FAFD41CED993 /* AdventureSessionViewModel.swift in Sources */,
 				8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */,
 				35626976F61FA247618FFFCD /* AudioManager.swift in Sources */,
+				D99FBEC5776E93A193F488B6 /* BalanceScene.swift in Sources */,
+				1AB00DEF60A8CAB67510C272 /* BalanceView.swift in Sources */,
 				0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */,
 				B685D99B1591521148186507 /* CheckInView.swift in Sources */,
 				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,

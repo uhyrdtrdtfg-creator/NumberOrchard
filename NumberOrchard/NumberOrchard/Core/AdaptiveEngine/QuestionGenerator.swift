@@ -149,4 +149,34 @@ struct QuestionGenerator: Sendable {
         let op2 = Int.random(in: 1...(op1))
         return (op1, op2)
     }
+
+    /// Generate a question for a specific game mode.
+    func generate(for profile: LearningProfile, gameMode: GameMode, recentQuestions: [MathQuestion] = []) -> MathQuestion {
+        if gameMode == .pickFruit || gameMode == .shareFruit {
+            let operation: MathOperation = gameMode == .pickFruit ? .add : .subtract
+            let (op1, op2) = generateOperands(
+                level: profile.currentLevel,
+                subDifficulty: profile.subDifficulty,
+                operation: operation
+            )
+            return MathQuestion(operand1: op1, operand2: op2, operation: operation, gameMode: gameMode)
+        }
+
+        if gameMode == .numberTrain {
+            let totalSeats = profile.currentLevel.maxNumber <= 5 ? 5 : 10
+            let occupied = Int.random(in: 1...(totalSeats - 1))
+            let empty = totalSeats - occupied
+            return MathQuestion(operand1: occupied, operand2: empty, operation: .add, gameMode: .numberTrain)
+        }
+
+        if gameMode == .balance {
+            let maxTotal = min(profile.currentLevel.maxNumber, 10)
+            let target = Int.random(in: 3...maxTotal)
+            let rightFixed = Int.random(in: 1...(target - 1))
+            let rightMissing = target - rightFixed
+            return MathQuestion(operand1: rightFixed, operand2: rightMissing, operation: .add, gameMode: .balance)
+        }
+
+        return generate(for: profile, recentQuestions: recentQuestions)
+    }
 }
