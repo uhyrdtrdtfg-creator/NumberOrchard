@@ -44,16 +44,19 @@ struct AdventureSessionView: View {
             .padding(.horizontal, 20)
             .padding(.top, 8)
 
-            switch question.gameMode {
-            case .pickFruit:
-                PickFruitView(question: question) { correct, time in
-                    viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
-                }
-            case .shareFruit:
-                ShareFruitView(question: question) { correct, time in
-                    viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
+            Group {
+                switch question.gameMode {
+                case .pickFruit:
+                    PickFruitView(question: question) { correct, time in
+                        viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
+                    }
+                case .shareFruit:
+                    ShareFruitView(question: question) { correct, time in
+                        viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
+                    }
                 }
             }
+            .id("\(question.operand1)-\(question.operand2)-\(question.operation.rawValue)-\(viewModel.questionsCompleted)")
         }
     }
 

@@ -91,7 +91,7 @@
 		2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGenerator.swift; sourceTree = "<group>"; };
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionViewModel.swift; sourceTree = "<group>"; };
 		5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star_collect.wav; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_hint.aiff; sourceTree = "<group>"; };
 		9452C4C6F4C0CBA089556782 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
 		94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthViewModel.swift; sourceTree = "<group>"; };
-		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D5BD2AA2C845AF8576A096 /* share_check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = share_check.aiff; sourceTree = "<group>"; };
 		A45D7E24218840C081D2711C /* home_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = home_bgm.wav; sourceTree = "<group>"; };
 		A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionView.swift; sourceTree = "<group>"; };
@@ -483,9 +483,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-				};
+				LastUpgradeCheck = 1620;
 			};
 			buildConfigurationList = 6E691B4C98F4E9192C2B18B8 /* Build configuration list for PBXProject "NumberOrchard" */;
 			developmentRegion = en;
@@ -673,6 +671,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -758,6 +757,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

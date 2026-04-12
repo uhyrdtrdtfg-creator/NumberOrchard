@@ -101,13 +101,30 @@ class PickFruitScene: SKScene {
             fruitNodes.append(fruit)
         }
 
-        // Pre-existing fruits in basket (visual only)
+        // Pre-existing fruits in basket (visual only) — same size and texture as tree apples
         for i in 0..<gameState.basketCount {
-            let fruit = SKSpriteNode(color: .red, size: CGSize(width: 35, height: 35))
-            fruit.texture = SKTexture(image: createCircleImage(color: .systemOrange, size: 35))
-            let xOffset = CGFloat(i % 3 - 1) * 40
-            let yOffset = CGFloat(i / 3) * 40 - 10
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
+            fruit.zPosition = 1
+            let xOffset = CGFloat(i % 3 - 1) * 42
+            let yOffset = CGFloat(i / 3) * 42 - 5
             fruit.position = CGPoint(x: xOffset, y: yOffset)
+            basketNode.addChild(fruit)
+        }
+    }
+
+    /// Add a new apple to the basket after one was picked (visual representation of the new total)
+    private func addApplesToBasket(_ count: Int) {
+        // Remove all existing apples first, then redraw based on count
+        basketNode.children.compactMap { $0 as? SKSpriteNode }.forEach { $0.removeFromParent() }
+        let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
+        for i in 0..<count {
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
+            fruit.zPosition = 1
+            let xOffset = CGFloat(i % 3 - 1) * 42
+            let yOffset = CGFloat(i / 3) * 42 - 5
+            fruit.position = CGPoint(x: xOffset, y: yOffset)
+            fruit.setScale(0.1)
+            fruit.run(SKAction.scale(to: 1.0, duration: 0.15))
             basketNode.addChild(fruit)
         }
     }
@@ -147,7 +164,7 @@ class PickFruitScene: SKScene {
 
         if basketFrame.intersects(fruitFrame) {
             node.run(SKAction.sequence([
-                SKAction.scale(to: 0.8, duration: 0.1),
+                SKAction.scale(to: 0.8, duration: 0.15),
                 SKAction.move(to: basketNode.position, duration: 0.2),
                 SKAction.removeFromParent()
             ]))
@@ -155,6 +172,8 @@ class PickFruitScene: SKScene {
 
             gameState.pickFruit()
             basketLabel.text = "\(gameState.basketCount)"
+            // Update basket visuals to show the new count
+            addApplesToBasket(gameState.basketCount)
 
             if gameState.isComplete {
                 handleCompletion()
