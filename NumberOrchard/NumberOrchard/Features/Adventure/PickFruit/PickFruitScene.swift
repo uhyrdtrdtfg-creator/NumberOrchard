@@ -36,103 +36,201 @@ class PickFruitScene: SKScene {
     private var fruitNodes: [SKSpriteNode] = []
     private var basketNode: SKSpriteNode!
     private var basketLabel: SKLabelNode!
-    private var questionLabel: SKLabelNode!
+    private var treeNode: SKSpriteNode!
+    private var questionLabel: SKNode!
     private var draggingNode: SKSpriteNode?
     private var startTime: Date!
+
+    private let fruitSize: CGFloat = 72
 
     func configure(with question: MathQuestion) {
         self.gameState = PickFruitGameState(question: question)
     }
 
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor(red: 1.0, green: 0.97, blue: 0.91, alpha: 1.0)
+        backgroundColor = CartoonSK.skyTop
         startTime = Date()
+        setupBackground()
         setupScene()
+    }
+
+    private func setupBackground() {
+        let gradientImage = renderBackgroundGradient(size: size)
+        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        bg.size = size
+        bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        bg.zPosition = -100
+        addChild(bg)
+
+        // Ground strip at bottom
+        let ground = SKSpriteNode(texture: SKTexture(image: renderGround(size: CGSize(width: size.width, height: 140))))
+        ground.size = CGSize(width: size.width, height: 140)
+        ground.position = CGPoint(x: size.width / 2, y: 70)
+        ground.zPosition = -50
+        addChild(ground)
+    }
+
+    private func renderBackgroundGradient(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
+            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
+                ctx.cgContext.drawLinearGradient(gradient,
+                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
+            }
+        }
+    }
+
+    private func renderGround(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let grassTop = UIColor(red: 0.62, green: 0.84, blue: 0.45, alpha: 1.0)
+            let grassBottom = UIColor(red: 0.40, green: 0.66, blue: 0.30, alpha: 1.0)
+            let colors = [grassTop.cgColor, grassBottom.cgColor] as CFArray
+            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
+                ctx.cgContext.drawLinearGradient(gradient,
+                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
+            }
+        }
     }
 
     private func setupScene() {
         let sceneWidth = size.width
         let sceneHeight = size.height
 
-        // Question label at top
-        questionLabel = SKLabelNode(text: gameState.question.displayText)
-        questionLabel.fontSize = 28
-        questionLabel.fontColor = .darkGray
-        questionLabel.fontName = "PingFangSC-Medium"
-        questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - 60)
-        questionLabel.preferredMaxLayoutWidth = sceneWidth - 80
-        questionLabel.numberOfLines = 2
+        // Question pill at top
+        questionLabel = SKNode.cartoonPillLabel(
+            text: gameState.question.displayText,
+            fontSize: 26
+        )
+        questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - 80)
         addChild(questionLabel)
 
-        // Basket on the right
-        if let basketTexture = SKTexture(imageNamed: "Basket/basket") as SKTexture? {
-            basketNode = SKSpriteNode(texture: basketTexture, size: CGSize(width: 160, height: 120))
-        } else {
-            basketNode = SKSpriteNode(color: .brown.withAlphaComponent(0.3), size: CGSize(width: 160, height: 120))
-        }
-        basketNode.position = CGPoint(x: sceneWidth * 0.7, y: sceneHeight * 0.4)
+        // Tree trunk on left
+        let trunkTexture = SKTexture(image: renderTreeTrunk(size: CGSize(width: 60, height: 160)))
+        let trunk = SKSpriteNode(texture: trunkTexture, size: CGSize(width: 68, height: 168))
+        trunk.position = CGPoint(x: sceneWidth * 0.25, y: sceneHeight * 0.28)
+        addChild(trunk)
+
+        // Tree crown (big green disc)
+        treeNode = SKNode.cartoonDisc(diameter: 280, fill: CartoonSK.leaf)
+        treeNode.position = CGPoint(x: sceneWidth * 0.25, y: sceneHeight * 0.55)
+        addChild(treeNode)
+
+        // Basket on right
+        let basketTexture = SKTexture(image: renderBasket(size: CGSize(width: 180, height: 130)))
+        basketNode = SKSpriteNode(texture: basketTexture, size: CGSize(width: 188, height: 140))
+        basketNode.position = CGPoint(x: sceneWidth * 0.72, y: sceneHeight * 0.32)
         basketNode.name = "basket"
         addChild(basketNode)
 
-        basketLabel = SKLabelNode(text: "\(gameState.basketCount)")
-        basketLabel.fontSize = 36
-        basketLabel.fontColor = .darkGray
-        basketLabel.fontName = "PingFangSC-Semibold"
-        basketLabel.position = CGPoint(x: 0, y: -50)
-        basketNode.addChild(basketLabel)
-
-        // Tree area on the left
-        let treeNode = SKSpriteNode(color: .green.withAlphaComponent(0.2), size: CGSize(width: 200, height: 250))
-        treeNode.position = CGPoint(x: sceneWidth * 0.25, y: sceneHeight * 0.45)
-        addChild(treeNode)
+        basketLabel = SKLabelNode(fontNamed: CartoonSK.chineseFont())
+        basketLabel.text = "\(gameState.basketCount)"
+        basketLabel.fontSize = 48
+        basketLabel.fontColor = CartoonSK.ink
+        basketLabel.verticalAlignmentMode = .center
+        basketLabel.position = CGPoint(x: basketNode.position.x, y: basketNode.position.y + 95)
+        addChild(basketLabel)
 
         // Fruits on tree
         let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
-        for i in 0..<gameState.fruitsOnTree {
-            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 50, height: 50))
+        let fruitCount = gameState.fruitsOnTree
+        for i in 0..<fruitCount {
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: fruitSize, height: fruitSize))
             fruit.name = "fruit_\(i)"
-            let xOffset = CGFloat(i % 3 - 1) * 60
-            let yOffset = CGFloat(i / 3) * 60
+            let twoPi = Double.pi * 2
+            let slice = twoPi / Double(max(fruitCount, 1))
+            let angle: Double = Double(i) * slice + Double.pi / 6
+            let radius: CGFloat = 90
+            let offsetX = CGFloat(cos(angle)) * radius
+            let offsetY = CGFloat(sin(angle)) * radius * 0.8
             fruit.position = CGPoint(
-                x: sceneWidth * 0.25 + xOffset,
-                y: sceneHeight * 0.5 + yOffset
+                x: treeNode.position.x + offsetX,
+                y: treeNode.position.y + offsetY
             )
             addChild(fruit)
             fruitNodes.append(fruit)
+
+            // Subtle idle animation
+            let wiggle = SKAction.sequence([
+                SKAction.rotate(byAngle: 0.08, duration: 0.8),
+                SKAction.rotate(byAngle: -0.16, duration: 1.6),
+                SKAction.rotate(byAngle: 0.08, duration: 0.8)
+            ])
+            fruit.run(SKAction.repeatForever(wiggle))
         }
 
-        // Pre-existing fruits in basket (visual only) — same size and texture as tree apples
-        for i in 0..<gameState.basketCount {
-            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
-            fruit.zPosition = 1
-            let xOffset = CGFloat(i % 3 - 1) * 42
-            let yOffset = CGFloat(i / 3) * 42 - 5
-            fruit.position = CGPoint(x: xOffset, y: yOffset)
-            basketNode.addChild(fruit)
+        // Pre-existing basket fruits (visual only)
+        addApplesToBasket(gameState.basketCount, animated: false)
+    }
+
+    private func renderTreeTrunk(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            let path = UIBezierPath(roundedRect: rect, cornerRadius: 12)
+            CartoonSK.wood.setFill()
+            path.fill()
+            CartoonSK.ink.setStroke()
+            path.lineWidth = 3
+            path.stroke()
         }
     }
 
-    /// Add a new apple to the basket after one was picked (visual representation of the new total)
-    private func addApplesToBasket(_ count: Int) {
-        // Remove all existing apples first, then redraw based on count
+    private func renderBasket(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            // Basket body (trapezoid)
+            let basketBody = UIBezierPath()
+            let inset: CGFloat = 20
+            basketBody.move(to: CGPoint(x: inset, y: size.height * 0.25))
+            basketBody.addLine(to: CGPoint(x: size.width - inset, y: size.height * 0.25))
+            basketBody.addLine(to: CGPoint(x: size.width - inset - 10, y: size.height))
+            basketBody.addLine(to: CGPoint(x: inset + 10, y: size.height))
+            basketBody.close()
+            UIColor(red: 0.78, green: 0.55, blue: 0.30, alpha: 1.0).setFill()
+            basketBody.fill()
+            CartoonSK.ink.setStroke()
+            basketBody.lineWidth = 3
+            basketBody.stroke()
+
+            // Weave lines (cartoon detail)
+            for i in 1...3 {
+                let y = size.height * 0.25 + CGFloat(i) * (size.height * 0.75 / 4)
+                let weave = UIBezierPath()
+                weave.move(to: CGPoint(x: inset + 10, y: y))
+                weave.addLine(to: CGPoint(x: size.width - inset - 10, y: y))
+                CartoonSK.ink.withAlphaComponent(0.3).setStroke()
+                weave.lineWidth = 2
+                weave.stroke()
+            }
+
+            // Rim (top oval)
+            let rimRect = CGRect(x: 8, y: size.height * 0.1, width: size.width - 16, height: 34)
+            let rim = UIBezierPath(roundedRect: rimRect, cornerRadius: 17)
+            UIColor(red: 0.60, green: 0.40, blue: 0.20, alpha: 1.0).setFill()
+            rim.fill()
+            CartoonSK.ink.setStroke()
+            rim.lineWidth = 3
+            rim.stroke()
+        }
+    }
+
+    private func addApplesToBasket(_ count: Int, animated: Bool = true) {
+        // Clear existing apple sprites (keep the label via z-ordering check)
         basketNode.children.compactMap { $0 as? SKSpriteNode }.forEach { $0.removeFromParent() }
         let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
         for i in 0..<count {
-            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 48, height: 48))
             fruit.zPosition = 1
-            let xOffset = CGFloat(i % 3 - 1) * 42
-            let yOffset = CGFloat(i / 3) * 42 - 5
-            fruit.position = CGPoint(x: xOffset, y: yOffset)
-            fruit.setScale(0.1)
-            fruit.run(SKAction.scale(to: 1.0, duration: 0.15))
+            let col = i % 3 - 1
+            let row = i / 3
+            fruit.position = CGPoint(x: CGFloat(col) * 42, y: CGFloat(row) * 42 - 5)
+            if animated {
+                fruit.setScale(0.1)
+                fruit.run(SKAction.scale(to: 1.0, duration: 0.2))
+            }
             basketNode.addChild(fruit)
-        }
-    }
-
-    private func createCircleImage(color: UIColor, size: CGFloat) -> UIImage {
-        UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { ctx in
-            color.setFill()
-            ctx.cgContext.fillEllipse(in: CGRect(x: 0, y: 0, width: size, height: size))
         }
     }
 
@@ -143,6 +241,8 @@ class PickFruitScene: SKScene {
         for fruit in fruitNodes {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
+                fruit.removeAllActions()  // Stop wiggle
+                fruit.zPosition = 100
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
                 run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
@@ -172,13 +272,13 @@ class PickFruitScene: SKScene {
 
             gameState.pickFruit()
             basketLabel.text = "\(gameState.basketCount)"
-            // Update basket visuals to show the new count
             addApplesToBasket(gameState.basketCount)
 
             if gameState.isComplete {
                 handleCompletion()
             }
         } else {
+            node.zPosition = 0
             node.run(SKAction.scale(to: 1.0, duration: 0.1))
         }
     }
@@ -191,7 +291,7 @@ class PickFruitScene: SKScene {
             SKAction.run { [weak self] in
                 self?.showCelebration()
             },
-            SKAction.wait(forDuration: 1.5),
+            SKAction.wait(forDuration: 1.8),
             SKAction.run { [weak self] in
                 self?.gameDelegate?.pickFruitSceneDidComplete(
                     correct: true,
@@ -204,7 +304,6 @@ class PickFruitScene: SKScene {
 
     private func showCelebration() {
         run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
-        // Speak the equation aloud
         Task { @MainActor in
             AudioManager.shared.speakEquation(gameState.question)
         }
@@ -214,13 +313,18 @@ class PickFruitScene: SKScene {
             SKAction.scale(to: 1.0, duration: 0.2)
         ]))
 
-        let equation = SKLabelNode(text: "\(gameState.question.operand1) + \(gameState.question.operand2) = \(gameState.question.correctAnswer)")
-        equation.fontSize = 40
-        equation.fontColor = .systemGreen
-        equation.fontName = "PingFangSC-Semibold"
-        equation.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        let equation = SKNode.cartoonPillLabel(
+            text: "\(gameState.question.operand1) + \(gameState.question.operand2) = \(gameState.question.correctAnswer)",
+            fontSize: 44,
+            fill: CartoonSK.gold
+        )
+        equation.position = CGPoint(x: size.width / 2, y: size.height * 0.72)
         equation.setScale(0.1)
+        equation.zPosition = 200
         addChild(equation)
-        equation.run(SKAction.scale(to: 1.0, duration: 0.3))
+        equation.run(SKAction.sequence([
+            SKAction.scale(to: 1.15, duration: 0.3),
+            SKAction.scale(to: 1.0, duration: 0.15)
+        ]))
     }
 }

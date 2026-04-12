@@ -36,7 +36,9 @@ class ShareFruitScene: SKScene {
     private var gameState: ShareFruitGameState!
     private var fruitNodes: [SKSpriteNode] = []
     private var animalNode: SKSpriteNode!
+    private var plateNode: SKSpriteNode!
     private var plateLabel: SKLabelNode!
+    private var questionLabel: SKNode!
     private var draggingNode: SKSpriteNode?
     private var startTime: Date!
 
@@ -45,74 +47,146 @@ class ShareFruitScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor(red: 1.0, green: 0.97, blue: 0.91, alpha: 1.0)
+        backgroundColor = CartoonSK.skyTop
         startTime = Date()
+        setupBackground()
         setupScene()
     }
 
-    private func setupScene() {
-        let sceneWidth = size.width
-        let sceneHeight = size.height
+    private func setupBackground() {
+        let gradientImage = renderGradient(size: size)
+        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        bg.size = size
+        bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        bg.zPosition = -100
+        addChild(bg)
+    }
 
-        let questionLabel = SKLabelNode(text: gameState.question.displayText)
-        questionLabel.fontSize = 28
-        questionLabel.fontColor = .darkGray
-        questionLabel.fontName = "PingFangSC-Medium"
-        questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - 60)
-        questionLabel.preferredMaxLayoutWidth = sceneWidth - 80
-        questionLabel.numberOfLines = 2
+    private func renderGradient(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
+            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
+                ctx.cgContext.drawLinearGradient(gradient,
+                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
+            }
+        }
+    }
+
+    private func setupScene() {
+        let w = size.width
+        let h = size.height
+
+        questionLabel = SKNode.cartoonPillLabel(
+            text: gameState.question.displayText,
+            fontSize: 26
+        )
+        questionLabel.position = CGPoint(x: w / 2, y: h - 80)
         addChild(questionLabel)
 
-        let plateNode = SKSpriteNode(color: .white.withAlphaComponent(0.5), size: CGSize(width: 280, height: 180))
-        plateNode.position = CGPoint(x: sceneWidth / 2, y: sceneHeight * 0.55)
+        // Plate (big round disc in center-upper)
+        plateNode = SKSpriteNode(texture: SKTexture(image: renderPlate(size: CGSize(width: 360, height: 220))))
+        plateNode.size = CGSize(width: 368, height: 228)
+        plateNode.position = CGPoint(x: w / 2, y: h * 0.58)
+        plateNode.zPosition = 1
         addChild(plateNode)
 
-        plateLabel = SKLabelNode(text: "\(gameState.plateCount)")
-        plateLabel.fontSize = 32
-        plateLabel.fontColor = .darkGray
-        plateLabel.fontName = "PingFangSC-Semibold"
-        plateLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight * 0.55 - 110)
+        // Count label above plate
+        plateLabel = SKLabelNode(fontNamed: CartoonSK.chineseFont())
+        plateLabel.text = "\(gameState.plateCount)"
+        plateLabel.fontSize = 56
+        plateLabel.fontColor = CartoonSK.ink
+        plateLabel.verticalAlignmentMode = .center
+        plateLabel.position = CGPoint(x: w / 2, y: plateNode.position.y + 145)
         addChild(plateLabel)
 
+        // Fruits on plate
         let fruitTexture = SKTexture(imageNamed: "Fruits/strawberry")
         for i in 0..<gameState.plateCount {
-            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 40, height: 40))
+            let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 62, height: 62))
             fruit.name = "fruit_\(i)"
+            fruit.zPosition = 5
             let col = i % 4
             let row = i / 4
             fruit.position = CGPoint(
-                x: sceneWidth / 2 + CGFloat(col - 2) * 50 + 25,
-                y: sceneHeight * 0.55 + CGFloat(row) * 50 - 30
+                x: w / 2 + CGFloat(col - 2) * 68 + 34,
+                y: plateNode.position.y + CGFloat(row) * 58 - 10
             )
             addChild(fruit)
             fruitNodes.append(fruit)
         }
 
-        animalNode = SKSpriteNode(color: .gray.withAlphaComponent(0.3), size: CGSize(width: 100, height: 100))
-        animalNode.position = CGPoint(x: sceneWidth * 0.3, y: sceneHeight * 0.15)
+        // Animal bubble at bottom
+        animalNode = SKSpriteNode(texture: SKTexture(image: renderAnimalBubble(size: CGSize(width: 160, height: 160))))
+        animalNode.size = CGSize(width: 168, height: 168)
+        animalNode.position = CGPoint(x: w * 0.28, y: h * 0.22)
         animalNode.name = "animal"
         addChild(animalNode)
 
-        let animalLabel = SKLabelNode(text: "🐰")
-        animalLabel.fontSize = 50
-        animalLabel.position = CGPoint(x: 0, y: -15)
-        animalNode.addChild(animalLabel)
+        let animalEmoji = SKLabelNode(text: "🐰")
+        animalEmoji.fontSize = 90
+        animalEmoji.verticalAlignmentMode = .center
+        animalEmoji.horizontalAlignmentMode = .center
+        animalEmoji.position = CGPoint(x: 0, y: 0)
+        animalNode.addChild(animalEmoji)
+
+        // Animal pointer hint
+        let hint = SKNode.cartoonPillLabel(
+            text: "给小兔 \(gameState.targetGiveCount) 个",
+            fontSize: 22,
+            fill: CartoonSK.coral.lighter(by: 0.3)
+        )
+        hint.position = CGPoint(x: animalNode.position.x, y: animalNode.position.y - 110)
+        addChild(hint)
     }
 
-    private func createCircleImage(color: UIColor, size: CGFloat) -> UIImage {
-        UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { ctx in
-            color.setFill()
-            ctx.cgContext.fillEllipse(in: CGRect(x: 0, y: 0, width: size, height: size))
+    private func renderPlate(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            // Shadow
+            let shadowRect = CGRect(x: 0, y: 10, width: size.width, height: size.height - 10)
+            let shadow = UIBezierPath(ovalIn: shadowRect)
+            CartoonSK.ink.withAlphaComponent(0.4).setFill()
+            shadow.fill()
+
+            // Plate outer
+            let plateRect = CGRect(x: 0, y: 0, width: size.width, height: size.height - 10)
+            let plate = UIBezierPath(ovalIn: plateRect)
+            CartoonSK.paper.setFill()
+            plate.fill()
+            CartoonSK.ink.setStroke()
+            plate.lineWidth = 4
+            plate.stroke()
+
+            // Inner rim
+            let innerRect = plateRect.insetBy(dx: 20, dy: 20)
+            let inner = UIBezierPath(ovalIn: innerRect)
+            CartoonSK.ink.setStroke()
+            inner.lineWidth = 2
+            inner.stroke()
+        }
+    }
+
+    private func renderAnimalBubble(size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+            let path = UIBezierPath(ovalIn: rect)
+            CartoonSK.paper.setFill()
+            path.fill()
+            CartoonSK.ink.setStroke()
+            path.lineWidth = 4
+            path.stroke()
         }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-
         for fruit in fruitNodes {
             if fruit.contains(location) && fruit.parent == self {
                 draggingNode = fruit
+                fruit.zPosition = 100
                 fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
                 run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
                 break
@@ -134,14 +208,14 @@ class ShareFruitScene: SKScene {
 
         if animalFrame.intersects(fruitFrame) {
             node.run(SKAction.sequence([
-                SKAction.scale(to: 0.5, duration: 0.15),
+                SKAction.scale(to: 0.4, duration: 0.15),
                 SKAction.move(to: animalNode.position, duration: 0.15),
                 SKAction.removeFromParent()
             ]))
             run(SKAction.playSoundFileNamed("fruit_drop.wav", waitForCompletion: false))
 
             animalNode.run(SKAction.sequence([
-                SKAction.scale(to: 1.1, duration: 0.1),
+                SKAction.scale(to: 1.15, duration: 0.1),
                 SKAction.scale(to: 1.0, duration: 0.1)
             ]))
 
@@ -152,6 +226,7 @@ class ShareFruitScene: SKScene {
                 handleCompletion()
             }
         } else {
+            node.zPosition = 5
             node.run(SKAction.scale(to: 1.0, duration: 0.1))
         }
     }
@@ -159,22 +234,26 @@ class ShareFruitScene: SKScene {
     private func handleCompletion() {
         let responseTime = Date().timeIntervalSince(startTime)
         run(SKAction.playSoundFileNamed("correct.wav", waitForCompletion: false))
-        // Speak the equation aloud
         Task { @MainActor in
             AudioManager.shared.speakEquation(gameState.question)
         }
 
-        let equation = SKLabelNode(text: "\(gameState.question.operand1) - \(gameState.question.operand2) = \(gameState.question.correctAnswer)")
-        equation.fontSize = 40
-        equation.fontColor = .systemGreen
-        equation.fontName = "PingFangSC-Semibold"
-        equation.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        let equation = SKNode.cartoonPillLabel(
+            text: "\(gameState.question.operand1) - \(gameState.question.operand2) = \(gameState.question.correctAnswer)",
+            fontSize: 44,
+            fill: CartoonSK.gold
+        )
+        equation.position = CGPoint(x: size.width / 2, y: size.height * 0.72)
         equation.setScale(0.1)
+        equation.zPosition = 200
         addChild(equation)
-        equation.run(SKAction.scale(to: 1.0, duration: 0.3))
+        equation.run(SKAction.sequence([
+            SKAction.scale(to: 1.15, duration: 0.3),
+            SKAction.scale(to: 1.0, duration: 0.15)
+        ]))
 
         run(SKAction.sequence([
-            SKAction.wait(forDuration: 1.5),
+            SKAction.wait(forDuration: 2.0),
             SKAction.run { [weak self] in
                 self?.gameDelegate?.shareFruitSceneDidComplete(
                     correct: true,
