@@ -33,11 +33,12 @@ struct CheckInView: View {
                 }
 
                 if showReward {
-                    VStack(spacing: 8) {
+                    VStack(spacing: 12) {
                         Text("🌱")
-                            .font(.system(size: 60))
+                            .font(.system(size: 110))
                         Text("获得种子 ×1")
-                            .font(.title3)
+                            .font(.title)
+                            .fontWeight(.medium)
                             .foregroundStyle(.green)
                     }
                     .transition(.scale.combined(with: .opacity))
@@ -45,10 +46,10 @@ struct CheckInView: View {
 
                 Button(action: onDismiss) {
                     Text("开始今天的冒险")
-                        .font(.title3)
-                        .fontWeight(.medium)
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 16)
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .padding(.horizontal, 60)
+                        .padding(.vertical, 22)
                         .background(.green, in: Capsule())
                         .foregroundStyle(.white)
                 }

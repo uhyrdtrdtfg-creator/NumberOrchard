@@ -64,17 +64,18 @@ struct AppCoordinator: View {
     private var eyeCareOverlay: some View {
         ZStack {
             Color.black.opacity(0.7).ignoresSafeArea()
-            VStack(spacing: 20) {
-                Text("🌳").font(.system(size: 60))
-                Text("小果农休息一下吧！").font(.title).foregroundStyle(.white)
-                Text("站起来看看窗外～").font(.title3).foregroundStyle(.white.opacity(0.8))
+            VStack(spacing: 28) {
+                Text("🌳").font(.system(size: 120))
+                Text("小果农休息一下吧！").font(.system(size: 38, weight: .bold)).foregroundStyle(.white)
+                Text("站起来看看窗外～").font(.title2).foregroundStyle(.white.opacity(0.85))
                 if !eyeCareManager.hasUsedExtension {
                     Button {
                         eyeCareManager.useExtension()
                         showEyeCareAlert = false
                     } label: {
                         Text("再玩 5 分钟")
-                            .padding(.horizontal, 24).padding(.vertical, 12)
+                            .font(.title3).fontWeight(.semibold)
+                            .padding(.horizontal, 36).padding(.vertical, 18)
                             .background(.orange, in: Capsule())
                             .foregroundStyle(.white)
                     }
@@ -84,7 +85,8 @@ struct AppCoordinator: View {
                     showEyeCareAlert = false
                 } label: {
                     Text("结束今天的学习")
-                        .padding(.horizontal, 24).padding(.vertical, 12)
+                        .font(.title3).fontWeight(.semibold)
+                        .padding(.horizontal, 36).padding(.vertical, 18)
                         .background(.green, in: Capsule())
                         .foregroundStyle(.white)
                 }

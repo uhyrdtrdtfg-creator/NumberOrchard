@@ -87,10 +87,11 @@ struct AdventureSessionView: View {
                             .foregroundStyle(.green)
                     }
                     if let fruit = viewModel.newlyUnlockedFruit {
-                        VStack(spacing: 4) {
-                            Text(fruit.emoji).font(.system(size: 80))
+                        VStack(spacing: 8) {
+                            Text(fruit.emoji).font(.system(size: 140))
                             Text("解锁新水果: \(fruit.name)")
-                                .font(.headline)
+                                .font(.title)
+                                .fontWeight(.semibold)
                                 .foregroundStyle(.purple)
                         }
                     }

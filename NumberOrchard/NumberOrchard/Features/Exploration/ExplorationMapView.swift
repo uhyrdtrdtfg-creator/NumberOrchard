@@ -106,11 +106,12 @@ struct ExplorationMapView: View {
                     }
 
                     if viewModel.isUnlocked(MapCatalog.endStationId) {
-                        VStack {
+                        VStack(spacing: 8) {
                             Text("⭐🌈🏆")
-                                .font(.system(size: 60))
+                                .font(.system(size: 90))
                             Text("终点果园")
-                                .font(.headline)
+                                .font(.title2)
+                                .fontWeight(.bold)
                         }
                         .position(
                             x: 0.5 * geo.size.width,
@@ -130,25 +131,26 @@ struct StationNodeView: View {
     let isUnlocked: Bool
 
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 6) {
             ZStack {
                 Circle()
                     .fill(isUnlocked ? Color.white : Color.gray.opacity(0.3))
-                    .frame(width: 70, height: 70)
-                    .shadow(radius: 2)
+                    .frame(width: 110, height: 110)
+                    .shadow(radius: 4)
                 Text(station.emoji)
-                    .font(.system(size: 36))
+                    .font(.system(size: 60))
                     .opacity(isUnlocked ? 1.0 : 0.3)
             }
             Text(station.displayName)
-                .font(.caption)
+                .font(.callout)
+                .fontWeight(.medium)
                 .foregroundStyle(isUnlocked ? .primary : .secondary)
 
             if stars > 0 {
-                HStack(spacing: 2) {
+                HStack(spacing: 4) {
                     ForEach(0..<3) { i in
                         Image(systemName: i < stars ? "star.fill" : "star")
-                            .font(.caption2)
+                            .font(.body)
                             .foregroundStyle(i < stars ? .orange : .gray)
                     }
                 }

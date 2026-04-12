@@ -113,27 +113,29 @@ struct BattleView: View {
         VStack(spacing: 24) {
             switch viewModel.finalWinner {
             case .child:
-                Text("🎆").font(.system(size: 100))
+                Text("🎆").font(.system(size: 160))
                 Text("你比爸爸/妈妈还厉害！")
                     .font(.title)
                     .fontWeight(.bold)
             case .parent:
-                Text("🤗").font(.system(size: 100))
+                Text("🤗").font(.system(size: 160))
                 Text("差一点就赢了，下次一定！")
                     .font(.title)
                     .fontWeight(.bold)
             case .tie, nil:
-                Text("🙌").font(.system(size: 100))
+                Text("🙌").font(.system(size: 160))
                 Text("你们都很棒！")
                     .font(.title)
                     .fontWeight(.bold)
             }
             Text("最终 孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
-                .font(.title3)
+                .font(.title)
+                .fontWeight(.medium)
                 .foregroundStyle(.secondary)
             Button(action: onFinish) {
                 Text("返回主页")
-                    .padding(.horizontal, 40).padding(.vertical, 14)
+                    .font(.title2).fontWeight(.semibold)
+                    .padding(.horizontal, 50).padding(.vertical, 20)
                     .background(.green, in: Capsule())
                     .foregroundStyle(.white)
             }

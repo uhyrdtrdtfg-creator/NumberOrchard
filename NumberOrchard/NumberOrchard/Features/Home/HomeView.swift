@@ -35,7 +35,7 @@ struct HomeView: View {
                 ForEach(profile.decorations.filter { $0.isPlaced }) { deco in
                     if let item = DecorationCatalog.item(id: deco.itemId) {
                         Text(item.emoji)
-                            .font(.system(size: 44))
+                            .font(.system(size: 70))
                             .position(
                                 x: deco.positionX * geo.size.width,
                                 y: deco.positionY * geo.size.height

@@ -23,11 +23,13 @@ struct DecorateOrchardView: View {
                 .padding(.horizontal)
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
+                    HStack(spacing: 12) {
                         ForEach(DecorationCategory.allCases, id: \.self) { category in
                             Button(action: { selectedCategory = category }) {
                                 Text(category.rawValue)
-                                    .padding(.horizontal, 14).padding(.vertical, 8)
+                                    .font(.title3)
+                                    .fontWeight(.medium)
+                                    .padding(.horizontal, 22).padding(.vertical, 12)
                                     .background(selectedCategory == category ? Color.green : Color.gray.opacity(0.2), in: Capsule())
                                     .foregroundStyle(selectedCategory == category ? .white : .primary)
                             }
@@ -37,7 +39,7 @@ struct DecorateOrchardView: View {
                 }
 
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))], spacing: 16) {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], spacing: 24) {
                         ForEach(DecorationCatalog.items(in: selectedCategory)) { item in
                             decorationCard(for: item)
                         }
@@ -61,24 +63,25 @@ struct DecorateOrchardView: View {
         let stars = profile?.stars ?? 0
         let canAfford = stars >= item.cost
 
-        VStack(spacing: 6) {
-            Text(item.emoji).font(.system(size: 50))
-            Text(item.name).font(.caption)
-            Text("\(item.cost) ⭐").font(.caption2).foregroundStyle(.orange)
+        VStack(spacing: 10) {
+            Text(item.emoji).font(.system(size: 90))
+            Text(item.name).font(.title3).fontWeight(.medium)
+            Text("\(item.cost) ⭐").font(.body).foregroundStyle(.orange)
             if owned > 0 {
-                Text("已有 x\(owned)").font(.caption2).foregroundStyle(.green)
+                Text("已有 x\(owned)").font(.callout).foregroundStyle(.green)
             }
             Button(action: { purchase(item) }) {
                 Text(canAfford ? "购买" : "不够")
-                    .font(.caption)
-                    .padding(.horizontal, 12).padding(.vertical, 4)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 20).padding(.vertical, 10)
                     .background(canAfford ? Color.green : Color.gray, in: Capsule())
                     .foregroundStyle(.white)
             }
             .disabled(!canAfford)
         }
-        .padding(8)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .padding(14)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18))
     }
 
     private func purchase(_ item: DecorationItem) {
