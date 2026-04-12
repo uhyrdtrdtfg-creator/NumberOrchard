@@ -54,6 +54,11 @@ struct AdventureSessionView: View {
                     ShareFruitView(question: question) { correct, time in
                         viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
                     }
+                case .numberTrain, .balance:
+                    // Placeholder: full scenes implemented in Phase 2b/2c
+                    PickFruitView(question: question) { correct, time in
+                        viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
+                    }
                 }
             }
             .id("\(question.operand1)-\(question.operand2)-\(question.operation.rawValue)-\(viewModel.questionsCompleted)")

@@ -33,7 +33,8 @@ struct DifficultyManager: Sendable {
     }
 
     func shouldPromoteLevel(profile: LearningProfile) -> Bool {
-        guard profile.currentLevel != .bigTree else { return false }
+        // No promotion beyond harvest (max level)
+        guard profile.currentLevel != .harvest else { return false }
         guard profile.levelQuestionCount >= profile.currentLevel.minimumQuestionsForPromotion else {
             return false
         }

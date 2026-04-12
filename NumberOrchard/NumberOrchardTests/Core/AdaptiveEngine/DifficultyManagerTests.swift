@@ -64,10 +64,23 @@ import Testing
 
 @Test func noPromotionAtMaxLevel() {
     let manager = DifficultyManager()
-    var profile = LearningProfile(currentLevel: .bigTree, subDifficulty: 5)
+    var profile = LearningProfile(currentLevel: .harvest, subDifficulty: 5)
     profile.levelQuestionCount = 20
     profile.levelCorrectCount = 20
 
     let shouldPromote = manager.shouldPromoteLevel(profile: profile)
-    #expect(shouldPromote == false)
+    #expect(shouldPromote == false) // harvest is the true max (L6)
+}
+
+@Test func promotionFromBigTreeToBloom() {
+    let manager = DifficultyManager()
+    var profile = LearningProfile(currentLevel: .bigTree, subDifficulty: 3)
+    profile.levelQuestionCount = 10
+    profile.levelCorrectCount = 8  // 80% > 70% threshold
+
+    let shouldPromote = manager.shouldPromoteLevel(profile: profile)
+    #expect(shouldPromote == true)
+
+    let newProfile = manager.promote(profile: profile)
+    #expect(newProfile.currentLevel == .bloom)
 }
