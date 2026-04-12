@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00C6C802DB77AA322E48EB1B /* ShareFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */; };
+		01B969F9B736A4C8258A8AAF /* StationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */; };
 		05E9E883F9EA4E8B2FCECA6B /* fruit_pick.wav in Resources */ = {isa = PBXBuildFile; fileRef = DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */; };
 		0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */; };
 		087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */; };
@@ -26,15 +27,19 @@
 		3429843323A048D9A3E03C64 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9452C4C6F4C0CBA089556782 /* correct.wav */; };
 		35626976F61FA247618FFFCD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF67ED2B785DD79D28846F /* AudioManager.swift */; };
 		367C8CF3CDBBC9D1F677E156 /* fruit_drop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6716849999AC43443891C7D4 /* fruit_drop.wav */; };
+		3699E75146A40F203610453B /* FruitCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */; };
 		38827EF7F89FB3860E7AFE68 /* correct_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = CE486D1905D0928C0C65380F /* correct_03.aiff */; };
 		3937E775F90238CF3C265E70 /* balance.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6BF89DFC78ABA035C5FD2687 /* balance.wav */; };
+		3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5F110839E77BCA7F6E418 /* MapCatalog.swift */; };
 		3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */; };
 		3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */; };
+		403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */; };
 		4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B856776C53534150F3C9334F /* LearningProfile.swift */; };
 		44B006F9FAA275C62DD55DE8 /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = A833ED9961A1756FCB64C057 /* wrong.wav */; };
 		4B982840B4B8DC7F66D1356B /* correct_04.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FA44B685768E893018DAF829 /* correct_04.aiff */; };
 		4FAA3D31D9B0FC8C7421DCD7 /* star_collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */; };
 		5051AF2EDE3B6BB5078C9E4F /* TreeGrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */; };
+		53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */; };
 		5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */; };
 		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
@@ -64,12 +69,10 @@
 		EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83825F84A8F221612AB7A3B3 /* combo_07.aiff */; };
 		EDF37794BDD6E171477CA3D7 /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 095FAB413CFAC3FAFC822D28 /* button_click.wav */; };
 		EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F088ACB345D48F488B3658A /* ParentCenterView.swift */; };
+		F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */; };
 		F6D66B016584FA7C89D58F94 /* pick_too_many.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 840B2D04C9C6D135F31D444D /* pick_too_many.aiff */; };
 		FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */; };
 		FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */; };
-		AA000002000000000000AA01 /* StationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* StationProgress.swift */; };
-		AA000002000000000000AA02 /* CollectedDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA02 /* CollectedDecoration.swift */; };
-		AA000002000000000000AA03 /* CollectedFruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA03 /* CollectedFruit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,7 +97,8 @@
 		2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGenerator.swift; sourceTree = "<group>"; };
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43B5F110839E77BCA7F6E418 /* MapCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCatalog.swift; sourceTree = "<group>"; };
+		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionViewModel.swift; sourceTree = "<group>"; };
 		5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star_collect.wav; sourceTree = "<group>"; };
@@ -110,7 +114,7 @@
 		9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_hint.aiff; sourceTree = "<group>"; };
 		9452C4C6F4C0CBA089556782 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
 		94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthViewModel.swift; sourceTree = "<group>"; };
-		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D5BD2AA2C845AF8576A096 /* share_check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = share_check.aiff; sourceTree = "<group>"; };
 		A45D7E24218840C081D2711C /* home_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = home_bgm.wav; sourceTree = "<group>"; };
 		A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionView.swift; sourceTree = "<group>"; };
@@ -120,9 +124,11 @@
 		AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRecord.swift; sourceTree = "<group>"; };
 		B0A3499562F1D16E7DAEB485 /* welcome.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = welcome.aiff; sourceTree = "<group>"; };
 		B856776C53534150F3C9334F /* LearningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProfile.swift; sourceTree = "<group>"; };
+		B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedFruit.swift; sourceTree = "<group>"; };
 		BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateView.swift; sourceTree = "<group>"; };
 		C086DE626E123BF698F83460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
+		C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationCatalog.swift; sourceTree = "<group>"; };
 		C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitView.swift; sourceTree = "<group>"; };
 		CADC8A418254297E72F86954 /* PickFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitScene.swift; sourceTree = "<group>"; };
 		CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
@@ -135,19 +141,19 @@
 		D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyLevel.swift; sourceTree = "<group>"; };
 		D6DF7776B757FA1C3868920B /* wrong_help.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_help.aiff; sourceTree = "<group>"; };
 		D85156F893459A7FB65A2E06 /* MathQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathQuestion.swift; sourceTree = "<group>"; };
+		DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCatalog.swift; sourceTree = "<group>"; };
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
+		EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProgress.swift; sourceTree = "<group>"; };
 		F1613B849416E796B62C00C6 /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
 		F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitView.swift; sourceTree = "<group>"; };
+		F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedDecoration.swift; sourceTree = "<group>"; };
 		F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManager.swift; sourceTree = "<group>"; };
 		F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitLogicTests.swift; sourceTree = "<group>"; };
 		F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = adventure_bgm.wav; sourceTree = "<group>"; };
 		FA44B685768E893018DAF829 /* correct_04.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_04.aiff; sourceTree = "<group>"; };
 		FC5747B52D2567AB5400E83D /* idle_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = idle_hint.aiff; sourceTree = "<group>"; };
 		FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_01.aiff; sourceTree = "<group>"; };
-		AA000001000000000000AA01 /* StationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProgress.swift; sourceTree = "<group>"; };
-		AA000001000000000000AA02 /* CollectedDecoration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedDecoration.swift; sourceTree = "<group>"; };
-		AA000001000000000000AA03 /* CollectedFruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedFruit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -280,14 +286,17 @@
 			isa = PBXGroup;
 			children = (
 				C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */,
+				F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */,
+				B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */,
+				C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */,
 				D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */,
+				DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */,
 				CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */,
+				43B5F110839E77BCA7F6E418 /* MapCatalog.swift */,
 				D85156F893459A7FB65A2E06 /* MathQuestion.swift */,
 				0510E8D7639394AE33EDFCDC /* OrchardState.swift */,
 				AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */,
-				AA000001000000000000AA01 /* StationProgress.swift */,
-				AA000001000000000000AA02 /* CollectedDecoration.swift */,
-				AA000001000000000000AA03 /* CollectedFruit.swift */,
+				EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -492,7 +501,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 6E691B4C98F4E9192C2B18B8 /* Build configuration list for PBXProject "NumberOrchard" */;
 			developmentRegion = en;
@@ -575,13 +586,18 @@
 				0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */,
 				B685D99B1591521148186507 /* CheckInView.swift in Sources */,
 				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,
+				F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */,
+				53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */,
+				403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */,
 				DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */,
 				EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */,
 				09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */,
+				3699E75146A40F203610453B /* FruitCatalog.swift in Sources */,
 				0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */,
 				A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */,
 				4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */,
 				FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */,
+				3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */,
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */,
 				9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */,
@@ -594,11 +610,9 @@
 				2EDC9FAA6BA46D1E812F7CFE /* SettingsView.swift in Sources */,
 				699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */,
 				809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */,
+				01B969F9B736A4C8258A8AAF /* StationProgress.swift in Sources */,
 				5051AF2EDE3B6BB5078C9E4F /* TreeGrowthView.swift in Sources */,
 				1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */,
-				AA000002000000000000AA01 /* StationProgress.swift in Sources */,
-				AA000002000000000000AA02 /* CollectedDecoration.swift in Sources */,
-				AA000002000000000000AA03 /* CollectedFruit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,7 +697,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -769,7 +782,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
