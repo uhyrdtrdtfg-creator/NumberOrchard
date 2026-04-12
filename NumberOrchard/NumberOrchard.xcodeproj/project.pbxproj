@@ -43,6 +43,7 @@
 		4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B856776C53534150F3C9334F /* LearningProfile.swift */; };
 		44B006F9FAA275C62DD55DE8 /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = A833ED9961A1756FCB64C057 /* wrong.wav */; };
 		4B982840B4B8DC7F66D1356B /* correct_04.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FA44B685768E893018DAF829 /* correct_04.aiff */; };
+		4E39CA0413A41901DD1F2FC2 /* BattleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24733C5494D1270BF18130E /* BattleViewModel.swift */; };
 		4FAA3D31D9B0FC8C7421DCD7 /* star_collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */; };
 		5051AF2EDE3B6BB5078C9E4F /* TreeGrowthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */; };
 		53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */; };
@@ -53,6 +54,7 @@
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
 		69DA0892B5865BD4CBBE6779 /* idle_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FC5747B52D2567AB5400E83D /* idle_hint.aiff */; };
 		6C8CD1ED18BC4F15CDC91317 /* BalanceLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EC017E169CEF105B83409D /* BalanceLogicTests.swift */; };
+		6D6DC4422294A775C4EDE4B9 /* ParentBattleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */; };
 		75A384440A662CAEF58C193A /* welcome.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B0A3499562F1D16E7DAEB485 /* welcome.aiff */; };
 		7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68C640AC4EA0111CA49A97 /* DecorationPurchaseLogic.swift */; };
 		7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6DF7776B757FA1C3868920B /* wrong_help.aiff */; };
@@ -83,11 +85,13 @@
 		DAAF5FD3BC7DF062F5DE54B0 /* StationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD6A5F5D5C3939B7D13E8DA /* StationDetailView.swift */; };
 		DDE96EC2A6977A2D1632DC25 /* FruitCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E3CA872C854BD77BD67D69 /* FruitCollectionTests.swift */; };
 		DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */; };
+		E61761F7D616149824277D14 /* BattleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F148C547CD404A43F136755 /* BattleView.swift */; };
 		EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */; };
 		EC412EF08F3FFF4130F01B6D /* combo_07.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 83825F84A8F221612AB7A3B3 /* combo_07.aiff */; };
 		EDF37794BDD6E171477CA3D7 /* button_click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 095FAB413CFAC3FAFC822D28 /* button_click.wav */; };
 		EF7C71B1A8C666416FA0EA1B /* FruitCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2A32FC7C794E56045B78B9 /* FruitCollectionView.swift */; };
 		EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F088ACB345D48F488B3658A /* ParentCenterView.swift */; };
+		F27F938C8ABB798A3C0F92E7 /* ParentQuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AEABFEE87D8A3ADDA7DDC1 /* ParentQuestionGenerator.swift */; };
 		F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */; };
 		F6D66B016584FA7C89D58F94 /* pick_too_many.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 840B2D04C9C6D135F31D444D /* pick_too_many.aiff */; };
 		FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */; };
@@ -117,12 +121,15 @@
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3A6F591402A2A70FC6588965 /* ExplorationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorationMapViewModel.swift; sourceTree = "<group>"; };
+		41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentBattleTests.swift; sourceTree = "<group>"; };
 		43B5F110839E77BCA7F6E418 /* MapCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCatalog.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		4F3955C8B6279F8E0709080A /* RewardCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCalculator.swift; sourceTree = "<group>"; };
+		58AEABFEE87D8A3ADDA7DDC1 /* ParentQuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentQuestionGenerator.swift; sourceTree = "<group>"; };
 		5DFBED41867EE40C38EF9EB4 /* MapProgressionLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapProgressionLogicTests.swift; sourceTree = "<group>"; };
 		5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureSessionViewModel.swift; sourceTree = "<group>"; };
+		5F148C547CD404A43F136755 /* BattleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleView.swift; sourceTree = "<group>"; };
 		5F2A32FC7C794E56045B78B9 /* FruitCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCollectionView.swift; sourceTree = "<group>"; };
 		5F340C2BFBEBDD6E139E7FCC /* star_collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = star_collect.wav; sourceTree = "<group>"; };
 		61EC017E169CEF105B83409D /* BalanceLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceLogicTests.swift; sourceTree = "<group>"; };
@@ -155,6 +162,7 @@
 		B032E93606C6F6A5C51AE38A /* L5L6GenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L5L6GenerationTests.swift; sourceTree = "<group>"; };
 		B0A3499562F1D16E7DAEB485 /* welcome.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = welcome.aiff; sourceTree = "<group>"; };
 		B0E3CA872C854BD77BD67D69 /* FruitCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCollectionTests.swift; sourceTree = "<group>"; };
+		B24733C5494D1270BF18130E /* BattleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleViewModel.swift; sourceTree = "<group>"; };
 		B4C2612A326CC5ACD9F2B62D /* NumberTrainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainScene.swift; sourceTree = "<group>"; };
 		B53B3DE3B2195B1878609A78 /* RewardCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCalculatorTests.swift; sourceTree = "<group>"; };
 		B856776C53534150F3C9334F /* LearningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProfile.swift; sourceTree = "<group>"; };
@@ -202,6 +210,14 @@
 				D77F6335A5F7C01441E072D2 /* Sounds */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		04E429F661EF6C4DEE17F324 /* ParentChild */ = {
+			isa = PBXGroup;
+			children = (
+				41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */,
+			);
+			path = ParentChild;
 			sourceTree = "<group>";
 		};
 		091F9E241BD46B2D6D08092C /* Products */ = {
@@ -326,6 +342,16 @@
 			path = DailyFlow;
 			sourceTree = "<group>";
 		};
+		53941F22D2FC489773F9E19A /* ParentChild */ = {
+			isa = PBXGroup;
+			children = (
+				5F148C547CD404A43F136755 /* BattleView.swift */,
+				B24733C5494D1270BF18130E /* BattleViewModel.swift */,
+				58AEABFEE87D8A3ADDA7DDC1 /* ParentQuestionGenerator.swift */,
+			);
+			path = ParentChild;
+			sourceTree = "<group>";
+		};
 		5541ABB2040346C3C03B80E6 /* DailyFlow */ = {
 			isa = PBXGroup;
 			children = (
@@ -437,6 +463,7 @@
 				495F0B04FE2A72EB1D9A516C /* Home */,
 				CC4E86C7B1E6BF8104E301B8 /* Orchard */,
 				37B3FF3B0E15EBD4C1D2341C /* ParentCenter */,
+				53941F22D2FC489773F9E19A /* ParentChild */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -556,6 +583,7 @@
 				BE89C3DAEA39988A4F184B56 /* Adventure */,
 				5541ABB2040346C3C03B80E6 /* DailyFlow */,
 				6653F7663003C8AAB8CD2AC2 /* Orchard */,
+				04E429F661EF6C4DEE17F324 /* ParentChild */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -696,6 +724,7 @@
 				556792948EBD7FB6269FC285 /* MapProgressionLogicTests.swift in Sources */,
 				D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */,
 				8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */,
+				6D6DC4422294A775C4EDE4B9 /* ParentBattleTests.swift in Sources */,
 				3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */,
 				65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */,
 				5838DE7F03C5C7037EF0C7D1 /* RewardCalculatorTests.swift in Sources */,
@@ -714,6 +743,8 @@
 				D99FBEC5776E93A193F488B6 /* BalanceScene.swift in Sources */,
 				1AB00DEF60A8CAB67510C272 /* BalanceView.swift in Sources */,
 				0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */,
+				E61761F7D616149824277D14 /* BattleView.swift in Sources */,
+				4E39CA0413A41901DD1F2FC2 /* BattleViewModel.swift in Sources */,
 				B685D99B1591521148186507 /* CheckInView.swift in Sources */,
 				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,
 				F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */,
@@ -740,6 +771,7 @@
 				845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */,
 				9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */,
 				EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */,
+				F27F938C8ABB798A3C0F92E7 /* ParentQuestionGenerator.swift in Sources */,
 				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
 				3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */,
 				CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */,
