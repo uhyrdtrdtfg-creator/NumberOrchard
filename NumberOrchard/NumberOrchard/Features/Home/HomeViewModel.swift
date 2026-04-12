@@ -2,11 +2,17 @@ import SwiftUI
 import SwiftData
 import Observation
 
+enum ParentGateIntent {
+    case settings
+    case battle
+}
+
 @Observable
 @MainActor
 final class HomeViewModel {
     var showCheckIn = false
     var showParentalGate = false
+    var parentGateIntent: ParentGateIntent = .settings
     var profile: ChildProfile?
 
     func checkDailyLogin(profile: ChildProfile) {

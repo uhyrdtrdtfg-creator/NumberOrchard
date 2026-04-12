@@ -21,8 +21,12 @@ struct AppCoordinator: View {
                 switch currentScreen {
                 case .home:
                     HomeView(
-                        onStartAdventure: { startAdventure() },
-                        onOpenParentCenter: { currentScreen = .parentCenter }
+                        onStartAdventure: { },
+                        onOpenParentCenter: { currentScreen = .parentCenter },
+                        onOpenMap: { },
+                        onOpenCollection: { },
+                        onOpenDecorate: { },
+                        onOpenBattle: { }
                     )
                 case .adventure:
                     AdventureSessionView(

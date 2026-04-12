@@ -4,6 +4,10 @@ import SwiftData
 struct HomeView: View {
     let onStartAdventure: () -> Void
     let onOpenParentCenter: () -> Void
+    let onOpenMap: () -> Void
+    let onOpenCollection: () -> Void
+    let onOpenDecorate: () -> Void
+    let onOpenBattle: () -> Void
 
     @Environment(\.modelContext) private var modelContext
     @Query private var profiles: [ChildProfile]
@@ -19,15 +23,31 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [Color(red: 0.85, green: 0.95, blue: 0.85), Color(red: 1.0, green: 0.97, blue: 0.91)],
-                startPoint: .top,
-                endPoint: .bottom
+                colors: [
+                    Color(red: 0.70, green: 0.88, blue: 0.98),
+                    Color(red: 0.85, green: 0.95, blue: 0.75),
+                ],
+                startPoint: .top, endPoint: .bottom
             )
+            .ignoresSafeArea()
+
+            GeometryReader { geo in
+                ForEach(profile.decorations.filter { $0.isPlaced }) { deco in
+                    if let item = DecorationCatalog.item(id: deco.itemId) {
+                        Text(item.emoji)
+                            .font(.system(size: 44))
+                            .position(
+                                x: deco.positionX * geo.size.width,
+                                y: deco.positionY * geo.size.height
+                            )
+                    }
+                }
+            }
             .ignoresSafeArea()
 
             VStack {
                 HStack {
-                    HStack(spacing: 16) {
+                    HStack(spacing: 12) {
                         Label("\(profile.stars)", systemImage: "star.fill")
                             .foregroundStyle(.orange)
                         Label("\(profile.seeds)", systemImage: "leaf.fill")
@@ -41,7 +61,7 @@ struct HomeView: View {
                         viewModel.showParentalGate = true
                     } label: {
                         Image(systemName: "gearshape")
-                            .font(.title3)
+                            .font(.title2)
                             .foregroundStyle(.gray)
                     }
                 }
@@ -50,41 +70,29 @@ struct HomeView: View {
 
                 Spacer()
 
-                VStack(spacing: 12) {
-                    Text(viewModel.treeStageEmoji)
-                        .font(.system(size: 100))
-
-                    ProgressView(value: viewModel.treeProgress)
-                        .frame(width: 200)
-                        .tint(.green)
-
-                    Text(profile.difficultyLevel.displayName)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                VStack(spacing: 10) {
+                    Text(viewModel.treeStageEmoji).font(.system(size: 90))
+                    ProgressView(value: viewModel.treeProgress).frame(width: 180).tint(.green)
+                    Text(profile.difficultyLevel.displayName).font(.caption).foregroundStyle(.secondary)
                 }
 
                 Spacer()
 
-                Button(action: onStartAdventure) {
-                    HStack {
-                        Image(systemName: "play.fill")
-                        Text("今日冒险")
+                HStack(spacing: 20) {
+                    featureButton(emoji: "🗺️", label: "探险", color: .green) { onOpenMap() }
+                    featureButton(emoji: "🎨", label: "装饰", color: .purple) { onOpenDecorate() }
+                    featureButton(emoji: "🍎", label: "图鉴", color: .red) { onOpenCollection() }
+                    featureButton(emoji: "👨‍👦", label: "对战", color: .blue) {
+                        viewModel.showParentalGate = true
+                        viewModel.parentGateIntent = .battle
                     }
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(.horizontal, 50)
-                    .padding(.vertical, 20)
-                    .background(.green, in: Capsule())
-                    .foregroundStyle(.white)
-                    .shadow(color: .green.opacity(0.3), radius: 10, y: 5)
                 }
-
-                Spacer().frame(height: 60)
+                .padding(.bottom, 40)
             }
         }
         .onAppear {
-            AudioManager.shared.playMusic("home_bgm.wav")
             viewModel.checkDailyLogin(profile: profile)
+            AudioManager.shared.playMusic("home_bgm.wav")
         }
         .fullScreenCover(isPresented: $viewModel.showCheckIn) {
             CheckInView(
@@ -96,12 +104,30 @@ struct HomeView: View {
             ParentalGateView(
                 onSuccess: {
                     viewModel.showParentalGate = false
-                    onOpenParentCenter()
+                    switch viewModel.parentGateIntent {
+                    case .settings: onOpenParentCenter()
+                    case .battle: onOpenBattle()
+                    }
+                    viewModel.parentGateIntent = .settings
                 },
                 onCancel: {
                     viewModel.showParentalGate = false
+                    viewModel.parentGateIntent = .settings
                 }
             )
+        }
+    }
+
+    private func featureButton(emoji: String, label: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 4) {
+                Text(emoji).font(.system(size: 40))
+                Text(label).font(.footnote).fontWeight(.medium)
+            }
+            .frame(width: 80, height: 80)
+            .background(color.opacity(0.2), in: RoundedRectangle(cornerRadius: 16))
+            .foregroundStyle(.primary)
+            .shadow(color: color.opacity(0.3), radius: 6, y: 3)
         }
     }
 }
