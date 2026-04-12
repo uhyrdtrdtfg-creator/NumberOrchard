@@ -128,44 +128,53 @@ struct CartoonButton<Content: View>: View {
     var tint: Color
     var shadowOffset: CGFloat = 6
     var cornerRadius: CGFloat = 28
+    var accessibilityLabel: String? = nil
+    var accessibilityHint: String? = nil
     var action: () -> Void
     let content: () -> Content
 
     @State private var pressed = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(
         tint: Color,
         shadowOffset: CGFloat = 6,
         cornerRadius: CGFloat = 28,
+        accessibilityLabel: String? = nil,
+        accessibilityHint: String? = nil,
         action: @escaping () -> Void,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.tint = tint
         self.shadowOffset = shadowOffset
         self.cornerRadius = cornerRadius
+        self.accessibilityLabel = accessibilityLabel
+        self.accessibilityHint = accessibilityHint
         self.action = action
         self.content = content
     }
 
     var body: some View {
         Button(action: {
-            withAnimation(.spring(response: 0.18, dampingFraction: 0.55)) {
+            if reduceMotion {
+                action()
+                return
+            }
+            withAnimation(.spring(response: 0.22, dampingFraction: 0.55)) {
                 pressed = true
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-                withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                withAnimation(.spring(response: 0.28, dampingFraction: 0.7)) {
                     pressed = false
                 }
                 action()
             }
         }) {
             ZStack {
-                // Shadow layer (hard offset, no blur — sticker style)
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(tint.opacity(0.85).mix(with: CartoonColor.ink, by: 0.4))
                     .offset(y: shadowOffset)
 
-                // Button surface
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(
                         LinearGradient(
@@ -181,8 +190,11 @@ struct CartoonButton<Content: View>: View {
                 content()
             }
             .offset(y: pressed ? shadowOffset : 0)
+            .contentShape(RoundedRectangle(cornerRadius: cornerRadius))
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel ?? "")
+        .accessibilityHint(accessibilityHint ?? "")
     }
 }
 
@@ -207,15 +219,18 @@ struct CartoonHUD: View {
     let icon: String
     let value: String
     let tint: Color
+    var accessibilityLabel: String? = nil
 
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 24, weight: .black))
                 .foregroundStyle(tint)
+                .accessibilityHidden(true)
             Text(value)
                 .font(.system(size: 30, weight: .black, design: .rounded))
                 .foregroundStyle(CartoonColor.text)
+                .minimumScaleFactor(0.7)
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 12)
@@ -226,6 +241,8 @@ struct CartoonHUD: View {
                 Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
             }
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(accessibilityLabel ?? "\(value)"))
     }
 }
 

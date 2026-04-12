@@ -11,18 +11,19 @@ struct ShareFruitView: View {
     var body: some View {
         GeometryReader { geo in
             if let scene {
-                SpriteView(scene: scene)
-                    .ignoresSafeArea()
+                SpriteView(scene: scene).ignoresSafeArea()
+            } else {
+                Color.clear
+                    .onAppear {
+                        let newScene = ShareFruitScene(size: geo.size)
+                        newScene.scaleMode = .resizeFill
+                        newScene.configure(with: question)
+                        let newCoordinator = ShareFruitCoordinator(onComplete: onComplete)
+                        newScene.gameDelegate = newCoordinator
+                        coordinator = newCoordinator
+                        scene = newScene
+                    }
             }
-        }
-        .onAppear {
-            let newScene = ShareFruitScene(size: CGSize(width: 1194, height: 834))
-            newScene.scaleMode = .aspectFill
-            newScene.configure(with: question)
-            let newCoordinator = ShareFruitCoordinator(onComplete: onComplete)
-            newScene.gameDelegate = newCoordinator
-            coordinator = newCoordinator
-            scene = newScene
         }
     }
 }

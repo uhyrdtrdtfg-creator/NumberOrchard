@@ -56,14 +56,17 @@ struct DecorateOrchardView: View {
     private var backButton: some View {
         Button(action: onDismiss) {
             ZStack {
-                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
-                Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
-                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
+                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 68, height: 68).offset(y: 4)
+                Circle().fill(CartoonColor.paper).frame(width: 68, height: 68)
+                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 68, height: 68)
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 26, weight: .black))
+                    .font(.system(size: 28, weight: .black))
                     .foregroundStyle(CartoonColor.text)
             }
+            .frame(width: 72, height: 72)
+            .contentShape(Circle())
         }
+        .accessibilityLabel("返回")
     }
 
     private func categoryTab(_ category: DecorationCategory) -> some View {
@@ -74,13 +77,13 @@ struct DecorateOrchardView: View {
             }
         }) {
             ZStack {
-                Capsule().fill(CartoonColor.ink.opacity(0.9)).frame(height: 48).offset(y: 4)
+                Capsule().fill(CartoonColor.ink.opacity(0.9)).frame(height: 56).offset(y: 4)
                 Capsule()
                     .fill(selected ? CartoonColor.coral : CartoonColor.paper)
-                    .frame(height: 48)
-                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(height: 48)
+                    .frame(height: 56)
+                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(height: 56)
                 Text(category.rawValue)
-                    .font(.system(size: 20, weight: .black, design: .rounded))
+                    .font(.system(size: 22, weight: .black, design: .rounded))
                     .foregroundStyle(selected ? .white : CartoonColor.text)
                     .padding(.horizontal, 24)
             }
@@ -88,6 +91,8 @@ struct DecorateOrchardView: View {
             .offset(y: selected ? 0 : -2)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(category.rawValue)
+        .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)
     }
 
     @ViewBuilder
@@ -114,23 +119,27 @@ struct DecorateOrchardView: View {
             }
 
             Text(item.name)
-                .font(.system(size: 20, weight: .black, design: .rounded))
+                .font(.system(size: 22, weight: .black, design: .rounded))
                 .foregroundStyle(CartoonColor.text)
+                .minimumScaleFactor(0.8)
+                .lineLimit(1)
 
             CartoonButton(
                 tint: canAfford ? CartoonColor.gold : CartoonColor.ink.opacity(0.3),
                 shadowOffset: 4,
-                cornerRadius: 20,
+                cornerRadius: 22,
+                accessibilityLabel: "购买 \(item.name),价格 \(item.cost) 颗星星",
+                accessibilityHint: canAfford ? "双击购买" : "星星不够",
                 action: { purchase(item) }
             ) {
-                HStack(spacing: 6) {
-                    Image(systemName: "star.fill").font(.system(size: 18, weight: .black))
+                HStack(spacing: 8) {
+                    Image(systemName: "star.fill").font(.system(size: 20, weight: .black))
                     Text("\(item.cost)")
-                        .font(.system(size: 22, weight: .black, design: .rounded))
+                        .font(.system(size: 24, weight: .black, design: .rounded))
                 }
                 .foregroundStyle(.white)
                 .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
-                .frame(width: 110, height: 50)
+                .frame(width: 130, height: 58)
             }
             .disabled(!canAfford)
         }

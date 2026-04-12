@@ -9,19 +9,21 @@ struct BalanceView: View {
     @State private var coordinator: BalanceCoordinator?
 
     var body: some View {
-        GeometryReader { _ in
+        GeometryReader { geo in
             if let scene {
                 SpriteView(scene: scene).ignoresSafeArea()
+            } else {
+                Color.clear
+                    .onAppear {
+                        let newScene = BalanceScene(size: geo.size)
+                        newScene.scaleMode = .resizeFill
+                        newScene.configure(with: question)
+                        let coord = BalanceCoordinator(onComplete: onComplete)
+                        newScene.gameDelegate = coord
+                        coordinator = coord
+                        scene = newScene
+                    }
             }
-        }
-        .onAppear {
-            let newScene = BalanceScene(size: CGSize(width: 1194, height: 834))
-            newScene.scaleMode = .aspectFill
-            newScene.configure(with: question)
-            let coord = BalanceCoordinator(onComplete: onComplete)
-            newScene.gameDelegate = coord
-            coordinator = coord
-            scene = newScene
         }
     }
 }

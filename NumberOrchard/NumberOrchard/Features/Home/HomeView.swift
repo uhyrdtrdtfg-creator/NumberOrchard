@@ -10,6 +10,7 @@ struct HomeView: View {
     let onOpenBattle: () -> Void
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query private var profiles: [ChildProfile]
     @State private var viewModel = HomeViewModel()
     @State private var treeBreathing = false
@@ -30,8 +31,8 @@ struct HomeView: View {
             GeometryReader { geo in
                 Text("🌞")
                     .font(.system(size: 110))
-                    .rotationEffect(.degrees(sunRotating ? 12 : -12))
-                    .animation(.easeInOut(duration: 4).repeatForever(autoreverses: true), value: sunRotating)
+                    .rotationEffect(.degrees(reduceMotion ? 0 : (sunRotating ? 12 : -12)))
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: sunRotating)
                     .position(x: geo.size.width * 0.88, y: geo.size.height * 0.14)
 
                 Text("☁️")
@@ -43,6 +44,7 @@ struct HomeView: View {
                     .position(x: geo.size.width * 0.55, y: geo.size.height * 0.12)
             }
             .allowsHitTesting(false)
+            .accessibilityHidden(true)
 
             CartoonGround(height: 280)
 
@@ -67,8 +69,8 @@ struct HomeView: View {
             VStack(spacing: 0) {
                 // Top HUD
                 HStack(spacing: 12) {
-                    CartoonHUD(icon: "star.fill", value: "\(profile.stars)", tint: CartoonColor.gold)
-                    CartoonHUD(icon: "leaf.fill", value: "\(profile.seeds)", tint: CartoonColor.leaf)
+                    CartoonHUD(icon: "star.fill", value: "\(profile.stars)", tint: CartoonColor.gold, accessibilityLabel: "星星 \(profile.stars)")
+                    CartoonHUD(icon: "leaf.fill", value: "\(profile.seeds)", tint: CartoonColor.leaf, accessibilityLabel: "种子 \(profile.seeds)")
                     Spacer()
                     Button {
                         viewModel.showParentalGate = true
@@ -76,19 +78,23 @@ struct HomeView: View {
                         ZStack {
                             Circle()
                                 .fill(CartoonColor.ink.opacity(0.9))
-                                .frame(width: 60, height: 60)
+                                .frame(width: 68, height: 68)
                                 .offset(y: 4)
                             Circle()
                                 .fill(CartoonColor.paper)
-                                .frame(width: 60, height: 60)
+                                .frame(width: 68, height: 68)
                             Circle()
                                 .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
-                                .frame(width: 60, height: 60)
+                                .frame(width: 68, height: 68)
                             Image(systemName: "gearshape.fill")
-                                .font(.system(size: 28, weight: .black))
+                                .font(.system(size: 30, weight: .black))
                                 .foregroundStyle(CartoonColor.text)
                         }
+                        .frame(width: 72, height: 72)
+                        .contentShape(Circle())
                     }
+                    .accessibilityLabel("家长中心")
+                    .accessibilityHint("打开家长设置")
                 }
                 .padding(.horizontal, 36)
                 .padding(.top, 20)
@@ -100,8 +106,9 @@ struct HomeView: View {
                     Text(viewModel.treeStageEmoji)
                         .font(.system(size: 160))
                         .shadow(color: CartoonColor.ink.opacity(0.3), radius: 0, x: 0, y: 6)
-                        .scaleEffect(treeBreathing ? 1.05 : 1.0)
-                        .animation(.easeInOut(duration: 2.6).repeatForever(autoreverses: true), value: treeBreathing)
+                        .scaleEffect(reduceMotion ? 1.0 : (treeBreathing ? 1.05 : 1.0))
+                        .animation(reduceMotion ? nil : .easeInOut(duration: 2.6).repeatForever(autoreverses: true), value: treeBreathing)
+                        .accessibilityHidden(true)
 
                     TreeProgressBar(progress: viewModel.treeProgress, level: profile.difficultyLevel.displayName)
                 }
@@ -110,7 +117,7 @@ struct HomeView: View {
                 Spacer().frame(height: 40)
 
                 // Feature buttons
-                HStack(spacing: 24) {
+                HStack(spacing: 20) {
                     CartoonFeatureButton(emoji: "🗺️", label: "探险", tint: CartoonColor.gold, bobDelay: 0.0) {
                         onOpenMap()
                     }
@@ -125,6 +132,7 @@ struct HomeView: View {
                         viewModel.parentGateIntent = .battle
                     }
                 }
+                .padding(.horizontal, 16)
                 .padding(.bottom, 50)
             }
         }
@@ -169,21 +177,27 @@ private struct CartoonFeatureButton: View {
     let action: () -> Void
 
     @State private var bobbing = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo: .title) private var buttonSize: CGFloat = 150
+    @ScaledMetric(relativeTo: .title) private var emojiSize: CGFloat = 62
+    @ScaledMetric(relativeTo: .title) private var labelSize: CGFloat = 26
 
     var body: some View {
-        CartoonButton(tint: tint, action: action) {
+        CartoonButton(tint: tint, accessibilityLabel: label, action: action) {
             VStack(spacing: 6) {
-                Text(emoji).font(.system(size: 62))
+                Text(emoji).font(.system(size: emojiSize))
                 Text(label)
-                    .font(.system(size: 24, weight: .black, design: .rounded))
+                    .font(.system(size: labelSize, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                     .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                    .minimumScaleFactor(0.7)
+                    .lineLimit(1)
             }
-            .frame(width: 150, height: 150)
+            .frame(width: buttonSize, height: buttonSize)
         }
-        .offset(y: bobbing ? -4 : 2)
-        .rotationEffect(.degrees(bobbing ? 1.5 : -1.5))
-        .animation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true).delay(bobDelay), value: bobbing)
+        .offset(y: reduceMotion ? 0 : (bobbing ? -4 : 2))
+        .rotationEffect(.degrees(reduceMotion ? 0 : (bobbing ? 1.5 : -1.5)))
+        .animation(reduceMotion ? nil : .easeInOut(duration: 1.8).repeatForever(autoreverses: true).delay(bobDelay), value: bobbing)
         .onAppear { bobbing = true }
     }
 }
@@ -243,17 +257,20 @@ private struct WigglingDecoration: View {
     let phaseOffset: Double
 
     @State private var wiggling = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Text(emoji)
             .font(.system(size: 56))
-            .rotationEffect(.degrees(wiggling ? 5 : -5))
+            .rotationEffect(.degrees(reduceMotion ? 0 : (wiggling ? 5 : -5)))
             .animation(
-                .easeInOut(duration: 2.4 + phaseOffset.truncatingRemainder(dividingBy: 1.0))
+                reduceMotion ? nil :
+                    .easeInOut(duration: 2.4 + phaseOffset.truncatingRemainder(dividingBy: 1.0))
                     .repeatForever(autoreverses: true)
                     .delay(phaseOffset),
                 value: wiggling
             )
             .onAppear { wiggling = true }
+            .accessibilityHidden(true)
     }
 }

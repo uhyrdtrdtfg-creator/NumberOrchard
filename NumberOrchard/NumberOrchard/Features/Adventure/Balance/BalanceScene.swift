@@ -178,14 +178,15 @@ class BalanceScene: SKScene {
         poolLabel.position = CGPoint(x: w/2, y: poolBG.position.y + poolHeight / 2 - 8)
         addChild(poolLabel)
 
-        // Pool blocks (8 chunky cartoon blocks)
-        let spacing: CGFloat = 78
-        let totalCount = 8
-        let totalPoolWidth = CGFloat(totalCount - 1) * spacing
-        let startX = w/2 - totalPoolWidth / 2
+        // Pool blocks: enough to answer the question with a small buffer (so kid always has extras).
+        // Evenly distributed inside the tray so none get clipped.
+        let totalCount = max(gameState.targetRightAdd + 2, 4)
+        let usableWidth = poolWidth - 60  // inner margin
+        let blockStepX: CGFloat = totalCount > 1 ? usableWidth / CGFloat(totalCount - 1) : 0
+        let firstX = poolBG.position.x - usableWidth / 2
         for i in 0..<totalCount {
             let block = SKNode.cartoonBlock(size: blockSize, fill: CartoonSK.coral)
-            block.position = CGPoint(x: startX + CGFloat(i) * spacing, y: 90)
+            block.position = CGPoint(x: firstX + CGFloat(i) * blockStepX, y: poolBG.position.y - 10)
             block.name = "pool_\(i)"
             addChild(block)
             poolBlocks.append(block)

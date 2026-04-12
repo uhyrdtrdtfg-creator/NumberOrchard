@@ -101,7 +101,7 @@ class PickFruitScene: SKScene {
         // Question pill at top
         questionLabel = SKNode.cartoonPillLabel(
             text: gameState.question.displayText,
-            fontSize: 26
+            fontSize: 34
         )
         questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - 80)
         addChild(questionLabel)
