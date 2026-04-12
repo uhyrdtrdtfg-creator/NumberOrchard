@@ -10,6 +10,9 @@ struct ExplorationMapView: View {
     @State private var viewModel: ExplorationMapViewModel?
     @State private var selectedStation: Station?
 
+    /// Multiplier for scrollable vertical space. Larger = more spacing between stations.
+    private let heightMultiplier: CGFloat = 3.2
+
     var body: some View {
         ZStack {
             CartoonSkyBackground()
@@ -18,20 +21,14 @@ struct ExplorationMapView: View {
                 mapContent(viewModel: viewModel)
             }
 
+            // Top bar (floats above scroll)
             VStack {
                 HStack(spacing: 12) {
                     Button(action: onDismiss) {
                         ZStack {
-                            Circle()
-                                .fill(CartoonColor.ink.opacity(0.9))
-                                .frame(width: 60, height: 60)
-                                .offset(y: 4)
-                            Circle()
-                                .fill(CartoonColor.paper)
-                                .frame(width: 60, height: 60)
-                            Circle()
-                                .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
-                                .frame(width: 60, height: 60)
+                            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
+                            Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
+                            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
                             Image(systemName: "chevron.left")
                                 .font(.system(size: 26, weight: .black))
                                 .foregroundStyle(CartoonColor.text)
@@ -45,6 +42,7 @@ struct ExplorationMapView: View {
                 .padding(.top, 20)
                 Spacer()
             }
+            .allowsHitTesting(true)
         }
         .onAppear {
             viewModel = ExplorationMapViewModel(profile: profile)
@@ -69,8 +67,11 @@ struct ExplorationMapView: View {
 
     private func mapContent(viewModel: ExplorationMapViewModel) -> some View {
         GeometryReader { geo in
-            ScrollView([.vertical]) {
+            let contentHeight = geo.size.height * heightMultiplier
+
+            ScrollView([.vertical], showsIndicators: false) {
                 ZStack {
+                    // Paths
                     Canvas { ctx, size in
                         for station in MapCatalog.stations {
                             for unlockId in station.unlocks where unlockId != "end" {
@@ -79,21 +80,46 @@ struct ExplorationMapView: View {
                                     path.move(to: CGPoint(x: station.mapX * size.width, y: station.mapY * size.height))
                                     path.addLine(to: CGPoint(x: target.mapX * size.width, y: target.mapY * size.height))
                                     let completed = viewModel.completedStationIds.contains(station.id)
-                                    // Outer stroke (darker border for contrast)
+                                    // Outer ink outline
                                     ctx.stroke(path,
-                                              with: .color(completed ? .green.opacity(0.9) : .brown.opacity(0.5)),
-                                              style: StrokeStyle(lineWidth: 28, lineCap: .round, lineJoin: .round))
-                                    // Inner stroke (lighter fill on top)
+                                              with: .color(CartoonColor.ink.opacity(0.7)),
+                                              style: StrokeStyle(lineWidth: 34, lineCap: .round, lineJoin: .round))
+                                    // Colored fill
                                     ctx.stroke(path,
-                                              with: .color(completed ? .yellow.opacity(0.8) : .white.opacity(0.7)),
-                                              style: StrokeStyle(lineWidth: 18, lineCap: .round, lineJoin: .round,
-                                                                 dash: completed ? [] : [12, 10]))
+                                              with: .color(completed
+                                                           ? CartoonColor.gold
+                                                           : Color(red: 0.88, green: 0.80, blue: 0.62)),
+                                              style: StrokeStyle(lineWidth: 26, lineCap: .round, lineJoin: .round))
+                                    // Highlight band (only on completed)
+                                    if completed {
+                                        ctx.stroke(path,
+                                                  with: .color(Color.white.opacity(0.4)),
+                                                  style: StrokeStyle(lineWidth: 8, lineCap: .round, lineJoin: .round,
+                                                                     dash: [4, 14]))
+                                    } else {
+                                        ctx.stroke(path,
+                                                  with: .color(Color.white.opacity(0.5)),
+                                                  style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round,
+                                                                     dash: [10, 12]))
+                                    }
                                 }
                             }
                         }
                     }
-                    .frame(width: geo.size.width, height: geo.size.height * 2)
+                    .frame(width: geo.size.width, height: contentHeight)
 
+                    // End station marker at top
+                    if viewModel.isUnlocked(MapCatalog.endStationId) {
+                        endStationMarker
+                            .position(x: geo.size.width / 2, y: 80)
+                    } else {
+                        endStationMarker
+                            .grayscale(1.0)
+                            .opacity(0.4)
+                            .position(x: geo.size.width / 2, y: 80)
+                    }
+
+                    // Station nodes
                     ForEach(MapCatalog.stations) { station in
                         StationNodeView(
                             station: station,
@@ -102,29 +128,33 @@ struct ExplorationMapView: View {
                         )
                         .position(
                             x: station.mapX * geo.size.width,
-                            y: station.mapY * (geo.size.height * 2)
+                            y: station.mapY * contentHeight
                         )
                         .onTapGesture {
                             selectedStation = station
                         }
                     }
-
-                    if viewModel.isUnlocked(MapCatalog.endStationId) {
-                        VStack(spacing: 8) {
-                            Text("⭐🌈🏆")
-                                .font(.system(size: 90))
-                            Text("终点果园")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                        }
-                        .position(
-                            x: 0.5 * geo.size.width,
-                            y: 0.01 * (geo.size.height * 2)
-                        )
-                    }
                 }
-                .frame(width: geo.size.width, height: geo.size.height * 2)
+                .frame(width: geo.size.width, height: contentHeight)
+                .padding(.top, 100) // Space for top bar
             }
+        }
+    }
+
+    private var endStationMarker: some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 120, height: 120).offset(y: 5)
+                Circle().fill(CartoonColor.gold).frame(width: 120, height: 120)
+                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4).frame(width: 120, height: 120)
+                Text("🏆").font(.system(size: 60))
+            }
+            Text("终点果园")
+                .font(.system(size: 20, weight: .black, design: .rounded))
+                .foregroundStyle(CartoonColor.text)
+                .padding(.horizontal, 14).padding(.vertical, 5)
+                .background(Capsule().fill(CartoonColor.paper))
+                .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3))
         }
     }
 }
@@ -137,59 +167,91 @@ struct StationNodeView: View {
     @State private var pulsing = false
 
     private var isCTA: Bool { isUnlocked && stars == 0 }
+    private let size: CGFloat = 100
+
+    /// Color of the station disc surface based on region (L1-L6).
+    private var regionColor: Color {
+        switch station.level {
+        case .seed:      return Color(red: 0.95, green: 0.85, blue: 0.55)  // pale yellow
+        case .sprout:    return Color(red: 0.80, green: 0.92, blue: 0.55)  // lime
+        case .smallTree: return Color(red: 0.70, green: 0.90, blue: 0.80)  // mint
+        case .bigTree:   return Color(red: 0.70, green: 0.85, blue: 1.00)  // sky
+        case .bloom:     return Color(red: 0.90, green: 0.72, blue: 1.00)  // lavender
+        case .harvest:   return Color(red: 1.00, green: 0.70, blue: 0.70)  // coral
+        }
+    }
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             ZStack {
+                // Pulsing glow ring for current-available
                 if isCTA {
                     Circle()
                         .stroke(CartoonColor.gold, lineWidth: 8)
-                        .frame(width: 140, height: 140)
+                        .frame(width: size + 22, height: size + 22)
                         .scaleEffect(pulsing ? 1.2 : 1.0)
                         .opacity(pulsing ? 0.0 : 0.9)
                         .animation(.easeOut(duration: 1.4).repeatForever(autoreverses: false), value: pulsing)
                 }
 
-                // Shadow circle
+                // Shadow (offset, fully opaque ink)
                 Circle()
-                    .fill(CartoonColor.ink.opacity(0.9))
-                    .frame(width: 118, height: 118)
+                    .fill(CartoonColor.ink.opacity(0.85))
+                    .frame(width: size, height: size)
                     .offset(y: 5)
 
-                // Surface circle
+                // Surface (SOLID color — no transparency so shadow doesn't bleed)
                 Circle()
-                    .fill(isUnlocked ? CartoonColor.paper : Color.gray.opacity(0.4))
-                    .frame(width: 118, height: 118)
+                    .fill(isUnlocked ? regionColor : Color(red: 0.82, green: 0.76, blue: 0.68))
+                    .frame(width: size, height: size)
 
-                // Ink outline
+                // Outline
                 Circle()
                     .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4)
-                    .frame(width: 118, height: 118)
+                    .frame(width: size, height: size)
 
+                // Emoji
                 Text(station.emoji)
-                    .font(.system(size: 62))
-                    .opacity(isUnlocked ? 1.0 : 0.3)
-                    .scaleEffect(isCTA && pulsing ? 1.1 : 1.0)
+                    .font(.system(size: 54))
+                    .saturation(isUnlocked ? 1 : 0.3)
+                    .opacity(isUnlocked ? 1 : 0.6)
+                    .scaleEffect(isCTA && pulsing ? 1.08 : 1.0)
                     .animation(.easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: pulsing)
+
+                // Lock overlay for locked stations
+                if !isUnlocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 32, weight: .black))
+                        .foregroundStyle(CartoonColor.ink.opacity(0.55))
+                        .offset(y: 2)
+                }
             }
             .onAppear { pulsing = true }
 
+            // Name label
             Text(station.displayName)
-                .font(.system(size: 18, weight: .black, design: .rounded))
-                .foregroundStyle(isUnlocked ? CartoonColor.text : CartoonColor.text.opacity(0.4))
-                .padding(.horizontal, 10).padding(.vertical, 4)
-                .background(Capsule().fill(CartoonColor.paper.opacity(isUnlocked ? 0.9 : 0.5)))
+                .font(.system(size: 15, weight: .black, design: .rounded))
+                .foregroundStyle(isUnlocked ? CartoonColor.text : CartoonColor.text.opacity(0.5))
+                .padding(.horizontal, 10).padding(.vertical, 3)
+                .background(
+                    Capsule()
+                        .fill(CartoonColor.paper)
+                )
+                .overlay(
+                    Capsule()
+                        .stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2)
+                )
 
+            // Stars
             if stars > 0 {
-                HStack(spacing: 4) {
+                HStack(spacing: 3) {
                     ForEach(0..<3) { i in
                         Image(systemName: i < stars ? "star.fill" : "star")
-                            .font(.system(size: 20, weight: .black))
+                            .font(.system(size: 16, weight: .black))
                             .foregroundStyle(i < stars ? CartoonColor.gold : CartoonColor.ink.opacity(0.2))
                     }
                 }
             }
         }
-        .scaleEffect(isUnlocked && stars == 0 ? 1.05 : 1.0)
     }
 }
