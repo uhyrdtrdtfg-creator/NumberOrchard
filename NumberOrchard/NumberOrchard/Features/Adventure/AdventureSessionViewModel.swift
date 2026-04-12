@@ -19,6 +19,7 @@ final class AdventureSessionViewModel {
     private var learningProfile: LearningProfile
     private var session: LearningSession
     private var profile: ChildProfile
+    private var recentQuestions: [MathQuestion] = []
 
     init(profile: ChildProfile, modelContext: ModelContext) {
         self.profile = profile
@@ -34,7 +35,13 @@ final class AdventureSessionViewModel {
             isSessionComplete = true
             return
         }
-        currentQuestion = questionGenerator.generate(for: learningProfile)
+        let next = questionGenerator.generate(for: learningProfile, recentQuestions: recentQuestions)
+        currentQuestion = next
+        recentQuestions.append(next)
+        // Only keep last 5 for window
+        if recentQuestions.count > 5 {
+            recentQuestions.removeFirst(recentQuestions.count - 5)
+        }
     }
 
     func handleAnswer(correct: Bool, responseTime: TimeInterval, usedHint: Bool) {
