@@ -1,0 +1,134 @@
+import SwiftUI
+import SwiftData
+
+struct NoomForestView: View {
+    let onDismiss: () -> Void
+    let onStartChallenge: () -> Void
+
+    @Query private var profiles: [ChildProfile]
+    @State private var viewModel: NoomForestViewModel?
+    @State private var inspectedNoom: Noom?
+
+    private var profile: ChildProfile? { profiles.first }
+
+    var body: some View {
+        ZStack {
+            CartoonSkyBackground()
+
+            VStack(spacing: 24) {
+                topBar
+
+                Text("🐾 小精灵森林")
+                    .font(.system(size: 36, weight: .black, design: .rounded))
+                    .foregroundStyle(CartoonColor.text)
+
+                Text("图鉴: \(viewModel?.unlockedCount ?? 0) / 10")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(CartoonColor.text.opacity(0.7))
+
+                dexGrid
+
+                Spacer()
+
+                CartoonButton(
+                    tint: CartoonColor.gold,
+                    accessibilityLabel: "开始挑战",
+                    action: onStartChallenge
+                ) {
+                    Text("🎮 开始挑战")
+                        .font(.system(size: 28, weight: .black, design: .rounded))
+                        .foregroundStyle(.white)
+                        .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                        .frame(width: 260, height: 76)
+                }
+
+                Spacer().frame(height: 30)
+            }
+            .padding(.horizontal, 30)
+        }
+        .onAppear {
+            if let profile { viewModel = NoomForestViewModel(profile: profile) }
+        }
+        .sheet(item: $inspectedNoom) { noom in
+            noomDetailSheet(noom: noom)
+        }
+    }
+
+    private var topBar: some View {
+        HStack {
+            Button(action: onDismiss) {
+                ZStack {
+                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 60, height: 60).offset(y: 4)
+                    Circle().fill(CartoonColor.paper).frame(width: 60, height: 60)
+                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 60, height: 60)
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 26, weight: .black))
+                        .foregroundStyle(CartoonColor.text)
+                }
+            }
+            Spacer()
+            CartoonHUD(icon: "star.fill", value: "\(profile?.stars ?? 0)", tint: CartoonColor.gold)
+            CartoonHUD(icon: "leaf.fill", value: "\(profile?.seeds ?? 0)", tint: CartoonColor.leaf)
+        }
+        .padding(.top, 20)
+    }
+
+    private var dexGrid: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 14), count: 5), spacing: 14) {
+            ForEach(NoomCatalog.all) { noom in
+                noomCell(noom: noom)
+                    .onTapGesture {
+                        if viewModel?.isUnlocked(noom.number) ?? false {
+                            inspectedNoom = noom
+                        }
+                    }
+            }
+        }
+    }
+
+    private func noomCell(noom: Noom) -> some View {
+        let unlocked = viewModel?.isUnlocked(noom.number) ?? false
+        return ZStack {
+            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 110, height: 110).offset(y: 5)
+            Circle().fill(unlocked ? Color(uiColor: noom.bodyColor) : Color.gray.opacity(0.4))
+                .frame(width: 110, height: 110)
+            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 110, height: 110)
+            if unlocked {
+                Image(uiImage: NoomRenderer.image(for: noom, expression: .neutral, size: CGSize(width: 100, height: 100)))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+            } else {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 36, weight: .black))
+                    .foregroundStyle(CartoonColor.ink.opacity(0.55))
+            }
+        }
+    }
+
+    private func noomDetailSheet(noom: Noom) -> some View {
+        VStack(spacing: 20) {
+            Image(uiImage: NoomRenderer.image(for: noom, expression: .happy, size: CGSize(width: 200, height: 200)))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+            Text(noom.name)
+                .font(.system(size: 36, weight: .black, design: .rounded))
+                .foregroundStyle(CartoonColor.text)
+            Text("我是数字 \(noom.number)！")
+                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            CartoonPanel(cornerRadius: 20) {
+                Text(noom.catchphrase)
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(CartoonColor.text)
+                    .padding(20)
+            }
+            Button("关闭") { inspectedNoom = nil }
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .padding(.top)
+        }
+        .padding(40)
+        .presentationDetents([.medium])
+    }
+}
