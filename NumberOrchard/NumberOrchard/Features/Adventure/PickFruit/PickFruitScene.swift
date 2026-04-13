@@ -217,15 +217,27 @@ class PickFruitScene: SKScene {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
 
-        for fruit in fruitNodes {
-            if fruit.contains(location) && fruit.parent == self {
-                draggingNode = fruit
-                fruit.removeAllActions()  // Stop wiggle
-                fruit.zPosition = 100
-                fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
-                run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
-                break
+        // Expanded hit area + closest-fruit selection so kids' imprecise taps land a fruit.
+        let padding = CartoonSKTouch.largeHitPadding
+        var bestFruit: SKSpriteNode?
+        var bestDistance: CGFloat = .greatestFiniteMagnitude
+        for fruit in fruitNodes where fruit.parent == self {
+            let expanded = fruit.frame.insetBy(dx: -padding, dy: -padding)
+            guard expanded.contains(location) else { continue }
+            let dx = fruit.position.x - location.x
+            let dy = fruit.position.y - location.y
+            let dist = dx * dx + dy * dy
+            if dist < bestDistance {
+                bestDistance = dist
+                bestFruit = fruit
             }
+        }
+        if let fruit = bestFruit {
+            draggingNode = fruit
+            fruit.removeAllActions()  // stop idle wiggle
+            fruit.zPosition = 100
+            fruit.run(SKAction.scale(to: 1.2, duration: 0.1))
+            run(SKAction.playSoundFileNamed("fruit_pick.wav", waitForCompletion: false))
         }
     }
 

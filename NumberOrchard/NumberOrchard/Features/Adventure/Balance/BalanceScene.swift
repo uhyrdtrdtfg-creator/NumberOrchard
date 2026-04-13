@@ -283,11 +283,27 @@ class BalanceScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard !gameState.isComplete, let touch = touches.first else { return }
         let location = touch.location(in: self)
-        for block in poolBlocks where block.contains(location) {
+
+        // Use an expanded hit area around each pool block (kids' fingers are imprecise).
+        // Pick the CLOSEST block within hit range (not just the first match).
+        let padding = CartoonSKTouch.largeHitPadding
+        var bestBlock: SKSpriteNode?
+        var bestDistance: CGFloat = .greatestFiniteMagnitude
+        for block in poolBlocks where block.parent != nil {
+            let expandedFrame = block.frame.insetBy(dx: -padding, dy: -padding)
+            guard expandedFrame.contains(location) else { continue }
+            let dx = block.position.x - location.x
+            let dy = block.position.y - location.y
+            let dist = dx * dx + dy * dy
+            if dist < bestDistance {
+                bestDistance = dist
+                bestBlock = block
+            }
+        }
+        if let block = bestBlock {
             draggingBlock = block
             block.zPosition = 100
             block.run(SKAction.scale(to: 1.15, duration: 0.1))
-            return
         }
     }
 
