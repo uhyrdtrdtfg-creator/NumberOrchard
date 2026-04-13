@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		00C6C802DB77AA322E48EB1B /* ShareFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */; };
 		01B969F9B736A4C8258A8AAF /* StationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */; };
+		01E8C5240C61FACE54312723 /* NoomRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */; };
 		05E9E883F9EA4E8B2FCECA6B /* fruit_pick.wav in Resources */ = {isa = PBXBuildFile; fileRef = DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */; };
 		0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */; };
 		087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */; };
 		09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3346700B718F8495EE4352 /* EyeCareManager.swift */; };
 		09FDE69EE1B2EA4E2D36452B /* eye_care.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */; };
+		0D863C203BECF6C3D3EA13DD /* NoomChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */; };
 		0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31873A70D02219C3C54E64A9 /* HomeView.swift */; };
 		119D1A6A4B9696A64846FEEC /* OrchardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */; };
 		185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */; };
@@ -179,7 +181,9 @@
 		A50EC3636C7C728433B8256B /* DifficultyManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyManagerTests.swift; sourceTree = "<group>"; };
 		A833ED9961A1756FCB64C057 /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
 		A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_05.aiff; sourceTree = "<group>"; };
+		AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomRenderer.swift; sourceTree = "<group>"; };
 		AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainView.swift; sourceTree = "<group>"; };
+		AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomChallengeScene.swift; sourceTree = "<group>"; };
 		AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRecord.swift; sourceTree = "<group>"; };
 		B032E93606C6F6A5C51AE38A /* L5L6GenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L5L6GenerationTests.swift; sourceTree = "<group>"; };
 		B0A3499562F1D16E7DAEB485 /* welcome.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = welcome.aiff; sourceTree = "<group>"; };
@@ -505,6 +509,15 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		AFAD56A89E14823269D3A0EF /* NoomForest */ = {
+			isa = PBXGroup;
+			children = (
+				AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */,
+				AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */,
+			);
+			path = NoomForest;
+			sourceTree = "<group>";
+		};
 		B399E474F8CEB7E31F6026A0 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,6 +525,7 @@
 				5378E50D7439E6740DF9A1F3 /* DailyFlow */,
 				4E6D99A71C1D1314B9643FC0 /* Exploration */,
 				495F0B04FE2A72EB1D9A516C /* Home */,
+				AFAD56A89E14823269D3A0EF /* NoomForest */,
 				CC4E86C7B1E6BF8104E301B8 /* Orchard */,
 				37B3FF3B0E15EBD4C1D2341C /* ParentCenter */,
 				53941F22D2FC489773F9E19A /* ParentChild */,
@@ -849,8 +863,10 @@
 				34DFD7D4AEA20293BED88E88 /* MapProgressionLogic.swift in Sources */,
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				6B9820C7D6EA2726A0C9E65E /* Noom.swift in Sources */,
+				0D863C203BECF6C3D3EA13DD /* NoomChallengeScene.swift in Sources */,
 				59CEED9C0DB2C64746AEB92B /* NoomMergeLogic.swift in Sources */,
 				841262A765119064A349A2B2 /* NoomQuestionGenerator.swift in Sources */,
+				01E8C5240C61FACE54312723 /* NoomRenderer.swift in Sources */,
 				1F327F704CE207EA4EAC67F3 /* NoomSplitLogic.swift in Sources */,
 				28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */,
 				3A924772A2997942BE464F32 /* NumberTrainScene.swift in Sources */,
