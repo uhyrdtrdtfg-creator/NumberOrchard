@@ -123,6 +123,10 @@ private struct HomeDecorationsLayer: View {
 
     var body: some View {
         GeometryReader { geo in
+            // Place decorations along the grassy band — wide enough to see,
+            // above the feature-button row so they are not hidden.
+            let bandTop = geo.size.height * 0.55
+            let bandHeight = geo.size.height * 0.18
             ForEach(Array(decorations.filter { $0.isPlaced }.enumerated()), id: \.element.id) { index, deco in
                 if let item = DecorationCatalog.item(id: deco.itemId) {
                     WigglingDecoration(
@@ -131,7 +135,7 @@ private struct HomeDecorationsLayer: View {
                     )
                     .position(
                         x: deco.positionX * geo.size.width,
-                        y: geo.size.height - 180 + (deco.positionY * 80)
+                        y: bandTop + deco.positionY * bandHeight
                     )
                 }
             }
@@ -306,7 +310,8 @@ private struct WigglingDecoration: View {
 
     var body: some View {
         Text(emoji)
-            .font(.system(size: 56))
+            .font(.system(size: 68))
+            .cartoonInkShadow(y: 3)
             .rotationEffect(.degrees(reduceMotion ? 0 : (wiggling ? 5 : -5)))
             .animation(
                 reduceMotion ? nil :

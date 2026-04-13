@@ -7,6 +7,8 @@ struct DecorateOrchardView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var profiles: [ChildProfile]
     @State private var selectedCategory: DecorationCategory = .flower
+    @State private var purchaseToast: String?
+    @State private var toastVisible = false
     private let purchaseLogic = DecorationPurchaseLogic()
 
     private var profile: ChildProfile? { profiles.first }
@@ -18,8 +20,37 @@ struct DecorateOrchardView: View {
         ZStack {
             CartoonSkyBackground()
 
+            if let toast = purchaseToast, toastVisible {
+                VStack {
+                    Spacer()
+                    HStack(spacing: CartoonDimensions.spacingSmall) {
+                        Text("🎉")
+                        Text(toast).cartoonTitle(size: CartoonDimensions.fontBodyLarge).foregroundStyle(.white)
+                    }
+                    .padding(.horizontal, CartoonDimensions.spacingMedium)
+                    .padding(.vertical, CartoonDimensions.spacingSmall)
+                    .background(
+                        ZStack {
+                            Capsule().fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).offset(y: CartoonDimensions.shadowOffsetRegular)
+                            Capsule().fill(CartoonColor.leaf)
+                            Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
+                        }
+                    )
+                    .padding(.bottom, 100)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .zIndex(10)
+                .allowsHitTesting(false)
+            }
+
             VStack(spacing: CartoonDimensions.spacingRegular) {
                 topBar
+
+                Text("用⭐装扮你的果园～每买一样都会出现在首页")
+                    .cartoonBody(size: CartoonDimensions.fontBodySmall)
+                    .foregroundStyle(CartoonColor.text.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, CartoonDimensions.spacingLarge)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -138,14 +169,28 @@ struct DecorateOrchardView: View {
     private func purchase(_ item: DecorationItem) {
         guard let profile else { return }
         let result = purchaseLogic.purchase(item: item, availableStars: profile.stars)
-        if result.success {
-            profile.stars = result.remainingStars
-            let decoration = CollectedDecoration(itemId: item.id)
-            decoration.isPlaced = true
-            decoration.positionX = Double.random(in: 0.1...0.9)
-            decoration.positionY = Double.random(in: 0.2...0.7)
-            profile.decorations.append(decoration)
-            modelContext.insert(decoration)
+        guard result.success else { return }
+
+        profile.stars = result.remainingStars
+
+        // Canonical SwiftData order: insert into context first, then mutate, then
+        // attach to the parent relationship. Otherwise the inverse link may not
+        // persist reliably and the decoration vanishes on relaunch.
+        let decoration = CollectedDecoration(itemId: item.id)
+        modelContext.insert(decoration)
+        decoration.isPlaced = true
+        decoration.positionX = Double.random(in: 0.1...0.9)
+        decoration.positionY = Double.random(in: 0.0...1.0)
+        profile.decorations.append(decoration)
+
+        do { try modelContext.save() } catch { /* autosave will retry */ }
+
+        purchaseToast = "获得 \(item.name) \(item.emoji)"
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+            toastVisible = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation(.easeOut(duration: 0.3)) { toastVisible = false }
         }
     }
 }
