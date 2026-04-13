@@ -36,6 +36,8 @@ class ShareFruitScene: SKScene {
     private var gameState: ShareFruitGameState!
     private var fruitNodes: [SKSpriteNode] = []
     private var fruitHomePositions: [CGPoint] = []
+    private var themeEmoji: String = "🍓"
+    private var animalEmoji: String = "🐰"
     private var animalNode: SKSpriteNode!
     private var plateNode: SKSpriteNode!
     private var plateLabel: SKLabelNode!
@@ -43,8 +45,10 @@ class ShareFruitScene: SKScene {
     private var draggingNode: SKSpriteNode?
     private var startTime: Date!
 
-    func configure(with question: MathQuestion) {
+    func configure(with question: MathQuestion, themeEmoji: String = "🍓", animalEmoji: String = "🐰") {
         self.gameState = ShareFruitGameState(question: question)
+        self.themeEmoji = themeEmoji
+        self.animalEmoji = animalEmoji
     }
 
     private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
@@ -93,8 +97,8 @@ class ShareFruitScene: SKScene {
         plateLabel.position = CGPoint(x: w / 2, y: plateNode.position.y + 145)
         addChild(plateLabel)
 
-        // Fruits on plate
-        let fruitTexture = SKTexture(imageNamed: "Fruits/strawberry")
+        // Fruits on plate — emoji themed by station.
+        let fruitTexture = CartoonSKTextureCache.emojiTexture(themeEmoji, size: 62)
         for i in 0..<gameState.plateCount {
             let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 62, height: 62))
             fruit.name = "fruit_\(i)"
@@ -118,16 +122,16 @@ class ShareFruitScene: SKScene {
         animalNode.name = "animal"
         addChild(animalNode)
 
-        let animalEmoji = SKLabelNode(text: "🐰")
-        animalEmoji.fontSize = 90
-        animalEmoji.verticalAlignmentMode = .center
-        animalEmoji.horizontalAlignmentMode = .center
-        animalEmoji.position = CGPoint(x: 0, y: 0)
-        animalNode.addChild(animalEmoji)
+        let animalLabel = SKLabelNode(text: animalEmoji)
+        animalLabel.fontSize = 90
+        animalLabel.verticalAlignmentMode = .center
+        animalLabel.horizontalAlignmentMode = .center
+        animalLabel.position = CGPoint(x: 0, y: 0)
+        animalNode.addChild(animalLabel)
 
         // Animal pointer hint
         let hint = SKNode.cartoonPillLabel(
-            text: "🐰 给小兔 \(gameState.targetGiveCount) 个",
+            text: "\(animalEmoji) 给小动物 \(gameState.targetGiveCount) 个",
             fontSize: 28,
             fill: CartoonSK.coral.lighter(by: 0.3)
         )

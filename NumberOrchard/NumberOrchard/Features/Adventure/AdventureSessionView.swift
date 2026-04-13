@@ -91,13 +91,15 @@ struct AdventureSessionView: View {
             .padding(.top, CartoonDimensions.spacingTight)
 
             Group {
+                let themeEmoji = stationFruitEmoji(viewModel: viewModel)
+                let animalEmoji = stationAnimalEmoji(viewModel: viewModel)
                 switch question.gameMode {
                 case .pickFruit:
-                    PickFruitView(question: question) { correct, time in
+                    PickFruitView(question: question, themeEmoji: themeEmoji) { correct, time in
                         viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
                     }
                 case .shareFruit:
-                    ShareFruitView(question: question) { correct, time in
+                    ShareFruitView(question: question, themeEmoji: themeEmoji, animalEmoji: animalEmoji) { correct, time in
                         viewModel.handleAnswer(correct: correct, responseTime: time, usedHint: false)
                     }
                 case .numberTrain:
@@ -173,6 +175,23 @@ struct AdventureSessionView: View {
         let profile = ChildProfile(name: "小果农")
         modelContext.insert(profile)
         return profile
+    }
+
+    /// Theme fruit for the active station (falls back to apple).
+    private func stationFruitEmoji(viewModel: AdventureSessionViewModel) -> String {
+        if let id = viewModel.station?.starFruitId, let fruit = FruitCatalog.fruit(id: id) {
+            return fruit.emoji
+        }
+        return "🍎"
+    }
+
+    /// Rotating friendly animal per station so the "share" game isn't always the rabbit.
+    private func stationAnimalEmoji(viewModel: AdventureSessionViewModel) -> String {
+        let animals = ["🐰", "🐻", "🐼", "🦊", "🐨", "🐯", "🐸", "🐱", "🐶", "🐷"]
+        guard let id = viewModel.station?.id else { return "🐰" }
+        // Stable pseudo-hash on station id so same station always picks same animal.
+        let hash = abs(id.hashValue)
+        return animals[hash % animals.count]
     }
 }
 

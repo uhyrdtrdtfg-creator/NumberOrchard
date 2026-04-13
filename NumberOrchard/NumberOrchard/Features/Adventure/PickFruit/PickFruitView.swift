@@ -3,6 +3,7 @@ import SpriteKit
 
 struct PickFruitView: View {
     let question: MathQuestion
+    var themeEmoji: String = "🍎"
     let onComplete: (Bool, TimeInterval) -> Void
 
     @State private var scene: PickFruitScene?
@@ -17,7 +18,7 @@ struct PickFruitView: View {
                     .onAppear {
                         let newScene = PickFruitScene(size: geo.size)
                         newScene.scaleMode = .resizeFill
-                        newScene.configure(with: question)
+                        newScene.configure(with: question, themeEmoji: themeEmoji)
                         let newCoordinator = PickFruitCoordinator(onComplete: onComplete)
                         newScene.gameDelegate = newCoordinator
                         coordinator = newCoordinator

@@ -40,6 +40,31 @@ enum CartoonSKTouch {
 enum CartoonSKTextureCache {
     private static var skyCache: [String: SKTexture] = [:]
     private static var groundCache: [String: SKTexture] = [:]
+    private static var emojiCache: [String: SKTexture] = [:]
+
+    /// Texture rendered from an emoji string, sized to `size`. Cached.
+    static func emojiTexture(_ emoji: String, size: CGFloat) -> SKTexture {
+        let key = "\(emoji)@\(Int(size.rounded()))"
+        if let cached = emojiCache[key] { return cached }
+        let canvas = CGSize(width: size, height: size)
+        let renderer = UIGraphicsImageRenderer(size: canvas)
+        let image = renderer.image { _ in
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: size * 0.88)
+            ]
+            let textSize = (emoji as NSString).size(withAttributes: attrs)
+            let rect = CGRect(
+                x: (canvas.width - textSize.width) / 2,
+                y: (canvas.height - textSize.height) / 2,
+                width: textSize.width,
+                height: textSize.height
+            )
+            (emoji as NSString).draw(in: rect, withAttributes: attrs)
+        }
+        let tex = SKTexture(image: image)
+        emojiCache[key] = tex
+        return tex
+    }
 
     private static func key(_ size: CGSize) -> String {
         "\(Int(size.width.rounded()))x\(Int(size.height.rounded()))"

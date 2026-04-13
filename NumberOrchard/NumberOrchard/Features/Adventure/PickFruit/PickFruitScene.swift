@@ -35,6 +35,7 @@ class PickFruitScene: SKScene {
     private var gameState: PickFruitGameState!
     private var fruitNodes: [SKSpriteNode] = []
     private var fruitHomePositions: [CGPoint] = []
+    private var themeEmoji: String = "🍎"
     private var basketNode: SKSpriteNode!
     private var basketLabel: SKLabelNode!
     private var treeNode: SKSpriteNode!
@@ -44,8 +45,9 @@ class PickFruitScene: SKScene {
 
     private let fruitSize: CGFloat = 72
 
-    func configure(with question: MathQuestion) {
+    func configure(with question: MathQuestion, themeEmoji: String = "🍎") {
         self.gameState = PickFruitGameState(question: question)
+        self.themeEmoji = themeEmoji
     }
 
     private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
@@ -112,8 +114,8 @@ class PickFruitScene: SKScene {
         basketLabel.position = CGPoint(x: basketNode.position.x, y: basketNode.position.y + 95)
         addChild(basketLabel)
 
-        // Fruits on tree
-        let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
+        // Fruits on tree — emoji themed by station.
+        let fruitTexture = CartoonSKTextureCache.emojiTexture(themeEmoji, size: fruitSize)
         let fruitCount = gameState.fruitsOnTree
         for i in 0..<fruitCount {
             let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: fruitSize, height: fruitSize))
@@ -201,7 +203,7 @@ class PickFruitScene: SKScene {
     private func addApplesToBasket(_ count: Int, animated: Bool = true) {
         // Clear existing apple sprites (keep the label via z-ordering check)
         basketNode.children.compactMap { $0 as? SKSpriteNode }.forEach { $0.removeFromParent() }
-        let fruitTexture = SKTexture(imageNamed: "Fruits/apple")
+        let fruitTexture = CartoonSKTextureCache.emojiTexture(themeEmoji, size: 48)
         for i in 0..<count {
             let fruit = SKSpriteNode(texture: fruitTexture, size: CGSize(width: 48, height: 48))
             fruit.zPosition = 1

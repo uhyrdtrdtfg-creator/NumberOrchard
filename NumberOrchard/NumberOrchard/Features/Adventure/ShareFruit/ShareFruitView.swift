@@ -3,6 +3,8 @@ import SpriteKit
 
 struct ShareFruitView: View {
     let question: MathQuestion
+    var themeEmoji: String = "🍓"
+    var animalEmoji: String = "🐰"
     let onComplete: (Bool, TimeInterval) -> Void
 
     @State private var scene: ShareFruitScene?
@@ -17,7 +19,7 @@ struct ShareFruitView: View {
                     .onAppear {
                         let newScene = ShareFruitScene(size: geo.size)
                         newScene.scaleMode = .resizeFill
-                        newScene.configure(with: question)
+                        newScene.configure(with: question, themeEmoji: themeEmoji, animalEmoji: animalEmoji)
                         let newCoordinator = ShareFruitCoordinator(onComplete: onComplete)
                         newScene.gameDelegate = newCoordinator
                         coordinator = newCoordinator
