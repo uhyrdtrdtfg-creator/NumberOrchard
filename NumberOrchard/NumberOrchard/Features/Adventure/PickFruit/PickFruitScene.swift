@@ -34,6 +34,7 @@ class PickFruitScene: SKScene {
 
     private var gameState: PickFruitGameState!
     private var fruitNodes: [SKSpriteNode] = []
+    private var fruitHomePositions: [CGPoint] = []
     private var basketNode: SKSpriteNode!
     private var basketLabel: SKLabelNode!
     private var treeNode: SKSpriteNode!
@@ -123,12 +124,14 @@ class PickFruitScene: SKScene {
             let radius: CGFloat = 90
             let offsetX = CGFloat(cos(angle)) * radius
             let offsetY = CGFloat(sin(angle)) * radius * 0.8
-            fruit.position = CGPoint(
+            let homePos = CGPoint(
                 x: treeNode.position.x + offsetX,
                 y: treeNode.position.y + offsetY
             )
+            fruit.position = homePos
             addChild(fruit)
             fruitNodes.append(fruit)
+            fruitHomePositions.append(homePos)
 
             // Subtle idle animation
             let wiggle = SKAction.sequence([
@@ -273,7 +276,16 @@ class PickFruitScene: SKScene {
             }
         } else {
             node.zPosition = 0
-            node.run(SKAction.scale(to: 1.0, duration: 0.1))
+            // Snap fruit back to its spot on the tree so kids can retry.
+            if let idx = fruitNodes.firstIndex(of: node), idx < fruitHomePositions.count {
+                let home = fruitHomePositions[idx]
+                node.run(SKAction.group([
+                    SKAction.scale(to: 1.0, duration: 0.15),
+                    SKAction.move(to: home, duration: 0.22)
+                ]))
+            } else {
+                node.run(SKAction.scale(to: 1.0, duration: 0.1))
+            }
         }
     }
 

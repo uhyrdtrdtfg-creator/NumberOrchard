@@ -35,6 +35,7 @@ class ShareFruitScene: SKScene {
 
     private var gameState: ShareFruitGameState!
     private var fruitNodes: [SKSpriteNode] = []
+    private var fruitHomePositions: [CGPoint] = []
     private var animalNode: SKSpriteNode!
     private var plateNode: SKSpriteNode!
     private var plateLabel: SKLabelNode!
@@ -100,12 +101,14 @@ class ShareFruitScene: SKScene {
             fruit.zPosition = 5
             let col = i % 4
             let row = i / 4
-            fruit.position = CGPoint(
+            let homePos = CGPoint(
                 x: w / 2 + CGFloat(col - 2) * 68 + 34,
                 y: plateNode.position.y + CGFloat(row) * 58 - 10
             )
+            fruit.position = homePos
             addChild(fruit)
             fruitNodes.append(fruit)
+            fruitHomePositions.append(homePos)
         }
 
         // Animal bubble at bottom (respect home indicator)
@@ -235,7 +238,16 @@ class ShareFruitScene: SKScene {
             }
         } else {
             node.zPosition = 5
-            node.run(SKAction.scale(to: 1.0, duration: 0.1))
+            // Snap back to the plate so kids can retry.
+            if let idx = fruitNodes.firstIndex(of: node), idx < fruitHomePositions.count {
+                let home = fruitHomePositions[idx]
+                node.run(SKAction.group([
+                    SKAction.scale(to: 1.0, duration: 0.15),
+                    SKAction.move(to: home, duration: 0.22)
+                ]))
+            } else {
+                node.run(SKAction.scale(to: 1.0, duration: 0.1))
+            }
         }
     }
 

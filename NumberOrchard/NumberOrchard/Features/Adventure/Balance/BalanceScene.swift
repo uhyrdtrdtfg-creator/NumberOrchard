@@ -52,6 +52,7 @@ class BalanceScene: SKScene {
     private var leftBlocks: [SKSpriteNode] = []
     private var rightBlocks: [SKSpriteNode] = []
     private var poolBlocks: [SKSpriteNode] = []
+    private var poolHomePositions: [CGPoint] = []
     private var draggingBlock: SKSpriteNode?
     private var startTime: Date!
     private var questionLabel: SKNode!
@@ -179,10 +180,12 @@ class BalanceScene: SKScene {
         let blockY = poolY - 16
         for i in 0..<totalCount {
             let block = SKNode.cartoonBlock(size: blockSize, fill: CartoonSK.coral)
-            block.position = CGPoint(x: firstX + CGFloat(i) * blockSpacing, y: blockY)
+            let homePos = CGPoint(x: firstX + CGFloat(i) * blockSpacing, y: blockY)
+            block.position = homePos
             block.name = "pool_\(i)"
             addChild(block)
             poolBlocks.append(block)
+            poolHomePositions.append(homePos)
         }
     }
 
@@ -345,7 +348,16 @@ class BalanceScene: SKScene {
             if gameState.isComplete { handleCompletion() }
         } else {
             block.zPosition = 0
-            block.run(SKAction.scale(to: 1.0, duration: 0.15))
+            // Snap back to original pool slot so children can try again.
+            if let idx = poolBlocks.firstIndex(of: block), idx < poolHomePositions.count {
+                let home = poolHomePositions[idx]
+                block.run(SKAction.group([
+                    SKAction.scale(to: 1.0, duration: 0.2),
+                    SKAction.move(to: home, duration: 0.25)
+                ]))
+            } else {
+                block.run(SKAction.scale(to: 1.0, duration: 0.15))
+            }
         }
     }
 
