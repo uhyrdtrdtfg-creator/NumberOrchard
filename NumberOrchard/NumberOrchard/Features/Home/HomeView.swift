@@ -8,6 +8,7 @@ struct HomeView: View {
     let onOpenCollection: () -> Void
     let onOpenDecorate: () -> Void
     let onOpenBattle: () -> Void
+    let onOpenNoomForest: () -> Void
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -50,6 +51,7 @@ struct HomeView: View {
                     onOpenMap: onOpenMap,
                     onOpenDecorate: onOpenDecorate,
                     onOpenCollection: onOpenCollection,
+                    onOpenNoomForest: onOpenNoomForest,
                     onOpenBattle: {
                         viewModel.showParentalGate = true
                         viewModel.parentGateIntent = .battle
@@ -207,6 +209,7 @@ private struct HomeFeatureRow: View {
     let onOpenMap: () -> Void
     let onOpenDecorate: () -> Void
     let onOpenCollection: () -> Void
+    let onOpenNoomForest: () -> Void
     let onOpenBattle: () -> Void
 
     var body: some View {
@@ -214,7 +217,8 @@ private struct HomeFeatureRow: View {
             CartoonFeatureButton(emoji: "🗺️", label: "探险", tint: CartoonColor.gold, bobDelay: 0.0, action: onOpenMap)
             CartoonFeatureButton(emoji: "🎨", label: "装饰", tint: CartoonColor.coral, bobDelay: 0.15, action: onOpenDecorate)
             CartoonFeatureButton(emoji: "🍎", label: "图鉴", tint: CartoonColor.leaf, bobDelay: 0.30, action: onOpenCollection)
-            CartoonFeatureButton(emoji: "👨‍👦", label: "对战", tint: CartoonColor.berry, bobDelay: 0.45, action: onOpenBattle)
+            CartoonFeatureButton(emoji: "🐾", label: "小精灵", tint: CartoonColor.sky, bobDelay: 0.45, action: onOpenNoomForest)
+            CartoonFeatureButton(emoji: "👨‍👦", label: "对战", tint: CartoonColor.berry, bobDelay: 0.60, action: onOpenBattle)
         }
     }
 }
@@ -313,7 +317,8 @@ private struct TreeProgressBar: View {
         onOpenMap: {},
         onOpenCollection: {},
         onOpenDecorate: {},
-        onOpenBattle: {}
+        onOpenBattle: {},
+        onOpenNoomForest: {}
     )
     .modelContainer(for: ChildProfile.self, inMemory: true)
 }
