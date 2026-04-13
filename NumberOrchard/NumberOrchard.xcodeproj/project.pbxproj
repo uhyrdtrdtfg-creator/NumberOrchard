@@ -80,6 +80,8 @@
 		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
 		D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */; };
 		D26D178B8F0C646AE7AD7461 /* DecorateOrchardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */; };
+		A1A1A1A1A1A1A1A1A1A1A102 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */; };
+		A2A2A2A2A2A2A2A2A2A2A203 /* OrchardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */; };
 		D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */; };
 		D8CD90D952A88FE5EA3CD4DD /* RewardCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3955C8B6279F8E0709080A /* RewardCalculator.swift */; };
 		D99FBEC5776E93A193F488B6 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75777EE9293B57CE69E74078 /* BalanceScene.swift */; };
@@ -176,6 +178,8 @@
 		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
 		C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationCatalog.swift; sourceTree = "<group>"; };
 		C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorateOrchardView.swift; sourceTree = "<group>"; };
+		A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
+		A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
 		C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitView.swift; sourceTree = "<group>"; };
 		CAD6A5F5D5C3939B7D13E8DA /* StationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
 		CADC8A418254297E72F86954 /* PickFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitScene.swift; sourceTree = "<group>"; };
@@ -535,6 +539,8 @@
 				5F2A32FC7C794E56045B78B9 /* FruitCollectionView.swift */,
 				E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */,
 				94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */,
+				A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */,
+				A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */,
 			);
 			path = Orchard;
 			sourceTree = "<group>";
@@ -766,6 +772,8 @@
 				F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */,
 				53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */,
 				D26D178B8F0C646AE7AD7461 /* DecorateOrchardView.swift in Sources */,
+				A1A1A1A1A1A1A1A1A1A1A102 /* PlacedDecorationView.swift in Sources */,
+				A2A2A2A2A2A2A2A2A2A2A203 /* OrchardEditView.swift in Sources */,
 				403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */,
 				7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */,
 				DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */,

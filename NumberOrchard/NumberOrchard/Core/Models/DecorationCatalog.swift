@@ -1,4 +1,5 @@
 import Foundation
+import CoreGraphics
 
 struct DecorationItem: Identifiable, Sendable, Hashable {
     let id: String
@@ -16,6 +17,20 @@ enum DecorationCategory: String, CaseIterable, Sendable {
     case water      = "水景"
     case building   = "建筑"
     case festival   = "节日"
+
+    /// Emoji rendering size (pt) when placed in the orchard. Different categories get
+    /// different sizes so a 🏰 feels bigger than a 🐞, producing visual hierarchy.
+    var placedSize: CGFloat {
+        switch self {
+        case .fence:    return 56
+        case .flower:   return 60
+        case .plant:    return 96
+        case .animal:   return 52
+        case .water:    return 84
+        case .building: return 124
+        case .festival: return 76
+        }
+    }
 }
 
 enum DecorationCatalog {

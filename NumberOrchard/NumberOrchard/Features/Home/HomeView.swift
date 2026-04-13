@@ -121,22 +121,29 @@ private struct HomeSkyLayer: View {
 private struct HomeDecorationsLayer: View {
     let decorations: [CollectedDecoration]
 
+    /// Sort by positionY so decorations further "back" render first (and those in front layer over).
+    private var sortedPlaced: [(offset: Int, element: CollectedDecoration)] {
+        let placed = decorations.filter { $0.isPlaced }
+            .sorted { $0.positionY < $1.positionY }
+        return Array(placed.enumerated())
+    }
+
     var body: some View {
         GeometryReader { geo in
-            // Place decorations along the grassy band — wide enough to see,
-            // above the feature-button row so they are not hidden.
             let bandTop = geo.size.height * 0.55
             let bandHeight = geo.size.height * 0.18
-            ForEach(Array(decorations.filter { $0.isPlaced }.enumerated()), id: \.element.id) { index, deco in
+            ForEach(sortedPlaced, id: \.element.id) { index, deco in
                 if let item = DecorationCatalog.item(id: deco.itemId) {
-                    WigglingDecoration(
+                    PlacedDecorationView(
                         emoji: item.emoji,
+                        size: item.category.placedSize,
                         phaseOffset: Double(index) * 0.3
                     )
                     .position(
                         x: deco.positionX * geo.size.width,
                         y: bandTop + deco.positionY * bandHeight
                     )
+                    .zIndex(orchardDepthZ(for: deco.positionY))
                 }
             }
         }
@@ -296,32 +303,6 @@ private struct TreeProgressBar: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("当前级别 \(level),成长进度 \(Int(progress * 100)) 百分比")
-    }
-}
-
-// MARK: - Decoration
-
-private struct WigglingDecoration: View {
-    let emoji: String
-    let phaseOffset: Double
-
-    @State private var wiggling = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    var body: some View {
-        Text(emoji)
-            .font(.system(size: 68))
-            .cartoonInkShadow(y: 3)
-            .rotationEffect(.degrees(reduceMotion ? 0 : (wiggling ? 5 : -5)))
-            .animation(
-                reduceMotion ? nil :
-                    .easeInOut(duration: 2.4 + phaseOffset.truncatingRemainder(dividingBy: 1.0))
-                    .repeatForever(autoreverses: true)
-                    .delay(phaseOffset),
-                value: wiggling
-            )
-            .onAppear { wiggling = true }
-            .accessibilityHidden(true)
     }
 }
 

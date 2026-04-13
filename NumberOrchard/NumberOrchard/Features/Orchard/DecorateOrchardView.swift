@@ -9,6 +9,7 @@ struct DecorateOrchardView: View {
     @State private var selectedCategory: DecorationCategory = .flower
     @State private var purchaseToast: String?
     @State private var toastVisible = false
+    @State private var showEdit = false
     private let purchaseLogic = DecorationPurchaseLogic()
 
     private var profile: ChildProfile? { profiles.first }
@@ -19,6 +20,16 @@ struct DecorateOrchardView: View {
     var body: some View {
         ZStack {
             CartoonSkyBackground()
+        }
+        .overlay(content)
+        .fullScreenCover(isPresented: $showEdit) {
+            OrchardEditView(onDismiss: { showEdit = false })
+        }
+    }
+
+    private var content: some View {
+        ZStack {
+            Color.clear
 
             if let toast = purchaseToast, toastVisible {
                 VStack {
@@ -88,7 +99,7 @@ struct DecorateOrchardView: View {
     }
 
     private var topBar: some View {
-        HStack {
+        HStack(spacing: CartoonDimensions.spacingSmall) {
             CartoonCircleIconButton(
                 systemImage: "chevron.left",
                 accessibilityLabel: "返回",
@@ -98,6 +109,28 @@ struct DecorateOrchardView: View {
             Text("🎨 装饰商店")
                 .cartoonTitle(size: CartoonDimensions.fontTitle)
             Spacer()
+            Button {
+                showEdit = true
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "hand.draw.fill")
+                        .font(.system(size: 18, weight: .black))
+                    Text("摆放")
+                        .font(.system(size: CartoonDimensions.fontBody, weight: .black, design: .rounded))
+                }
+                .foregroundStyle(.white)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(
+                    ZStack {
+                        Capsule().fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).offset(y: 3)
+                        Capsule().fill(CartoonColor.leaf)
+                        Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
+                    }
+                )
+                .contentShape(Capsule())
+            }
+            .accessibilityLabel("摆放果园")
             CartoonHUD(icon: "star.fill", value: "\(profile?.stars ?? 0)", tint: CartoonColor.gold)
         }
         .padding(.horizontal, CartoonDimensions.spacingLarge)
