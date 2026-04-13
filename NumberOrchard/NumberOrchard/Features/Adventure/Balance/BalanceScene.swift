@@ -315,15 +315,24 @@ class BalanceScene: SKScene {
         block.position = touch.location(in: self)
     }
 
+    /// Is `scenePoint` close enough to the right pan's center to count as a drop? Exposed for tests.
+    /// rightPan lives inside beam (rotated) inside pivot, so we must convert to scene space
+    /// rather than comparing `block.frame` to `rightPan.calculateAccumulatedFrame()`, which live in
+    /// different coordinate spaces and caused drops to never register after the scene became responsive.
+    func isInRightPanDropZone(_ scenePoint: CGPoint) -> Bool {
+        guard rightPan != nil else { return false }
+        let panCenterInScene = rightPan.convert(CGPoint.zero, to: self)
+        let panRadius = max(rightPan.size.width, rightPan.size.height) / 2 + CartoonSKTouch.largeHitPadding
+        let dx = scenePoint.x - panCenterInScene.x
+        let dy = scenePoint.y - panCenterInScene.y
+        return hypot(dx, dy) < panRadius
+    }
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let block = draggingBlock else { return }
         draggingBlock = nil
 
-        let rightPanSceneFrame = rightPan.calculateAccumulatedFrame().insetBy(
-            dx: -CartoonSKTouch.largeHitPadding,
-            dy: -CartoonSKTouch.largeHitPadding
-        )
-        if rightPanSceneFrame.intersects(block.frame) {
+        if isInRightPanDropZone(block.position) {
             block.run(SKAction.sequence([
                 SKAction.scale(to: 0.1, duration: 0.15),
                 SKAction.removeFromParent()
