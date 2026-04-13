@@ -15,6 +15,7 @@
 		09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3346700B718F8495EE4352 /* EyeCareManager.swift */; };
 		09FDE69EE1B2EA4E2D36452B /* eye_care.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */; };
 		0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31873A70D02219C3C54E64A9 /* HomeView.swift */; };
+		119D1A6A4B9696A64846FEEC /* OrchardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */; };
 		185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */; };
 		1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */; };
 		1AB00DEF60A8CAB67510C272 /* BalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D12D41600FAE9DAFD3D5E4B /* BalanceView.swift */; };
@@ -53,8 +54,10 @@
 		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
 		69DA0892B5865BD4CBBE6779 /* idle_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FC5747B52D2567AB5400E83D /* idle_hint.aiff */; };
+		6B9820C7D6EA2726A0C9E65E /* Noom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B52E7B8B906410D0B8C918 /* Noom.swift */; };
 		6C8CD1ED18BC4F15CDC91317 /* BalanceLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61EC017E169CEF105B83409D /* BalanceLogicTests.swift */; };
 		6D6DC4422294A775C4EDE4B9 /* ParentBattleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */; };
+		6DF427575DC41DB9B81DA099 /* CollectedNoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */; };
 		75A384440A662CAEF58C193A /* welcome.aiff in Resources */ = {isa = PBXBuildFile; fileRef = B0A3499562F1D16E7DAEB485 /* welcome.aiff */; };
 		7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68C640AC4EA0111CA49A97 /* DecorationPurchaseLogic.swift */; };
 		7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6DF7776B757FA1C3868920B /* wrong_help.aiff */; };
@@ -63,6 +66,7 @@
 		8146CECFFE7FBE2EAF6949E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C086DE626E123BF698F83460 /* Assets.xcassets */; };
 		8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */; };
 		845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */; };
+		8BB297703389E441A70AC884 /* NoomCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB54E58FBEE26A9755A642 /* NoomCatalogTests.swift */; };
 		8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */; };
 		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
 		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
@@ -73,6 +77,7 @@
 		B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */; };
 		B685D99B1591521148186507 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1613B849416E796B62C00C6 /* CheckInView.swift */; };
 		BCA7AC3C4B65AA03EB239DD9 /* DecorationInventoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA8F3B08371E6244910548 /* DecorationInventoryTests.swift */; };
+		C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */; };
 		C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */; };
 		C8B92790BC03E6B291AF3ECD /* share_check.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 98D5BD2AA2C845AF8576A096 /* share_check.aiff */; };
 		CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */; };
@@ -80,8 +85,6 @@
 		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
 		D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */; };
 		D26D178B8F0C646AE7AD7461 /* DecorateOrchardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */; };
-		A1A1A1A1A1A1A1A1A1A1A102 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */; };
-		A2A2A2A2A2A2A2A2A2A2A203 /* OrchardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */; };
 		D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECCDC3E5544F748E066651 /* NumberTrainLogicTests.swift */; };
 		D8CD90D952A88FE5EA3CD4DD /* RewardCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3955C8B6279F8E0709080A /* RewardCalculator.swift */; };
 		D99FBEC5776E93A193F488B6 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75777EE9293B57CE69E74078 /* BalanceScene.swift */; };
@@ -130,6 +133,7 @@
 		41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentBattleTests.swift; sourceTree = "<group>"; };
 		43B5F110839E77BCA7F6E418 /* MapCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCatalog.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoom.swift; sourceTree = "<group>"; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		4F3955C8B6279F8E0709080A /* RewardCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCalculator.swift; sourceTree = "<group>"; };
 		58AEABFEE87D8A3ADDA7DDC1 /* ParentQuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentQuestionGenerator.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 		74290E47C61364EE77542658 /* ExplorationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorationMapView.swift; sourceTree = "<group>"; };
 		74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberOrchardApp.swift; sourceTree = "<group>"; };
 		75777EE9293B57CE69E74078 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
+		75B52E7B8B906410D0B8C918 /* Noom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noom.swift; sourceTree = "<group>"; };
+		76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
 		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
 		867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitLogicTests.swift; sourceTree = "<group>"; };
@@ -155,6 +161,7 @@
 		9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_hint.aiff; sourceTree = "<group>"; };
 		9452C4C6F4C0CBA089556782 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
 		94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthViewModel.swift; sourceTree = "<group>"; };
+		96BB54E58FBEE26A9755A642 /* NoomCatalogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomCatalogTests.swift; sourceTree = "<group>"; };
 		981EB1F28BB3F69A5C6388FA /* NumberOrchardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = NumberOrchardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98D5BD2AA2C845AF8576A096 /* share_check.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = share_check.aiff; sourceTree = "<group>"; };
 		9D12D41600FAE9DAFD3D5E4B /* BalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceView.swift; sourceTree = "<group>"; };
@@ -178,8 +185,6 @@
 		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
 		C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationCatalog.swift; sourceTree = "<group>"; };
 		C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorateOrchardView.swift; sourceTree = "<group>"; };
-		A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
-		A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
 		C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitView.swift; sourceTree = "<group>"; };
 		CAD6A5F5D5C3939B7D13E8DA /* StationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
 		CADC8A418254297E72F86954 /* PickFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitScene.swift; sourceTree = "<group>"; };
@@ -195,6 +200,7 @@
 		D85156F893459A7FB65A2E06 /* MathQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathQuestion.swift; sourceTree = "<group>"; };
 		DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCatalog.swift; sourceTree = "<group>"; };
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
+		DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
 		E2DA8F3B08371E6244910548 /* DecorationInventoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationInventoryTests.swift; sourceTree = "<group>"; };
 		EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProgress.swift; sourceTree = "<group>"; };
@@ -375,6 +381,7 @@
 				C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */,
 				F2A01F7868C19C9B67F08A25 /* CollectedDecoration.swift */,
 				B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */,
+				4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */,
 				C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */,
 				8D68C640AC4EA0111CA49A97 /* DecorationPurchaseLogic.swift */,
 				D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */,
@@ -382,6 +389,7 @@
 				CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */,
 				43B5F110839E77BCA7F6E418 /* MapCatalog.swift */,
 				D85156F893459A7FB65A2E06 /* MathQuestion.swift */,
+				75B52E7B8B906410D0B8C918 /* Noom.swift */,
 				0510E8D7639394AE33EDFCDC /* OrchardState.swift */,
 				AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */,
 				EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */,
@@ -537,10 +545,10 @@
 			children = (
 				C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */,
 				5F2A32FC7C794E56045B78B9 /* FruitCollectionView.swift */,
+				76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */,
+				DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */,
 				E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */,
 				94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */,
-				A1A1A1A1A1A1A1A1A1A1A101 /* PlacedDecorationView.swift */,
-				A2A2A2A2A2A2A2A2A2A2A202 /* OrchardEditView.swift */,
 			);
 			path = Orchard;
 			sourceTree = "<group>";
@@ -611,6 +619,7 @@
 		F3FF9737B69A1CBCCFA815A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				96BB54E58FBEE26A9755A642 /* NoomCatalogTests.swift */,
 				650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */,
 			);
 			path = Models;
@@ -742,6 +751,7 @@
 				DDE96EC2A6977A2D1632DC25 /* FruitCollectionTests.swift in Sources */,
 				3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */,
 				556792948EBD7FB6269FC285 /* MapProgressionLogicTests.swift in Sources */,
+				8BB297703389E441A70AC884 /* NoomCatalogTests.swift in Sources */,
 				D2E193779D4260CE466C9139 /* NumberTrainLogicTests.swift in Sources */,
 				8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */,
 				6D6DC4422294A775C4EDE4B9 /* ParentBattleTests.swift in Sources */,
@@ -771,9 +781,8 @@
 				3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */,
 				F36B75DB4909C4346FB6E92A /* CollectedDecoration.swift in Sources */,
 				53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */,
+				6DF427575DC41DB9B81DA099 /* CollectedNoom.swift in Sources */,
 				D26D178B8F0C646AE7AD7461 /* DecorateOrchardView.swift in Sources */,
-				A1A1A1A1A1A1A1A1A1A1A102 /* PlacedDecorationView.swift in Sources */,
-				A2A2A2A2A2A2A2A2A2A2A203 /* OrchardEditView.swift in Sources */,
 				403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */,
 				7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */,
 				DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */,
@@ -790,15 +799,18 @@
 				3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */,
 				34DFD7D4AEA20293BED88E88 /* MapProgressionLogic.swift in Sources */,
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
+				6B9820C7D6EA2726A0C9E65E /* Noom.swift in Sources */,
 				28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */,
 				3A924772A2997942BE464F32 /* NumberTrainScene.swift in Sources */,
 				845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */,
+				119D1A6A4B9696A64846FEEC /* OrchardEditView.swift in Sources */,
 				9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */,
 				EFBB489C0BDEE8A3C9726948 /* ParentCenterView.swift in Sources */,
 				F27F938C8ABB798A3C0F92E7 /* ParentQuestionGenerator.swift in Sources */,
 				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
 				3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */,
 				CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */,
+				C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */,
 				D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */,
 				087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */,
 				D8CD90D952A88FE5EA3CD4DD /* RewardCalculator.swift in Sources */,
