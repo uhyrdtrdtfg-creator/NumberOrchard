@@ -6,6 +6,7 @@ struct ExplorationMapView: View {
     let onStartStation: (Station) -> Void
 
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Query private var profiles: [ChildProfile]
     @State private var viewModel: ExplorationMapViewModel?
     @State private var selectedStation: Station?
@@ -56,34 +57,47 @@ struct ExplorationMapView: View {
         GeometryReader { geo in
             let contentHeight = geo.size.height * heightMultiplier
 
-            ScrollView([.vertical], showsIndicators: false) {
-                ZStack {
-                    MapPathsCanvas(
-                        completedIds: viewModel.completedStationIds,
-                        geoSize: CGSize(width: geo.size.width, height: contentHeight)
-                    )
+            ScrollViewReader { proxy in
+                ScrollView([.vertical], showsIndicators: false) {
+                    ZStack {
+                        MapPathsCanvas(
+                            completedIds: viewModel.completedStationIds,
+                            geoSize: CGSize(width: geo.size.width, height: contentHeight)
+                        )
+                        .frame(width: geo.size.width, height: contentHeight)
+
+                        EndStationMarker(
+                            unlocked: viewModel.isUnlocked(MapCatalog.endStationId)
+                        )
+                        .position(x: geo.size.width / 2, y: 80)
+
+                        ForEach(MapCatalog.stations) { station in
+                            StationNodeView(
+                                station: station,
+                                stars: viewModel.stars(for: station.id),
+                                isUnlocked: viewModel.isUnlocked(station.id)
+                            )
+                            .id(station.id)
+                            .position(
+                                x: station.mapX * geo.size.width,
+                                y: station.mapY * contentHeight
+                            )
+                            .onTapGesture { selectedStation = station }
+                        }
+                    }
                     .frame(width: geo.size.width, height: contentHeight)
-
-                    EndStationMarker(
-                        unlocked: viewModel.isUnlocked(MapCatalog.endStationId)
-                    )
-                    .position(x: geo.size.width / 2, y: 80)
-
-                    ForEach(MapCatalog.stations) { station in
-                        StationNodeView(
-                            station: station,
-                            stars: viewModel.stars(for: station.id),
-                            isUnlocked: viewModel.isUnlocked(station.id)
-                        )
-                        .position(
-                            x: station.mapX * geo.size.width,
-                            y: station.mapY * contentHeight
-                        )
-                        .onTapGesture { selectedStation = station }
+                    .padding(.top, 100)
+                }
+                .onAppear {
+                    let targetId = viewModel.recommendedStationId
+                    guard !targetId.isEmpty else { return }
+                    // Give layout a moment to settle before scrolling.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.6)) {
+                            proxy.scrollTo(targetId, anchor: .center)
+                        }
                     }
                 }
-                .frame(width: geo.size.width, height: contentHeight)
-                .padding(.top, 100)
             }
         }
     }
