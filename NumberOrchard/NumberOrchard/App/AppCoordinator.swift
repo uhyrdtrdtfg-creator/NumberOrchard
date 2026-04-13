@@ -63,34 +63,52 @@ struct AppCoordinator: View {
 
     private var eyeCareOverlay: some View {
         ZStack {
-            Color.black.opacity(0.7).ignoresSafeArea()
-            VStack(spacing: 28) {
-                Text("🌳").font(.system(size: 120))
-                Text("小果农休息一下吧！").font(.system(size: 38, weight: .bold)).foregroundStyle(.white)
-                Text("站起来看看窗外～").font(.title2).foregroundStyle(.white.opacity(0.85))
+            CartoonColor.overlayDark.ignoresSafeArea()
+            VStack(spacing: CartoonDimensions.spacingLarge) {
+                Text("🌳")
+                    .font(.system(size: 120))
+                    .accessibilityHidden(true)
+                Text("小果农休息一下吧！")
+                    .font(.system(size: 38, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                Text("站起来看看窗外～")
+                    .font(.system(size: CartoonDimensions.fontBodyLarge, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.85))
+
                 if !eyeCareManager.hasUsedExtension {
-                    Button {
-                        eyeCareManager.useExtension()
-                        showEyeCareAlert = false
-                    } label: {
+                    CartoonButton(
+                        tint: CartoonColor.gold,
+                        accessibilityLabel: "再玩 5 分钟",
+                        action: {
+                            eyeCareManager.useExtension()
+                            showEyeCareAlert = false
+                        }
+                    ) {
                         Text("再玩 5 分钟")
-                            .font(.title3).fontWeight(.semibold)
-                            .padding(.horizontal, 36).padding(.vertical, 18)
-                            .background(.orange, in: Capsule())
+                            .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
                             .foregroundStyle(.white)
+                            .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                            .frame(width: 240, height: 72)
                     }
                 }
-                Button {
-                    stopAdventure()
-                    showEyeCareAlert = false
-                } label: {
+
+                CartoonButton(
+                    tint: CartoonColor.leaf,
+                    accessibilityLabel: "结束今天的学习",
+                    action: {
+                        stopAdventure()
+                        showEyeCareAlert = false
+                    }
+                ) {
                     Text("结束今天的学习")
-                        .font(.title3).fontWeight(.semibold)
-                        .padding(.horizontal, 36).padding(.vertical, 18)
-                        .background(.green, in: Capsule())
+                        .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
+                        .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                        .frame(width: 280, height: 72)
                 }
             }
+            .padding(CartoonDimensions.spacingLarge)
         }
     }
 

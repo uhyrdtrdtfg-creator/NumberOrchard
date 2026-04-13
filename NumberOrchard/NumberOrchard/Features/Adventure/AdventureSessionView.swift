@@ -8,23 +8,62 @@ struct AdventureSessionView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var profiles: [ChildProfile]
     @State private var viewModel: AdventureSessionViewModel?
+    @State private var loadingTimedOut = false
 
     var body: some View {
-        Group {
-            if let viewModel {
-                if viewModel.isSessionComplete {
-                    sessionCompleteView(viewModel: viewModel)
-                } else if let question = viewModel.currentQuestion {
-                    gameView(for: question, viewModel: viewModel)
+        ZStack {
+            if viewModel == nil {
+                CartoonSkyBackground()
+            }
+
+            Group {
+                if let viewModel {
+                    if viewModel.isSessionComplete {
+                        sessionCompleteView(viewModel: viewModel)
+                    } else if let question = viewModel.currentQuestion {
+                        gameView(for: question, viewModel: viewModel)
+                    }
+                } else if loadingTimedOut {
+                    loadingErrorView
+                } else {
+                    loadingView
                 }
-            } else {
-                ProgressView("加载中...")
             }
         }
         .onAppear {
             let profile = profiles.first ?? createDefaultProfile()
             viewModel = AdventureSessionViewModel(profile: profile, station: station, modelContext: modelContext)
             AudioManager.shared.playMusic("adventure_bgm.wav")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                if viewModel == nil { loadingTimedOut = true }
+            }
+        }
+    }
+
+    private var loadingView: some View {
+        VStack(spacing: CartoonDimensions.spacingRegular) {
+            ProgressView()
+                .controlSize(.large)
+                .tint(CartoonColor.leaf)
+            Text("加载中...")
+                .cartoonBody(size: CartoonDimensions.fontBodyLarge)
+        }
+    }
+
+    private var loadingErrorView: some View {
+        VStack(spacing: CartoonDimensions.spacingRegular) {
+            Text("🌧️").font(.system(size: 100)).accessibilityHidden(true)
+            Text("加载失败了")
+                .cartoonTitle(size: CartoonDimensions.fontTitle)
+            Text("请返回重试")
+                .cartoonBody(size: CartoonDimensions.fontBodyLarge)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "返回", action: onFinish) {
+                Text("返回")
+                    .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .frame(width: 180, height: 64)
+            }
         }
     }
 
@@ -33,21 +72,23 @@ struct AdventureSessionView: View {
         VStack(spacing: 0) {
             HStack {
                 Text("第 \(viewModel.questionsCompleted + 1)/\(viewModel.totalQuestions) 题")
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
+                    .cartoonBody(size: CartoonDimensions.fontBody)
+                    .foregroundStyle(CartoonColor.text.opacity(0.75))
                 Spacer()
-                Button("暂停") {
+                Button {
                     viewModel.finishSession()
                     onFinish()
+                } label: {
+                    Text("暂停")
+                        .cartoonBody(size: CartoonDimensions.fontBody)
+                        .padding(.horizontal, CartoonDimensions.spacingRegular)
+                        .padding(.vertical, 10)
+                        .contentShape(Rectangle())
                 }
-                .font(.headline)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .contentShape(Rectangle())
                 .accessibilityHint("暂停并返回")
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 8)
+            .padding(.horizontal, CartoonDimensions.spacingRegular + 4)
+            .padding(.top, CartoonDimensions.spacingTight)
 
             Group {
                 switch question.gameMode {
@@ -76,55 +117,53 @@ struct AdventureSessionView: View {
 
     private func sessionCompleteView(viewModel: AdventureSessionViewModel) -> some View {
         ZStack {
+            CartoonSkyBackground()
             ConfettiView()
-            VStack(spacing: 24) {
+            VStack(spacing: CartoonDimensions.spacingMedium + 2) {
                 Text("太棒了！")
-                    .font(.system(size: 56, weight: .bold))
+                    .font(.system(size: CartoonDimensions.fontTitleHuge, weight: .black, design: .rounded))
+                    .foregroundStyle(CartoonColor.text)
                     .modifier(PopInModifier(delay: 0.1))
 
                 if let reward = viewModel.lastReward {
                     VStack(spacing: 10) {
                         Text("获得 ⭐ +\(reward.starsEarned)")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.orange)
+                            .font(.system(size: CartoonDimensions.fontTitle, weight: .black, design: .rounded))
+                            .foregroundStyle(CartoonColor.gold)
                             .modifier(PopInModifier(delay: 0.3))
                         if reward.seedsEarned > 0 {
                             Text("获得 🌱 +\(reward.seedsEarned)")
-                                .font(.title2)
-                                .foregroundStyle(.green)
+                                .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                                .foregroundStyle(CartoonColor.leaf)
                                 .modifier(PopInModifier(delay: 0.5))
                         }
                         if let fruit = viewModel.newlyUnlockedFruit {
-                            VStack(spacing: 8) {
+                            VStack(spacing: CartoonDimensions.spacingTight) {
                                 Text(fruit.emoji)
                                     .font(.system(size: 140))
+                                    .accessibilityHidden(true)
                                     .modifier(PopInModifier(delay: 0.7, fromScale: 0.0, rotate: true))
                                 Text("解锁新水果: \(fruit.name)")
-                                    .font(.title)
-                                    .fontWeight(.semibold)
-                                    .foregroundStyle(.purple)
+                                    .cartoonTitle(size: CartoonDimensions.fontTitleSmall)
+                                    .foregroundStyle(CartoonColor.berry)
                                     .modifier(PopInModifier(delay: 0.9))
                             }
                         }
                     }
                 } else {
                     Text("获得经验 +\(viewModel.experienceGained)")
-                        .font(.title3)
-                        .foregroundStyle(.orange)
+                        .cartoonTitle(size: CartoonDimensions.fontTitleSmall)
+                        .foregroundStyle(CartoonColor.gold)
                         .modifier(PopInModifier(delay: 0.3))
                 }
 
-                Button(action: onFinish) {
+                CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "回到果园", action: onFinish) {
                     Text("🌳 回到果园")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 64)
-                        .padding(.vertical, 24)
-                        .background(.green, in: Capsule())
+                        .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
+                        .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                        .frame(width: 280, height: 80)
                 }
-                .accessibilityLabel("回到果园")
                 .modifier(PopInModifier(delay: 1.1))
             }
         }

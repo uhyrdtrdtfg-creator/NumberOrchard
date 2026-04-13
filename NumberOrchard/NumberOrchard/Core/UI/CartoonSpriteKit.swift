@@ -15,6 +15,8 @@ enum CartoonSK {
     static let leaf        = UIColor(red: 0.32, green: 0.75, blue: 0.42, alpha: 1.0)
     static let berry       = UIColor(red: 0.70, green: 0.40, blue: 0.90, alpha: 1.0)
     static let wood        = UIColor(red: 0.55, green: 0.38, blue: 0.22, alpha: 1.0)
+    static let grassTop    = UIColor(red: 0.62, green: 0.84, blue: 0.45, alpha: 1.0)
+    static let grassBottom = UIColor(red: 0.40, green: 0.66, blue: 0.30, alpha: 1.0)
 
     static let cartoonFont = "Avenir-Black"
     static let cartoonHeavyFont = "Avenir-Black"
@@ -22,6 +24,54 @@ enum CartoonSK {
     /// Font name that supports Chinese with bold look. Falls back to PingFang SC Semibold if Avenir unavailable.
     static func chineseFont() -> String {
         "PingFangSC-Semibold"
+    }
+}
+
+// MARK: - Shared helpers for game scenes
+
+/// Generous touch targets for young children. Expand frames by this much when doing intersection tests.
+enum CartoonSKTouch {
+    /// Inset amount used with `frame.insetBy(dx: -padding, dy: -padding)` — ~50pt makes targets thumb-friendly.
+    static let largeHitPadding: CGFloat = 50
+}
+
+/// Cached gradient / ground textures keyed by size — avoids re-rendering each scene setup.
+@MainActor
+enum CartoonSKTextureCache {
+    private static var skyCache: [String: SKTexture] = [:]
+    private static var groundCache: [String: SKTexture] = [:]
+
+    private static func key(_ size: CGSize) -> String {
+        "\(Int(size.width.rounded()))x\(Int(size.height.rounded()))"
+    }
+
+    static func skyGradient(size: CGSize) -> SKTexture {
+        let k = key(size)
+        if let cached = skyCache[k] { return cached }
+        let image = renderGradient(size: size, top: CartoonSK.skyTop, bottom: CartoonSK.skyBottom)
+        let tex = SKTexture(image: image)
+        skyCache[k] = tex
+        return tex
+    }
+
+    static func grassGradient(size: CGSize) -> SKTexture {
+        let k = key(size)
+        if let cached = groundCache[k] { return cached }
+        let image = renderGradient(size: size, top: CartoonSK.grassTop, bottom: CartoonSK.grassBottom)
+        let tex = SKTexture(image: image)
+        groundCache[k] = tex
+        return tex
+    }
+
+    private static func renderGradient(size: CGSize, top: UIColor, bottom: UIColor) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { ctx in
+            let colors = [top.cgColor, bottom.cgColor] as CFArray
+            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
+                ctx.cgContext.drawLinearGradient(gradient,
+                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
+            }
+        }
     }
 }
 

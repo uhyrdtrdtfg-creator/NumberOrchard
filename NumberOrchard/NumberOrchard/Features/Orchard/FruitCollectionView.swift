@@ -20,36 +20,33 @@ struct FruitCollectionView: View {
         ZStack {
             CartoonSkyBackground()
 
-            VStack(spacing: 18) {
-                // Top bar
-                HStack {
-                    backButton
-                    Spacer()
-                    Text("🍎 水果图鉴")
-                        .font(.system(size: 32, weight: .black, design: .rounded))
-                        .foregroundStyle(CartoonColor.text)
-                    Spacer()
-                    CartoonHUD(icon: "tray.full.fill", value: "\(collectedIds.count)/30", tint: CartoonColor.coral)
-                }
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+            VStack(spacing: CartoonDimensions.spacingRegular + 2) {
+                topBar
 
-                // Rarity tabs
-                HStack(spacing: 12) {
-                    rarityTab(rarity: .common, label: "常见", color: CartoonColor.leaf)
-                    rarityTab(rarity: .rare, label: "稀有", color: CartoonColor.sky)
-                    rarityTab(rarity: .legendary, label: "传说", color: CartoonColor.berry)
-                }
-
-                // Grid
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 170))], spacing: 28) {
-                        ForEach(filteredFruits) { fruit in
-                            fruitCard(fruit)
-                        }
+                HStack(spacing: CartoonDimensions.spacingSmall) {
+                    CartoonTabChip(label: "常见", selected: selectedRarity == .common, tint: CartoonColor.leaf) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) { selectedRarity = .common }
                     }
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 20)
+                    CartoonTabChip(label: "稀有", selected: selectedRarity == .rare, tint: CartoonColor.sky) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) { selectedRarity = .rare }
+                    }
+                    CartoonTabChip(label: "传说", selected: selectedRarity == .legendary, tint: CartoonColor.berry) {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) { selectedRarity = .legendary }
+                    }
+                }
+
+                if filteredFruits.isEmpty {
+                    emptyState
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 170))], spacing: 28) {
+                            ForEach(filteredFruits) { fruit in
+                                fruitCard(fruit)
+                            }
+                        }
+                        .padding(.horizontal, CartoonDimensions.spacingLarge)
+                        .padding(.vertical, CartoonDimensions.spacingRegular + 4)
+                    }
                 }
             }
         }
@@ -58,49 +55,40 @@ struct FruitCollectionView: View {
         }
     }
 
-    private var backButton: some View {
-        Button(action: onDismiss) {
-            ZStack {
-                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 68, height: 68).offset(y: 4)
-                Circle().fill(CartoonColor.paper).frame(width: 68, height: 68)
-                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 68, height: 68)
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 28, weight: .black))
-                    .foregroundStyle(CartoonColor.text)
-            }
-            .frame(width: 72, height: 72)
-            .contentShape(Circle())
+    private var topBar: some View {
+        HStack {
+            CartoonCircleIconButton(
+                systemImage: "chevron.left",
+                accessibilityLabel: "返回",
+                action: onDismiss
+            )
+            Spacer()
+            Text("🍎 水果图鉴")
+                .cartoonTitle(size: CartoonDimensions.fontTitle)
+            Spacer()
+            CartoonHUD(
+                icon: "tray.full.fill",
+                value: "\(collectedIds.count)/30",
+                tint: CartoonColor.coral,
+                accessibilityLabel: "已收集 \(collectedIds.count) / 30"
+            )
         }
-        .accessibilityLabel("返回")
+        .padding(.horizontal, CartoonDimensions.spacingLarge)
+        .padding(.top, 20)
     }
 
-    private func rarityTab(rarity: FruitRarity, label: String, color: Color) -> some View {
-        let selected = selectedRarity == rarity
-        return Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                selectedRarity = rarity
-            }
-        }) {
-            ZStack {
-                Capsule()
-                    .fill(CartoonColor.ink.opacity(0.9))
-                    .frame(height: 52)
-                    .offset(y: selected ? 4 : 4)
-                Capsule()
-                    .fill(selected ? color : CartoonColor.paper)
-                    .frame(height: 52)
-                Capsule()
-                    .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
-                    .frame(height: 52)
-                Text(label)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
-                    .foregroundStyle(selected ? .white : CartoonColor.text)
-                    .padding(.horizontal, 28)
-            }
-            .fixedSize()
-            .offset(y: selected ? 0 : -2)
+    private var emptyState: some View {
+        VStack(spacing: CartoonDimensions.spacingRegular) {
+            Spacer()
+            Text("🌱")
+                .font(.system(size: 100))
+                .accessibilityHidden(true)
+            Text("还没有收集到水果～\n去冒险里解锁吧！")
+                .multilineTextAlignment(.center)
+                .cartoonBody(size: CartoonDimensions.fontBodyLarge)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            Spacer()
         }
-        .buttonStyle(.plain)
     }
 
     private func fruitCard(_ fruit: FruitItem) -> some View {
@@ -111,14 +99,14 @@ struct FruitCollectionView: View {
             VStack(spacing: 10) {
                 ZStack {
                     Circle()
-                        .fill(CartoonColor.ink.opacity(0.9))
+                        .fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow))
                         .frame(width: 140, height: 140)
                         .offset(y: 5)
                     Circle()
                         .fill(collected ? CartoonColor.gold.opacity(0.3) : Color.gray.opacity(0.3))
                         .frame(width: 140, height: 140)
                     Circle()
-                        .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4)
+                        .stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeHeavy)
                         .frame(width: 140, height: 140)
                     Text(collected ? fruit.emoji : "?")
                         .font(.system(size: collected ? 78 : 72, weight: .black, design: .rounded))
@@ -127,7 +115,7 @@ struct FruitCollectionView: View {
                         .opacity(collected ? 1 : 0.5)
                 }
                 Text(collected ? fruit.name : "？？？")
-                    .font(.system(size: 20, weight: .black, design: .rounded))
+                    .cartoonTitle(size: CartoonDimensions.fontBody)
                     .foregroundStyle(collected ? CartoonColor.text : CartoonColor.text.opacity(0.4))
             }
         }
@@ -147,11 +135,11 @@ struct FruitDetailSheet: View {
         ZStack {
             CartoonSkyBackground()
 
-            VStack(spacing: 22) {
+            VStack(spacing: CartoonDimensions.spacingMedium) {
                 ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 240, height: 240).offset(y: 6)
+                    Circle().fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).frame(width: 240, height: 240).offset(y: CartoonDimensions.shadowOffsetLarge)
                     Circle().fill(CartoonColor.gold.opacity(0.25)).frame(width: 240, height: 240)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 5).frame(width: 240, height: 240)
+                    Circle().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: 5).frame(width: 240, height: 240)
                     Text(fruit.emoji).font(.system(size: 140)).accessibilityHidden(true)
                 }
                 .scaleEffect(reduceMotion ? 1 : (popped ? 1 : 0.3))
@@ -159,38 +147,36 @@ struct FruitDetailSheet: View {
                 .animation(reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.55), value: popped)
 
                 Text(fruit.name)
-                    .font(.system(size: 42, weight: .black, design: .rounded))
-                    .foregroundStyle(CartoonColor.text)
+                    .cartoonTitle(size: CartoonDimensions.fontTitleLarge)
 
                 Text(fruit.rarity.rawValue)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .font(.system(size: CartoonDimensions.fontBodyLarge, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
-                    .padding(.horizontal, 22).padding(.vertical, 10)
+                    .padding(.horizontal, CartoonDimensions.spacingMedium).padding(.vertical, 10)
                     .background(
                         ZStack {
-                            Capsule().fill(CartoonColor.ink.opacity(0.9)).offset(y: 4)
+                            Capsule().fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).offset(y: CartoonDimensions.shadowOffsetRegular)
                             Capsule().fill(rarityColor)
-                            Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
+                            Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
                         }
                     )
 
-                CartoonPanel(cornerRadius: 24) {
+                CartoonPanel(cornerRadius: CartoonDimensions.radiusMedium) {
                     Text(fruit.funFact)
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                        .foregroundStyle(CartoonColor.text)
+                        .cartoonBody(size: CartoonDimensions.fontBodyLarge)
                         .multilineTextAlignment(.center)
-                        .padding(24)
+                        .padding(CartoonDimensions.spacingMedium + 2)
                 }
 
                 CartoonButton(tint: CartoonColor.sky, action: onDismiss) {
                     Text("知道了！")
-                        .font(.system(size: 26, weight: .black, design: .rounded))
+                        .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
                         .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
                         .frame(width: 200, height: 70)
                 }
             }
-            .padding(30)
+            .padding(CartoonDimensions.spacingLarge)
         }
         .presentationDetents([.large])
         .onAppear { popped = true }
@@ -203,4 +189,9 @@ struct FruitDetailSheet: View {
         case .legendary: return CartoonColor.berry
         }
     }
+}
+
+#Preview {
+    FruitCollectionView(onDismiss: {})
+        .modelContainer(for: ChildProfile.self, inMemory: true)
 }

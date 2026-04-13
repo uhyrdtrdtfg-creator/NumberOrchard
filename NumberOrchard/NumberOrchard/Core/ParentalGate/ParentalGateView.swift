@@ -12,7 +12,7 @@ struct ParentalGateView: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.6)
+            CartoonColor.overlayMedium
                 .ignoresSafeArea()
 
             VStack(spacing: 30) {
@@ -71,18 +71,19 @@ struct ParentalGateView: View {
                     .frame(width: 88, height: 88)
             }
             .gesture(
-                LongPressGesture(minimumDuration: 3)
+                DragGesture(minimumDistance: 0)
                     .onChanged { _ in
-                        withAnimation(.linear(duration: 3)) {
-                            holdProgress = 1.0
+                        if holdProgress == 0 {
+                            withAnimation(.linear(duration: 3)) {
+                                holdProgress = 1.0
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                                if holdProgress >= 0.95 {
+                                    holdCompleted = true
+                                }
+                            }
                         }
                     }
-                    .onEnded { _ in
-                        holdCompleted = true
-                    }
-            )
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
                     .onEnded { _ in
                         if !holdCompleted {
                             withAnimation { holdProgress = 0 }

@@ -46,31 +46,23 @@ class ShareFruitScene: SKScene {
         self.gameState = ShareFruitGameState(question: question)
     }
 
+    private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
+    private var safeAreaBottom: CGFloat { view?.safeAreaInsets.bottom ?? 0 }
+
     override func didMove(to view: SKView) {
         backgroundColor = CartoonSK.skyTop
+        view.preferredFramesPerSecond = 60
         startTime = Date()
         setupBackground()
         setupScene()
     }
 
     private func setupBackground() {
-        let gradientImage = renderGradient(size: size)
-        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        let bg = SKSpriteNode(texture: CartoonSKTextureCache.skyGradient(size: size))
         bg.size = size
         bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
         bg.zPosition = -100
         addChild(bg)
-    }
-
-    private func renderGradient(size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { ctx in
-            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
-            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
-                ctx.cgContext.drawLinearGradient(gradient,
-                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
-            }
-        }
     }
 
     private func setupScene() {
@@ -81,7 +73,7 @@ class ShareFruitScene: SKScene {
             text: gameState.question.displayText,
             fontSize: 34
         )
-        questionLabel.position = CGPoint(x: w / 2, y: h - 80)
+        questionLabel.position = CGPoint(x: w / 2, y: h - safeAreaTop - 40)
         addChild(questionLabel)
 
         // Plate (big round disc in center-upper)
@@ -116,10 +108,10 @@ class ShareFruitScene: SKScene {
             fruitNodes.append(fruit)
         }
 
-        // Animal bubble at bottom
+        // Animal bubble at bottom (respect home indicator)
         animalNode = SKSpriteNode(texture: SKTexture(image: renderAnimalBubble(size: CGSize(width: 160, height: 160))))
         animalNode.size = CGSize(width: 168, height: 168)
-        animalNode.position = CGPoint(x: w * 0.28, y: h * 0.22)
+        animalNode.position = CGPoint(x: w * 0.28, y: max(h * 0.22, safeAreaBottom + 100))
         animalNode.name = "animal"
         addChild(animalNode)
 
@@ -204,7 +196,10 @@ class ShareFruitScene: SKScene {
         draggingNode = nil
 
         let fruitFrame = node.frame
-        let animalFrame = animalNode.frame.insetBy(dx: -30, dy: -30)
+        let animalFrame = animalNode.frame.insetBy(
+            dx: -CartoonSKTouch.largeHitPadding,
+            dy: -CartoonSKTouch.largeHitPadding
+        )
 
         if animalFrame.intersects(fruitFrame) {
             node.run(SKAction.sequence([

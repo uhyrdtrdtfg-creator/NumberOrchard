@@ -10,89 +10,80 @@ struct DecorateOrchardView: View {
     private let purchaseLogic = DecorationPurchaseLogic()
 
     private var profile: ChildProfile? { profiles.first }
+    private var currentItems: [DecorationItem] {
+        DecorationCatalog.items(in: selectedCategory)
+    }
 
     var body: some View {
         ZStack {
             CartoonSkyBackground()
 
-            VStack(spacing: 16) {
-                // Top bar
-                HStack {
-                    backButton
-                    Spacer()
-                    Text("🎨 装饰商店")
-                        .font(.system(size: 32, weight: .black, design: .rounded))
-                        .foregroundStyle(CartoonColor.text)
-                    Spacer()
-                    CartoonHUD(icon: "star.fill", value: "\(profile?.stars ?? 0)", tint: CartoonColor.gold)
-                }
-                .padding(.horizontal, 30)
-                .padding(.top, 20)
+            VStack(spacing: CartoonDimensions.spacingRegular) {
+                topBar
 
-                // Category tabs
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(DecorationCategory.allCases, id: \.self) { category in
-                            categoryTab(category)
+                            CartoonTabChip(
+                                label: category.rawValue,
+                                selected: selectedCategory == category,
+                                tint: CartoonColor.coral,
+                                action: {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                        selectedCategory = category
+                                    }
+                                }
+                            )
                         }
                     }
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, CartoonDimensions.spacingLarge)
                 }
 
-                // Grid
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], spacing: 24) {
-                        ForEach(DecorationCatalog.items(in: selectedCategory)) { item in
-                            decorationCard(item)
+                if currentItems.isEmpty {
+                    emptyState
+                } else {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 180))], spacing: 24) {
+                            ForEach(currentItems) { item in
+                                decorationCard(item)
+                            }
                         }
+                        .padding(.horizontal, CartoonDimensions.spacingLarge)
+                        .padding(.vertical, CartoonDimensions.spacingRegular)
                     }
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 16)
                 }
             }
         }
     }
 
-    private var backButton: some View {
-        Button(action: onDismiss) {
-            ZStack {
-                Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 68, height: 68).offset(y: 4)
-                Circle().fill(CartoonColor.paper).frame(width: 68, height: 68)
-                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 68, height: 68)
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 28, weight: .black))
-                    .foregroundStyle(CartoonColor.text)
-            }
-            .frame(width: 72, height: 72)
-            .contentShape(Circle())
+    private var topBar: some View {
+        HStack {
+            CartoonCircleIconButton(
+                systemImage: "chevron.left",
+                accessibilityLabel: "返回",
+                action: onDismiss
+            )
+            Spacer()
+            Text("🎨 装饰商店")
+                .cartoonTitle(size: CartoonDimensions.fontTitle)
+            Spacer()
+            CartoonHUD(icon: "star.fill", value: "\(profile?.stars ?? 0)", tint: CartoonColor.gold)
         }
-        .accessibilityLabel("返回")
+        .padding(.horizontal, CartoonDimensions.spacingLarge)
+        .padding(.top, 20)
     }
 
-    private func categoryTab(_ category: DecorationCategory) -> some View {
-        let selected = selectedCategory == category
-        return Button(action: {
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                selectedCategory = category
-            }
-        }) {
-            ZStack {
-                Capsule().fill(CartoonColor.ink.opacity(0.9)).frame(height: 56).offset(y: 4)
-                Capsule()
-                    .fill(selected ? CartoonColor.coral : CartoonColor.paper)
-                    .frame(height: 56)
-                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(height: 56)
-                Text(category.rawValue)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
-                    .foregroundStyle(selected ? .white : CartoonColor.text)
-                    .padding(.horizontal, 24)
-            }
-            .fixedSize()
-            .offset(y: selected ? 0 : -2)
+    private var emptyState: some View {
+        VStack(spacing: CartoonDimensions.spacingRegular) {
+            Spacer()
+            Text("🎨")
+                .font(.system(size: 100))
+                .accessibilityHidden(true)
+            Text("这个分类还没有商品哦～")
+                .cartoonBody(size: CartoonDimensions.fontBodyLarge)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            Spacer()
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(category.rawValue)
-        .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)
     }
 
     @ViewBuilder
@@ -101,41 +92,40 @@ struct DecorateOrchardView: View {
         let stars = profile?.stars ?? 0
         let canAfford = stars >= item.cost
 
-        VStack(spacing: 12) {
+        VStack(spacing: CartoonDimensions.spacingSmall) {
             ZStack {
-                Circle().fill(CartoonColor.ink.opacity(0.85)).frame(width: 130, height: 130).offset(y: 4)
+                Circle().fill(CartoonColor.ink.opacity(0.85)).frame(width: 130, height: 130).offset(y: CartoonDimensions.shadowOffsetRegular)
                 Circle().fill(CartoonColor.paper).frame(width: 130, height: 130)
-                Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 130, height: 130)
+                Circle().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold).frame(width: 130, height: 130)
                 Text(item.emoji).font(.system(size: 74))
                 if owned > 0 {
                     Text("×\(owned)")
-                        .font(.system(size: 18, weight: .black, design: .rounded))
+                        .font(.system(size: CartoonDimensions.fontBodySmall, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 10).padding(.vertical, 4)
                         .background(Capsule().fill(CartoonColor.leaf))
-                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 2))
+                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeThin))
                         .offset(x: 44, y: -44)
                 }
             }
 
             Text(item.name)
-                .font(.system(size: 22, weight: .black, design: .rounded))
-                .foregroundStyle(CartoonColor.text)
+                .cartoonTitle(size: CartoonDimensions.fontBodyLarge)
                 .minimumScaleFactor(0.8)
                 .lineLimit(1)
 
             CartoonButton(
                 tint: canAfford ? CartoonColor.gold : CartoonColor.ink.opacity(0.3),
-                shadowOffset: 4,
-                cornerRadius: 22,
+                shadowOffset: CartoonDimensions.shadowOffsetRegular,
+                cornerRadius: CartoonDimensions.radiusMedium - 2,
                 accessibilityLabel: "购买 \(item.name),价格 \(item.cost) 颗星星",
                 accessibilityHint: canAfford ? "双击购买" : "星星不够",
                 action: { purchase(item) }
             ) {
-                HStack(spacing: 8) {
-                    Image(systemName: "star.fill").font(.system(size: 20, weight: .black))
+                HStack(spacing: CartoonDimensions.spacingTight) {
+                    Image(systemName: "star.fill").font(.system(size: CartoonDimensions.fontBody, weight: .black))
                     Text("\(item.cost)")
-                        .font(.system(size: 24, weight: .black, design: .rounded))
+                        .font(.system(size: CartoonDimensions.fontTitleSmall - 2, weight: .black, design: .rounded))
                 }
                 .foregroundStyle(.white)
                 .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
@@ -158,4 +148,9 @@ struct DecorateOrchardView: View {
             modelContext.insert(decoration)
         }
     }
+}
+
+#Preview {
+    DecorateOrchardView(onDismiss: {})
+        .modelContainer(for: ChildProfile.self, inMemory: true)
 }

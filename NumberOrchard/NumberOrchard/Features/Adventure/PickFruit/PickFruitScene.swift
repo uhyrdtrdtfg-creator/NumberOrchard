@@ -47,63 +47,42 @@ class PickFruitScene: SKScene {
         self.gameState = PickFruitGameState(question: question)
     }
 
+    private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
+    private var safeAreaBottom: CGFloat { view?.safeAreaInsets.bottom ?? 0 }
+
     override func didMove(to view: SKView) {
         backgroundColor = CartoonSK.skyTop
+        view.preferredFramesPerSecond = 60
         startTime = Date()
         setupBackground()
         setupScene()
     }
 
     private func setupBackground() {
-        let gradientImage = renderBackgroundGradient(size: size)
-        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        let bg = SKSpriteNode(texture: CartoonSKTextureCache.skyGradient(size: size))
         bg.size = size
         bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
         bg.zPosition = -100
         addChild(bg)
 
-        // Ground strip at bottom
-        let ground = SKSpriteNode(texture: SKTexture(image: renderGround(size: CGSize(width: size.width, height: 140))))
-        ground.size = CGSize(width: size.width, height: 140)
-        ground.position = CGPoint(x: size.width / 2, y: 70)
+        let groundSize = CGSize(width: size.width, height: 140)
+        let ground = SKSpriteNode(texture: CartoonSKTextureCache.grassGradient(size: groundSize))
+        ground.size = groundSize
+        ground.position = CGPoint(x: size.width / 2, y: 70 + safeAreaBottom)
         ground.zPosition = -50
         addChild(ground)
-    }
-
-    private func renderBackgroundGradient(size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { ctx in
-            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
-            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
-                ctx.cgContext.drawLinearGradient(gradient,
-                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
-            }
-        }
-    }
-
-    private func renderGround(size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { ctx in
-            let grassTop = UIColor(red: 0.62, green: 0.84, blue: 0.45, alpha: 1.0)
-            let grassBottom = UIColor(red: 0.40, green: 0.66, blue: 0.30, alpha: 1.0)
-            let colors = [grassTop.cgColor, grassBottom.cgColor] as CFArray
-            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
-                ctx.cgContext.drawLinearGradient(gradient,
-                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
-            }
-        }
     }
 
     private func setupScene() {
         let sceneWidth = size.width
         let sceneHeight = size.height
 
-        // Question pill at top
+        // Question pill at top (offset below notch)
         questionLabel = SKNode.cartoonPillLabel(
             text: gameState.question.displayText,
             fontSize: 34
         )
-        questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - 80)
+        questionLabel.position = CGPoint(x: sceneWidth / 2, y: sceneHeight - safeAreaTop - 40)
         addChild(questionLabel)
 
         // Tree trunk on left
@@ -260,7 +239,10 @@ class PickFruitScene: SKScene {
         draggingNode = nil
 
         let fruitFrame = node.frame
-        let basketFrame = basketNode.frame.insetBy(dx: -30, dy: -30)
+        let basketFrame = basketNode.frame.insetBy(
+            dx: -CartoonSKTouch.largeHitPadding,
+            dy: -CartoonSKTouch.largeHitPadding
+        )
 
         if basketFrame.intersects(fruitFrame) {
             node.run(SKAction.sequence([

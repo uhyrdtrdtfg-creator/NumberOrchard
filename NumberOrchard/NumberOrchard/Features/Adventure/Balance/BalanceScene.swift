@@ -62,47 +62,34 @@ class BalanceScene: SKScene {
         self.gameState = BalanceGameState(question: question)
     }
 
+    private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
+    private var safeAreaBottom: CGFloat { view?.safeAreaInsets.bottom ?? 0 }
+
     override func didMove(to view: SKView) {
-        // Cartoon sky gradient via large background sprite
         backgroundColor = CartoonSK.skyTop
+        view.preferredFramesPerSecond = 60
         startTime = Date()
         setupBackground()
         setupScene()
     }
 
     private func setupBackground() {
-        // Peach gradient band at the bottom
-        let gradientImage = renderBackgroundGradient(size: size)
-        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        let bg = SKSpriteNode(texture: CartoonSKTextureCache.skyGradient(size: size))
         bg.size = size
         bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
         bg.zPosition = -100
         addChild(bg)
     }
 
-    private func renderBackgroundGradient(size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { ctx in
-            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
-            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
-                ctx.cgContext.drawLinearGradient(gradient,
-                    start: CGPoint(x: 0, y: 0),
-                    end: CGPoint(x: 0, y: size.height),
-                    options: [])
-            }
-        }
-    }
-
     private func setupScene() {
         let w = size.width
         let h = size.height
 
-        // Question pill at top
         questionLabel = SKNode.cartoonPillLabel(
             text: gameState.question.displayText,
             fontSize: 34
         )
-        questionLabel.position = CGPoint(x: w/2, y: h - 80)
+        questionLabel.position = CGPoint(x: w/2, y: h - safeAreaTop - 40)
         addChild(questionLabel)
 
         // Pivot (wood pole)
@@ -169,7 +156,7 @@ class BalanceScene: SKScene {
         let trayMargin: CGFloat = 40
         let poolHeight: CGFloat = 140
         let poolWidth = min(w - 60, groupWidth + trayMargin * 2 + blockSize.width)
-        let poolY: CGFloat = 120
+        let poolY: CGFloat = max(120, safeAreaBottom + poolHeight / 2 + 10)
 
         let poolTexture = SKTexture(image: renderPoolTray(size: CGSize(width: poolWidth, height: poolHeight)))
         let poolBG = SKSpriteNode(texture: poolTexture, size: CGSize(width: poolWidth + 8, height: poolHeight + 10))
@@ -313,7 +300,10 @@ class BalanceScene: SKScene {
         guard let block = draggingBlock else { return }
         draggingBlock = nil
 
-        let rightPanSceneFrame = rightPan.calculateAccumulatedFrame().insetBy(dx: -40, dy: -40)
+        let rightPanSceneFrame = rightPan.calculateAccumulatedFrame().insetBy(
+            dx: -CartoonSKTouch.largeHitPadding,
+            dy: -CartoonSKTouch.largeHitPadding
+        )
         if rightPanSceneFrame.intersects(block.frame) {
             block.run(SKAction.sequence([
                 SKAction.scale(to: 0.1, duration: 0.15),

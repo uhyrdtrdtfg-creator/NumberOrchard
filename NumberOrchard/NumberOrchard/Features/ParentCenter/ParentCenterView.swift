@@ -10,31 +10,57 @@ struct ParentCenterView: View {
     private var profile: ChildProfile? { profiles.first }
 
     var body: some View {
-        NavigationStack {
+        VStack(spacing: 0) {
+            topBar
+            Divider()
             if let profile {
-                TabView(selection: $selectedTab) {
-                    BasicReportView(profile: profile)
-                        .tag(0)
-                        .tabItem {
-                            Label("学习报告", systemImage: "chart.bar")
-                        }
-
-                    SettingsView(profile: profile)
-                        .tag(1)
-                        .tabItem {
-                            Label("设置", systemImage: "gearshape")
-                        }
-                }
-                .navigationTitle("家长中心")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button("返回") { onDismiss() }
+                Group {
+                    switch selectedTab {
+                    case 0: BasicReportView(profile: profile)
+                    default: SettingsView(profile: profile)
                     }
                 }
             } else {
-                Text("暂无数据")
+                Spacer()
+                Text("暂无数据").cartoonBody()
+                Spacer()
             }
         }
     }
+
+    private var topBar: some View {
+        HStack(spacing: CartoonDimensions.spacingSmall) {
+            Button("返回") { onDismiss() }
+                .font(.headline)
+                .padding(.horizontal, CartoonDimensions.spacingSmall + 2)
+                .padding(.vertical, CartoonDimensions.spacingTight)
+                .accessibilityLabel("返回")
+
+            Spacer()
+
+            Picker("", selection: $selectedTab) {
+                Label("学习报告", systemImage: "chart.bar").tag(0)
+                Label("设置", systemImage: "gearshape").tag(1)
+            }
+            .pickerStyle(.segmented)
+            .frame(maxWidth: 260)
+
+            Spacer()
+
+            // Invisible spacer matching return button width for balanced layout
+            Text("返回")
+                .font(.headline)
+                .padding(.horizontal, CartoonDimensions.spacingSmall + 2)
+                .padding(.vertical, CartoonDimensions.spacingTight)
+                .opacity(0)
+                .accessibilityHidden(true)
+        }
+        .padding(.horizontal, CartoonDimensions.spacingRegular)
+        .padding(.vertical, CartoonDimensions.spacingSmall)
+    }
+}
+
+#Preview {
+    ParentCenterView(onDismiss: {})
+        .modelContainer(for: ChildProfile.self, inMemory: true)
 }

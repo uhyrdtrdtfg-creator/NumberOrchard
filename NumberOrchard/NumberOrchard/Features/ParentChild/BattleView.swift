@@ -8,12 +8,15 @@ struct BattleView: View {
     @State private var viewModel: BattleViewModel?
 
     var body: some View {
-        Group {
-            if let viewModel {
-                if viewModel.battleComplete {
-                    battleResultView(viewModel: viewModel)
-                } else {
-                    battleContentView(viewModel: viewModel)
+        ZStack {
+            CartoonSkyBackground()
+            Group {
+                if let viewModel {
+                    if viewModel.battleComplete {
+                        battleResultView(viewModel: viewModel)
+                    } else {
+                        battleContentView(viewModel: viewModel)
+                    }
                 }
             }
         }
@@ -34,27 +37,12 @@ struct BattleView: View {
                 onClear: { viewModel.clearInput(for: .parent) },
                 onSubmit: { viewModel.submitParent() },
                 label: "家长",
-                color: .blue
+                tint: CartoonColor.sky
             )
             .rotationEffect(.degrees(180))
             .frame(maxWidth: .infinity)
 
-            ZStack {
-                Rectangle().fill(.brown.opacity(0.3)).frame(height: 40)
-                HStack(spacing: 20) {
-                    Text("🏆 第 \(viewModel.currentRound)/\(viewModel.totalRounds) 轮")
-                    Text("孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
-                        .fontWeight(.bold)
-                    if viewModel.roundComplete {
-                        Button("下一轮") { viewModel.nextRound() }
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 18).padding(.vertical, 10)
-                            .background(.green, in: Capsule())
-                            .foregroundStyle(.white)
-                    }
-                }
-                .font(.callout)
-            }
+            scoreboardRow(viewModel: viewModel)
 
             battleSide(
                 question: viewModel.childQuestion?.displayText ?? "",
@@ -64,9 +52,32 @@ struct BattleView: View {
                 onClear: { viewModel.clearInput(for: .child) },
                 onSubmit: { viewModel.submitChild() },
                 label: "孩子",
-                color: .green
+                tint: CartoonColor.leaf
             )
             .frame(maxWidth: .infinity)
+        }
+    }
+
+    private func scoreboardRow(viewModel: BattleViewModel) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(CartoonColor.wood.opacity(0.3))
+                .frame(height: 44)
+            HStack(spacing: CartoonDimensions.spacingRegular + 4) {
+                Text("🏆 第 \(viewModel.currentRound)/\(viewModel.totalRounds) 轮")
+                    .cartoonBody(size: CartoonDimensions.fontBodySmall)
+                Text("孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
+                    .cartoonTitle(size: CartoonDimensions.fontBodySmall)
+                if viewModel.roundComplete {
+                    Button("下一轮") { viewModel.nextRound() }
+                        .fontWeight(.bold)
+                        .padding(.horizontal, CartoonDimensions.spacingRegular + 2)
+                        .padding(.vertical, 10)
+                        .background(CartoonColor.leaf, in: Capsule())
+                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeThin))
+                        .foregroundStyle(.white)
+                }
+            }
         }
     }
 
@@ -78,39 +89,56 @@ struct BattleView: View {
         onClear: @escaping () -> Void,
         onSubmit: @escaping () -> Void,
         label: String,
-        color: Color
+        tint: Color
     ) -> some View {
-        VStack(spacing: 16) {
-            Text(label).font(.caption).foregroundStyle(.secondary)
-            Text(question).font(.title2).fontWeight(.semibold)
+        VStack(spacing: CartoonDimensions.spacingRegular) {
+            Text(label)
+                .cartoonCaption()
+            Text(question)
+                .cartoonTitle(size: CartoonDimensions.fontTitleSmall)
             Text(input.isEmpty ? "_" : input)
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .frame(minWidth: 80)
-                .padding(.horizontal, 12).padding(.vertical, 6)
-                .background(.gray.opacity(0.2), in: RoundedRectangle(cornerRadius: 8))
+                .font(.system(size: CartoonDimensions.fontTitleLarge, weight: .black, design: .rounded))
+                .foregroundStyle(CartoonColor.text)
+                .frame(minWidth: 96)
+                .padding(.horizontal, CartoonDimensions.spacingSmall)
+                .padding(.vertical, CartoonDimensions.spacingTight)
+                .background(
+                    ZStack {
+                        RoundedRectangle(cornerRadius: CartoonDimensions.radiusMedium)
+                            .fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).offset(y: CartoonDimensions.shadowOffsetRegular)
+                        RoundedRectangle(cornerRadius: CartoonDimensions.radiusMedium).fill(CartoonColor.paper)
+                        RoundedRectangle(cornerRadius: CartoonDimensions.radiusMedium).stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
+                    }
+                )
             HStack(spacing: 10) {
                 ForEach(0..<10) { i in
                     Button(action: { onDigit("\(i)") }) {
                         Text("\(i)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .frame(width: max(44, 52 * keypadScale), height: max(44, 52 * keypadScale))
-                            .background(color.opacity(0.2), in: RoundedRectangle(cornerRadius: 10))
+                            .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                            .foregroundStyle(CartoonColor.text)
+                            .frame(width: max(48, 54 * keypadScale), height: max(48, 54 * keypadScale))
+                            .background(tint.opacity(0.2), in: RoundedRectangle(cornerRadius: CartoonDimensions.radiusSmall))
+                            .overlay(RoundedRectangle(cornerRadius: CartoonDimensions.radiusSmall).stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStrokeLight), lineWidth: CartoonDimensions.strokeThin))
                     }
                     .accessibilityLabel("数字 \(i)")
                 }
             }
-            HStack(spacing: 20) {
+            HStack(spacing: CartoonDimensions.spacingRegular + 4) {
                 Button("清空", action: onClear)
-                    .padding(.horizontal, 18).padding(.vertical, 10)
-                    .background(.gray.opacity(0.25), in: Capsule())
-                    .foregroundStyle(.primary)
+                    .cartoonBody()
+                    .padding(.horizontal, CartoonDimensions.spacingRegular + 2)
+                    .padding(.vertical, 10)
+                    .background(Color.gray.opacity(0.25), in: Capsule())
+                    .overlay(Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStrokeLight), lineWidth: CartoonDimensions.strokeThin))
+                    .accessibilityLabel("清空")
                 Button("提交", action: onSubmit)
-                    .padding(.horizontal, 20).padding(.vertical, 12)
-                    .background(color, in: Capsule())
+                    .font(.system(size: CartoonDimensions.fontBodyLarge, weight: .black, design: .rounded))
+                    .padding(.horizontal, CartoonDimensions.spacingMedium)
+                    .padding(.vertical, CartoonDimensions.spacingSmall)
+                    .background(tint, in: Capsule())
+                    .overlay(Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeRegular))
                     .foregroundStyle(.white)
-                    .fontWeight(.bold)
+                    .accessibilityLabel("提交")
             }
         }
         .padding()
@@ -121,7 +149,7 @@ struct BattleView: View {
             if viewModel.finalWinner == .child {
                 ConfettiView()
             }
-            VStack(spacing: 24) {
+            VStack(spacing: CartoonDimensions.spacingMedium + 2) {
                 switch viewModel.finalWinner {
                 case .child:
                     Text("🎆")
@@ -129,8 +157,7 @@ struct BattleView: View {
                         .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1, fromScale: 0.0, rotate: true))
                     Text("你比爸爸/妈妈还厉害！")
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .cartoonTitle(size: CartoonDimensions.fontTitle)
                         .modifier(PopInModifier(delay: 0.4))
                 case .parent:
                     Text("🤗")
@@ -138,8 +165,7 @@ struct BattleView: View {
                         .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1))
                     Text("差一点就赢了，下次一定！")
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .cartoonTitle(size: CartoonDimensions.fontTitle)
                         .modifier(PopInModifier(delay: 0.3))
                 case .tie, nil:
                     Text("🙌")
@@ -147,21 +173,20 @@ struct BattleView: View {
                         .accessibilityHidden(true)
                         .modifier(PopInModifier(delay: 0.1))
                     Text("你们都很棒！")
-                        .font(.title)
-                        .fontWeight(.bold)
+                        .cartoonTitle(size: CartoonDimensions.fontTitle)
                         .modifier(PopInModifier(delay: 0.3))
                 }
                 Text("最终 孩子 \(viewModel.childScore) : \(viewModel.parentScore) 家长")
-                    .font(.title)
-                    .fontWeight(.medium)
-                    .foregroundStyle(.secondary)
+                    .cartoonBody(size: CartoonDimensions.fontBodyLarge)
+                    .foregroundStyle(CartoonColor.text.opacity(0.7))
                     .modifier(PopInModifier(delay: 0.6))
-                Button(action: onFinish) {
+
+                CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "返回主页", action: onFinish) {
                     Text("返回主页")
-                        .font(.title2).fontWeight(.semibold)
-                        .padding(.horizontal, 50).padding(.vertical, 20)
-                        .background(.green, in: Capsule())
+                        .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
+                        .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                        .frame(width: 240, height: 72)
                 }
                 .modifier(PopInModifier(delay: 0.8))
             }

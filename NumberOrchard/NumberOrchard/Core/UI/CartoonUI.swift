@@ -17,6 +17,8 @@ enum CartoonColor {
     static let text        = Color(red: 0.32, green: 0.20, blue: 0.12)
     /// Paper cream for panels
     static let paper       = Color(red: 1.00, green: 0.98, blue: 0.91)
+    /// Check-in / soft paper variant (slightly warmer)
+    static let paperWarm   = Color(red: 1.00, green: 0.97, blue: 0.88)
     /// Gold accent
     static let gold        = Color(red: 1.00, green: 0.76, blue: 0.20)
     /// Coral
@@ -27,6 +29,79 @@ enum CartoonColor {
     static let leaf        = Color(red: 0.32, green: 0.75, blue: 0.42)
     /// Berry purple
     static let berry       = Color(red: 0.70, green: 0.40, blue: 0.90)
+    /// Wood brown (for pivots, tracks, barriers)
+    static let wood        = Color(red: 0.55, green: 0.38, blue: 0.22)
+
+    // MARK: Map regions
+    static let regionSeed      = Color(red: 0.95, green: 0.85, blue: 0.55) // pale yellow
+    static let regionSprout    = Color(red: 0.80, green: 0.92, blue: 0.55) // lime
+    static let regionSmallTree = Color(red: 0.70, green: 0.90, blue: 0.80) // mint
+    static let regionBigTree   = Color(red: 0.70, green: 0.85, blue: 1.00) // sky
+    static let regionBloom     = Color(red: 0.90, green: 0.72, blue: 1.00) // lavender
+    static let regionHarvest   = Color(red: 1.00, green: 0.70, blue: 0.70) // coral
+
+    /// Locked path fill (desaturated tan)
+    static let lockedPath    = Color(red: 0.88, green: 0.80, blue: 0.62)
+    /// Locked station surface (desaturated tan)
+    static let lockedStation = Color(red: 0.82, green: 0.76, blue: 0.68)
+
+    /// Overlay dark backdrop (for modals, eye-care)
+    static let overlayDark   = Color.black.opacity(0.7)
+    /// Overlay medium (for parental gate)
+    static let overlayMedium = Color.black.opacity(0.6)
+}
+
+// MARK: - Cartoon Dimensions
+
+enum CartoonDimensions {
+    // Spacing
+    static let spacingTight: CGFloat = 8
+    static let spacingSmall: CGFloat = 12
+    static let spacingRegular: CGFloat = 16
+    static let spacingMedium: CGFloat = 22
+    static let spacingLarge: CGFloat = 30
+
+    // Corner radii
+    static let radiusSmall: CGFloat = 18
+    static let radiusMedium: CGFloat = 24
+    static let radiusLarge: CGFloat = 28
+    static let radiusXLarge: CGFloat = 32
+
+    // Stroke widths
+    static let strokeThin: CGFloat = 2
+    static let strokeRegular: CGFloat = 3
+    static let strokeBold: CGFloat = 3.5
+    static let strokeHeavy: CGFloat = 4
+
+    // Shadow offsets (for "hard drop shadow" look)
+    static let shadowOffsetSmall: CGFloat = 3
+    static let shadowOffsetRegular: CGFloat = 4
+    static let shadowOffsetLarge: CGFloat = 6
+
+    // Icon button sizes (circle-icon buttons like back/gear)
+    static let iconButtonSize: CGFloat = 68
+    static let iconButtonHitSize: CGFloat = 72
+    static let iconButtonIconSize: CGFloat = 28
+
+    // Font sizes
+    static let fontCaption: CGFloat = 15
+    static let fontBodySmall: CGFloat = 18
+    static let fontBody: CGFloat = 20
+    static let fontBodyLarge: CGFloat = 22
+    static let fontTitleSmall: CGFloat = 26
+    static let fontTitle: CGFloat = 32
+    static let fontTitleLarge: CGFloat = 42
+    static let fontTitleHuge: CGFloat = 56
+
+    // Common emoji-in-circle sizes
+    static let circleBadgeSmall: CGFloat = 100
+    static let circleBadgeMedium: CGFloat = 130
+    static let circleBadgeLarge: CGFloat = 160
+    static let circleBadgeHuge: CGFloat = 220
+
+    static let inkOpacityShadow: Double = 0.9
+    static let inkOpacityStroke: Double = 0.8
+    static let inkOpacityStrokeLight: Double = 0.6
 }
 
 // MARK: - Shared backgrounds
@@ -74,7 +149,7 @@ struct CartoonGround: View {
                                 control: CGPoint(x: geo.size.width / 2, y: -20)
                             )
                         }
-                        .stroke(CartoonColor.ink.opacity(0.25), lineWidth: 3)
+                        .stroke(CartoonColor.ink.opacity(0.25), lineWidth: CartoonDimensions.strokeRegular)
                     )
                     .frame(height: height)
                 }
@@ -89,16 +164,16 @@ struct CartoonGround: View {
 
 struct CartoonPanel<Content: View>: View {
     var fill: Color = CartoonColor.paper
-    var stroke: Color = CartoonColor.ink.opacity(0.8)
-    var cornerRadius: CGFloat = 32
-    var strokeWidth: CGFloat = 4
+    var stroke: Color = CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke)
+    var cornerRadius: CGFloat = CartoonDimensions.radiusXLarge
+    var strokeWidth: CGFloat = CartoonDimensions.strokeHeavy
     let content: () -> Content
 
     init(
         fill: Color = CartoonColor.paper,
-        stroke: Color = CartoonColor.ink.opacity(0.8),
-        cornerRadius: CGFloat = 32,
-        strokeWidth: CGFloat = 4,
+        stroke: Color = CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke),
+        cornerRadius: CGFloat = CartoonDimensions.radiusXLarge,
+        strokeWidth: CGFloat = CartoonDimensions.strokeHeavy,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.fill = fill
@@ -118,7 +193,7 @@ struct CartoonPanel<Content: View>: View {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(stroke, lineWidth: strokeWidth)
             )
-            .shadow(color: CartoonColor.ink.opacity(0.35), radius: 0, x: 0, y: 6)
+            .shadow(color: CartoonColor.ink.opacity(0.35), radius: 0, x: 0, y: CartoonDimensions.shadowOffsetLarge)
     }
 }
 
@@ -126,8 +201,8 @@ struct CartoonPanel<Content: View>: View {
 
 struct CartoonButton<Content: View>: View {
     var tint: Color
-    var shadowOffset: CGFloat = 6
-    var cornerRadius: CGFloat = 28
+    var shadowOffset: CGFloat = CartoonDimensions.shadowOffsetLarge
+    var cornerRadius: CGFloat = CartoonDimensions.radiusLarge
     var accessibilityLabel: String? = nil
     var accessibilityHint: String? = nil
     var action: () -> Void
@@ -138,8 +213,8 @@ struct CartoonButton<Content: View>: View {
 
     init(
         tint: Color,
-        shadowOffset: CGFloat = 6,
-        cornerRadius: CGFloat = 28,
+        shadowOffset: CGFloat = CartoonDimensions.shadowOffsetLarge,
+        cornerRadius: CGFloat = CartoonDimensions.radiusLarge,
         accessibilityLabel: String? = nil,
         accessibilityHint: String? = nil,
         action: @escaping () -> Void,
@@ -184,7 +259,7 @@ struct CartoonButton<Content: View>: View {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(CartoonColor.ink.opacity(0.8), lineWidth: 4)
+                            .stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeHeavy)
                     )
 
                 content()
@@ -195,6 +270,109 @@ struct CartoonButton<Content: View>: View {
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel ?? "")
         .accessibilityHint(accessibilityHint ?? "")
+    }
+}
+
+// MARK: - Circle icon button (back / gear / close etc.)
+
+struct CartoonCircleIconButton: View {
+    let systemImage: String
+    var diameter: CGFloat = CartoonDimensions.iconButtonSize
+    var iconSize: CGFloat = CartoonDimensions.iconButtonIconSize
+    var fill: Color = CartoonColor.paper
+    var accessibilityLabel: String
+    var accessibilityHint: String? = nil
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle()
+                    .fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow))
+                    .frame(width: diameter, height: diameter)
+                    .offset(y: CartoonDimensions.shadowOffsetRegular)
+                Circle()
+                    .fill(fill)
+                    .frame(width: diameter, height: diameter)
+                Circle()
+                    .stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
+                    .frame(width: diameter, height: diameter)
+                Image(systemName: systemImage)
+                    .font(.system(size: iconSize, weight: .black))
+                    .foregroundStyle(CartoonColor.text)
+            }
+            .frame(width: diameter + 4, height: diameter + 8)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint(accessibilityHint ?? "")
+    }
+}
+
+// MARK: - Capsule tab chip (rarity/category selectors)
+
+struct CartoonTabChip: View {
+    let label: String
+    let selected: Bool
+    let tint: Color
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Capsule()
+                    .fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow))
+                    .frame(height: 52)
+                    .offset(y: CartoonDimensions.shadowOffsetRegular)
+                Capsule()
+                    .fill(selected ? tint : CartoonColor.paper)
+                    .frame(height: 52)
+                Capsule()
+                    .stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
+                    .frame(height: 52)
+                Text(label)
+                    .font(.system(size: CartoonDimensions.fontBodyLarge, weight: .black, design: .rounded))
+                    .foregroundStyle(selected ? .white : CartoonColor.text)
+                    .padding(.horizontal, CartoonDimensions.spacingMedium + 6)
+            }
+            .fixedSize()
+            .offset(y: selected ? 0 : -2)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
+        .accessibilityAddTraits(selected ? [.isSelected, .isButton] : .isButton)
+    }
+}
+
+// MARK: - Circle badge (emoji inside circle with ink outline + hard shadow)
+
+struct CartoonCircleBadge: View {
+    let emoji: String
+    var diameter: CGFloat = CartoonDimensions.circleBadgeMedium
+    var fill: Color = CartoonColor.paper
+    var dimmed: Bool = false
+    var emojiScale: CGFloat = 0.56
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow))
+                .frame(width: diameter, height: diameter)
+                .offset(y: CartoonDimensions.shadowOffsetRegular)
+            Circle()
+                .fill(fill)
+                .frame(width: diameter, height: diameter)
+            Circle()
+                .stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeHeavy)
+                .frame(width: diameter, height: diameter)
+            Text(emoji)
+                .font(.system(size: diameter * emojiScale))
+                .saturation(dimmed ? 0.3 : 1)
+                .opacity(dimmed ? 0.6 : 1)
+                .accessibilityHidden(true)
+        }
+        .accessibilityHidden(true)
     }
 }
 
@@ -222,7 +400,7 @@ struct CartoonHUD: View {
     var accessibilityLabel: String? = nil
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: CartoonDimensions.spacingTight) {
             Image(systemName: icon)
                 .font(.system(size: 24, weight: .black))
                 .foregroundStyle(tint)
@@ -232,13 +410,13 @@ struct CartoonHUD: View {
                 .foregroundStyle(CartoonColor.text)
                 .minimumScaleFactor(0.7)
         }
-        .padding(.horizontal, 22)
-        .padding(.vertical, 12)
+        .padding(.horizontal, CartoonDimensions.spacingMedium)
+        .padding(.vertical, CartoonDimensions.spacingSmall)
         .background(
             ZStack {
-                Capsule().fill(CartoonColor.ink.opacity(0.9)).offset(y: 4)
+                Capsule().fill(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityShadow)).offset(y: CartoonDimensions.shadowOffsetRegular)
                 Capsule().fill(CartoonColor.paper)
-                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5)
+                Capsule().stroke(CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke), lineWidth: CartoonDimensions.strokeBold)
             }
         )
         .accessibilityElement(children: .ignore)
@@ -246,16 +424,30 @@ struct CartoonHUD: View {
     }
 }
 
-// MARK: - Rounded chunky text style
+// MARK: - Rounded chunky text styles
 
 extension View {
-    func cartoonTitle(size: CGFloat = 36) -> some View {
+    func cartoonTitle(size: CGFloat = CartoonDimensions.fontTitle) -> some View {
         self.font(.system(size: size, weight: .black, design: .rounded))
             .foregroundStyle(CartoonColor.text)
     }
 
-    func cartoonBody(size: CGFloat = 20) -> some View {
+    func cartoonBody(size: CGFloat = CartoonDimensions.fontBody) -> some View {
         self.font(.system(size: size, weight: .bold, design: .rounded))
             .foregroundStyle(CartoonColor.text)
+    }
+
+    func cartoonCaption(size: CGFloat = CartoonDimensions.fontCaption) -> some View {
+        self.font(.system(size: size, weight: .bold, design: .rounded))
+            .foregroundStyle(CartoonColor.text.opacity(0.7))
+    }
+}
+
+// MARK: - View modifiers for stroke/shadow shortcuts
+
+extension View {
+    /// Hard drop shadow in ink color — mimics the cartoon style offset block.
+    func cartoonInkShadow(y: CGFloat = CartoonDimensions.shadowOffsetRegular) -> some View {
+        self.shadow(color: CartoonColor.ink.opacity(0.3), radius: 0, x: 0, y: y)
     }
 }

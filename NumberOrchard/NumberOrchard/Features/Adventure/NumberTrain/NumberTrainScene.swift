@@ -61,31 +61,23 @@ class NumberTrainScene: SKScene {
         self.useCountingMode = countingMode
     }
 
+    private var safeAreaTop: CGFloat { view?.safeAreaInsets.top ?? 0 }
+    private var safeAreaBottom: CGFloat { view?.safeAreaInsets.bottom ?? 0 }
+
     override func didMove(to view: SKView) {
         backgroundColor = CartoonSK.skyTop
+        view.preferredFramesPerSecond = 60
         startTime = Date()
         setupBackground()
         setupScene()
     }
 
     private func setupBackground() {
-        let gradientImage = renderGradient(size: size)
-        let bg = SKSpriteNode(texture: SKTexture(image: gradientImage))
+        let bg = SKSpriteNode(texture: CartoonSKTextureCache.skyGradient(size: size))
         bg.size = size
         bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
         bg.zPosition = -100
         addChild(bg)
-    }
-
-    private func renderGradient(size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { ctx in
-            let colors = [CartoonSK.skyTop.cgColor, CartoonSK.skyBottom.cgColor] as CFArray
-            if let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
-                ctx.cgContext.drawLinearGradient(gradient,
-                    start: CGPoint(x: 0, y: 0), end: CGPoint(x: 0, y: size.height), options: [])
-            }
-        }
     }
 
     private func setupScene() {
@@ -96,7 +88,7 @@ class NumberTrainScene: SKScene {
             text: gameState.question.displayText,
             fontSize: 24
         )
-        questionLabel.position = CGPoint(x: w / 2, y: h - 80)
+        questionLabel.position = CGPoint(x: w / 2, y: h - safeAreaTop - 40)
         addChild(questionLabel)
 
         // Locomotive head on left
@@ -171,7 +163,7 @@ class NumberTrainScene: SKScene {
                 label: "确认"
             ))
             let confirm = SKSpriteNode(texture: confirmTex, size: CGSize(width: 188, height: 80))
-            confirm.position = CGPoint(x: w / 2, y: h * 0.15)
+            confirm.position = CGPoint(x: w / 2, y: max(h * 0.15, safeAreaBottom + 60))
             confirm.name = "confirm"
             addChild(confirm)
             confirmButton = confirm
@@ -181,7 +173,8 @@ class NumberTrainScene: SKScene {
             let keysPerRow = 5
             let totalW = CGFloat(keysPerRow) * (keyW + 8) - 8
             let keyStartX = (w - totalW) / 2 + keyW / 2
-            let keypadYTop = h * 0.22
+            // Ensure bottom row clears home indicator
+            let keypadYTop = max(h * 0.22, safeAreaBottom + keyH + 40)
 
             for i in 0...9 {
                 let row = i / keysPerRow
