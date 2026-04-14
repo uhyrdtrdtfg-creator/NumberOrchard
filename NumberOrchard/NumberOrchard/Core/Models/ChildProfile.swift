@@ -36,6 +36,9 @@ final class ChildProfile {
     @Relationship(deleteRule: .cascade)
     var collectedNooms: [CollectedNoom] = []
 
+    @Relationship(deleteRule: .cascade)
+    var petProgress: [PetProgress] = []
+
     init(name: String, avatarIndex: Int = 0) {
         self.name = name
         self.avatarIndex = avatarIndex
