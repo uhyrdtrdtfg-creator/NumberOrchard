@@ -99,6 +99,7 @@
 		C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */; };
 		C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */; };
 		C8B92790BC03E6B291AF3ECD /* share_check.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 98D5BD2AA2C845AF8576A096 /* share_check.aiff */; };
+		CD050EFCD433AC484F1565FE /* PetGardenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F34FB22474419A3FF0A83 /* PetGardenView.swift */; };
 		CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */; };
 		CE1BF32BBC91FAFD41CED993 /* AdventureSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E727938E4AF00D8CBBEA1E3 /* AdventureSessionViewModel.swift */; };
 		D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85156F893459A7FB65A2E06 /* MathQuestion.swift */; };
@@ -223,6 +224,7 @@
 		B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedFruit.swift; sourceTree = "<group>"; };
 		BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateView.swift; sourceTree = "<group>"; };
 		C086DE626E123BF698F83460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C45F34FB22474419A3FF0A83 /* PetGardenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenView.swift; sourceTree = "<group>"; };
 		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
 		C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationCatalog.swift; sourceTree = "<group>"; };
 		C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorateOrchardView.swift; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 				B4D7BBE76755CE793324D73D /* NoomForestView.swift */,
 				60329F20E7582CA16889E1AB /* NoomForestViewModel.swift */,
 				AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */,
+				C45F34FB22474419A3FF0A83 /* PetGardenView.swift */,
 			);
 			path = NoomForest;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				F27F938C8ABB798A3C0F92E7 /* ParentQuestionGenerator.swift in Sources */,
 				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
 				E0F83EF40004683D9DCCBE68 /* PetEvolutionLogic.swift in Sources */,
+				CD050EFCD433AC484F1565FE /* PetGardenView.swift in Sources */,
 				4AF3BD5F7B2CF1A0177B490C /* PetPreferenceMap.swift in Sources */,
 				F12C5BDBDFEE841DA46EA990 /* PetProgress.swift in Sources */,
 				369CFCD7B8B55D7F562FC151 /* PetXPCalculator.swift in Sources */,

@@ -22,11 +22,17 @@ struct NoomForestView: View {
                     .font(.system(size: 36, weight: .black, design: .rounded))
                     .foregroundStyle(CartoonColor.text)
 
-                Text("图鉴: \(viewModel?.unlockedCount ?? 0) / 10")
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
-                    .foregroundStyle(CartoonColor.text.opacity(0.7))
+                tabPicker
 
-                dexGrid
+                if viewModel?.selectedTab == .garden, let profile {
+                    PetGardenView(profile: profile)
+                } else {
+                    Text("图鉴: \(viewModel?.unlockedCount ?? 0) / 20")
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .foregroundStyle(CartoonColor.text.opacity(0.7))
+
+                    dexGrid
+                }
 
                 Spacer()
 
@@ -71,6 +77,31 @@ struct NoomForestView: View {
             CartoonHUD(icon: "leaf.fill", value: "\(profile?.seeds ?? 0)", tint: CartoonColor.leaf)
         }
         .padding(.top, 20)
+    }
+
+    private var tabPicker: some View {
+        HStack(spacing: 12) {
+            ForEach(NoomForestTab.allCases, id: \.self) { tab in
+                let selected = (viewModel?.selectedTab == tab)
+                Button(action: {
+                    viewModel?.selectedTab = tab
+                }) {
+                    Text(tab.title)
+                        .font(.system(size: 20, weight: .black, design: .rounded))
+                        .padding(.horizontal, 22).padding(.vertical, 10)
+                        .foregroundStyle(selected ? .white : CartoonColor.text)
+                        .background(
+                            ZStack {
+                                Capsule().fill(CartoonColor.ink.opacity(0.9)).offset(y: 4)
+                                Capsule().fill(selected ? CartoonColor.gold : CartoonColor.paper)
+                                Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3)
+                            }
+                        )
+                        .fixedSize()
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 
     private var dexGrid: some View {
