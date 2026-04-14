@@ -10,7 +10,7 @@ enum NoomExpression: Sendable {
 enum NoomRenderer {
     /// Render a Noom creature image at the given size.
     /// Body diameter scales subtly with `noom.number` so larger Nooms look chunkier.
-    static func image(for noom: Noom, expression: NoomExpression, size: CGSize) -> UIImage {
+    static func image(for noom: Noom, expression: NoomExpression, size: CGSize, stage: Int = 0) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { ctx in
             drawShadow(in: ctx.cgContext, size: size)
@@ -18,6 +18,7 @@ enum NoomRenderer {
             drawSpots(in: ctx.cgContext, size: size, count: noom.number)
             drawFace(in: ctx.cgContext, size: size, expression: expression)
             drawNumberBadge(in: ctx.cgContext, size: size, number: noom.number)
+            drawStageDecoration(in: ctx.cgContext, size: size, stage: stage)
         }
     }
 
@@ -130,6 +131,52 @@ enum NoomRenderer {
             width: textSize.width, height: textSize.height
         )
         text.draw(in: textRect, withAttributes: attrs)
+    }
+
+    private static func drawStageDecoration(in ctx: CGContext, size: CGSize, stage: Int) {
+        guard stage >= 1 else { return }
+
+        // Teen: bow on top
+        if stage == 1 {
+            let emoji = "🎀" as NSString
+            let font = UIFont.systemFont(ofSize: size.width * 0.28)
+            let attrs: [NSAttributedString.Key: Any] = [.font: font]
+            let textSize = emoji.size(withAttributes: attrs)
+            let rect = CGRect(
+                x: (size.width - textSize.width) / 2,
+                y: size.height * 0.02,
+                width: textSize.width,
+                height: textSize.height
+            )
+            emoji.draw(in: rect, withAttributes: attrs)
+        }
+
+        // Adult: crown on top + cape at bottom
+        if stage == 2 {
+            let crown = "👑" as NSString
+            let crownFont = UIFont.systemFont(ofSize: size.width * 0.3)
+            let crownAttrs: [NSAttributedString.Key: Any] = [.font: crownFont]
+            let crownSize = crown.size(withAttributes: crownAttrs)
+            let crownRect = CGRect(
+                x: (size.width - crownSize.width) / 2,
+                y: -size.height * 0.04,
+                width: crownSize.width,
+                height: crownSize.height
+            )
+            crown.draw(in: crownRect, withAttributes: crownAttrs)
+
+            let cape = "🎽" as NSString
+            let capeFont = UIFont.systemFont(ofSize: size.width * 0.22)
+            let capeAttrs: [NSAttributedString.Key: Any] = [.font: capeFont]
+            let capeSize = cape.size(withAttributes: capeAttrs)
+            let capeRect = CGRect(
+                x: (size.width - capeSize.width) / 2,
+                y: size.height - capeSize.height - 4,
+                width: capeSize.width,
+                height: capeSize.height
+            )
+            cape.draw(in: capeRect, withAttributes: capeAttrs)
+        }
     }
 }
 
