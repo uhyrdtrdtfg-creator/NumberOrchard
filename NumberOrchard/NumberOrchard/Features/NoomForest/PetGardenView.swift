@@ -1,18 +1,29 @@
 import SwiftUI
+import SwiftData
 
 struct PetGardenView: View {
     let profile: ChildProfile
 
+    @Environment(\.modelContext) private var modelContext
+    @State private var viewModel: PetGardenViewModel?
+
     var body: some View {
-        VStack {
-            Spacer()
-            Text("🌻 宠物花园")
-                .font(.system(size: 36, weight: .black, design: .rounded))
-                .foregroundStyle(CartoonColor.text)
-            Text("(即将到来 — Phase 5/6/7)")
-                .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundStyle(CartoonColor.text.opacity(0.5))
-            Spacer()
+        ScrollView {
+            VStack(spacing: 24) {
+                if let viewModel {
+                    PetFeedingArea(viewModel: viewModel)
+                    EggHatchingArea(viewModel: viewModel)
+                } else {
+                    ProgressView()
+                }
+                Spacer().frame(height: 30)
+            }
+            .padding(.horizontal, 20)
+        }
+        .onAppear {
+            if viewModel == nil {
+                viewModel = PetGardenViewModel(profile: profile, modelContext: modelContext)
+            }
         }
     }
 }

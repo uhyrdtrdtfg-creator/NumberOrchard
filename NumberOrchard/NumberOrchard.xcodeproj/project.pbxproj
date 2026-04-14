@@ -94,6 +94,7 @@
 		9CEEF7A1A1EB0E54D83352A2 /* CartoonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */; };
 		A7F2DC617F4178E54401DB5C /* NoomChallengeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5447E44C12B101400A365ECF /* NoomChallengeSessionView.swift */; };
 		A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */; };
+		AAFFEAC4052DB9F4C7FD0273 /* EggHatchingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */; };
 		B0A143F5AF18EFF07724DCC6 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A259DE212DCA85208D39566 /* level_up.wav */; };
 		B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBD147AE473D6CA05C57274 /* EyeCareManagerTests.swift */; };
 		B685D99B1591521148186507 /* CheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1613B849416E796B62C00C6 /* CheckInView.swift */; };
@@ -193,6 +194,7 @@
 		75777EE9293B57CE69E74078 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		75B52E7B8B906410D0B8C918 /* Noom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noom.swift; sourceTree = "<group>"; };
 		76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
+		7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggHatchingArea.swift; sourceTree = "<group>"; };
 		80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenViewModel.swift; sourceTree = "<group>"; };
 		822411B55B317E71BA909D86 /* PetXPCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculator.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 		AFAD56A89E14823269D3A0EF /* NoomForest */ = {
 			isa = PBXGroup;
 			children = (
+				7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */,
 				AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */,
 				5447E44C12B101400A365ECF /* NoomChallengeSessionView.swift */,
 				1F7E067CF1575D00668ACDF0 /* NoomChallengeView.swift */,
@@ -918,6 +921,7 @@
 				7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */,
 				DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */,
 				EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */,
+				AAFFEAC4052DB9F4C7FD0273 /* EggHatchingArea.swift in Sources */,
 				34394284F406C56730D61DE1 /* ExplorationMapView.swift in Sources */,
 				3291A8894AC4CC367DE1DE20 /* ExplorationMapViewModel.swift in Sources */,
 				09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */,
