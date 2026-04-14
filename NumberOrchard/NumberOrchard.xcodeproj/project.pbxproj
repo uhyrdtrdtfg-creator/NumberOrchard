@@ -82,6 +82,7 @@
 		8274429A906D497B48987193 /* OrchardStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650B25FD8B3C008CA6632525 /* OrchardStateTests.swift */; };
 		841262A765119064A349A2B2 /* NoomQuestionGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB36B19CCBC1612F48026A4 /* NoomQuestionGenerator.swift */; };
 		845D58CDFA5C5E4B3ABBF09C /* NumberTrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */; };
+		882D8863595DCEB334EC6C77 /* PetGardenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */; };
 		8BB297703389E441A70AC884 /* NoomCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB54E58FBEE26A9755A642 /* NoomCatalogTests.swift */; };
 		8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */; };
 		8FA7FF4FBF3AEE7BD9B554C5 /* NoomSplitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348682DB8233AD6BD04A6B65 /* NoomSplitLogicTests.swift */; };
@@ -89,6 +90,7 @@
 		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
 		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
 		9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510E8D7639394AE33EDFCDC /* OrchardState.swift */; };
+		9A858BDEA6AD88699F7AD3F3 /* PetFeedingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */; };
 		9CEEF7A1A1EB0E54D83352A2 /* CartoonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */; };
 		A7F2DC617F4178E54401DB5C /* NoomChallengeSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5447E44C12B101400A365ECF /* NoomChallengeSessionView.swift */; };
 		A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD5CDAF6DD8D9DF74453F47 /* HomeViewModel.swift */; };
@@ -166,6 +168,7 @@
 		482C1635F049A55AA815323A /* PetXPCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculatorTests.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoom.swift; sourceTree = "<group>"; };
+		4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFeedingArea.swift; sourceTree = "<group>"; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		4E9B89812B1768D58C624AD1 /* PetPreferenceMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPreferenceMap.swift; sourceTree = "<group>"; };
 		4F3955C8B6279F8E0709080A /* RewardCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardCalculator.swift; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		75777EE9293B57CE69E74078 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		75B52E7B8B906410D0B8C918 /* Noom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noom.swift; sourceTree = "<group>"; };
 		76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
+		80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenViewModel.swift; sourceTree = "<group>"; };
 		822411B55B317E71BA909D86 /* PetXPCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculator.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
 		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
@@ -560,7 +564,9 @@
 				B4D7BBE76755CE793324D73D /* NoomForestView.swift */,
 				60329F20E7582CA16889E1AB /* NoomForestViewModel.swift */,
 				AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */,
+				4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */,
 				C45F34FB22474419A3FF0A83 /* PetGardenView.swift */,
+				80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */,
 			);
 			path = NoomForest;
 			sourceTree = "<group>";
@@ -944,7 +950,9 @@
 				F27F938C8ABB798A3C0F92E7 /* ParentQuestionGenerator.swift in Sources */,
 				94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */,
 				E0F83EF40004683D9DCCBE68 /* PetEvolutionLogic.swift in Sources */,
+				9A858BDEA6AD88699F7AD3F3 /* PetFeedingArea.swift in Sources */,
 				CD050EFCD433AC484F1565FE /* PetGardenView.swift in Sources */,
+				882D8863595DCEB334EC6C77 /* PetGardenViewModel.swift in Sources */,
 				4AF3BD5F7B2CF1A0177B490C /* PetPreferenceMap.swift in Sources */,
 				F12C5BDBDFEE841DA46EA990 /* PetProgress.swift in Sources */,
 				369CFCD7B8B55D7F562FC151 /* PetXPCalculator.swift in Sources */,
