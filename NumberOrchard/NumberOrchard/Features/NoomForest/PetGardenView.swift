@@ -7,16 +7,19 @@ struct PetGardenView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: PetGardenViewModel?
     @State private var theaterViewModel: PetTheaterViewModel?
+    @State private var diceViewModel: DiceQuickMathViewModel?
     @State private var showTheater = false
+    @State private var showDice = false
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 20) {
                 if let viewModel {
                     PetFeedingArea(viewModel: viewModel)
                     if viewModel.activePet != nil {
                         theaterButton(gardenVM: viewModel)
                     }
+                    diceButton
                     EggHatchingArea(viewModel: viewModel)
                 } else {
                     ProgressView()
@@ -38,6 +41,14 @@ struct PetGardenView: View {
                 })
             }
         }
+        .fullScreenCover(isPresented: $showDice) {
+            if let vm = diceViewModel {
+                DiceQuickMathView(viewModel: vm, onDismiss: {
+                    showDice = false
+                    diceViewModel = nil
+                })
+            }
+        }
     }
 
     private func theaterButton(gardenVM: PetGardenViewModel) -> some View {
@@ -50,11 +61,25 @@ struct PetGardenView: View {
             }
         ) {
             HStack(spacing: 8) {
-                Text("🎭")
-                    .font(.system(size: 26))
-                Text("数学小剧场")
-                    .font(.system(size: 22, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
+                Text("🎭").font(.system(size: 26))
+                Text("数学小剧场").font(CartoonFont.bodyLarge).foregroundStyle(.white)
+            }
+            .frame(width: 240, height: 64)
+        }
+    }
+
+    private var diceButton: some View {
+        CartoonButton(
+            tint: CartoonColor.sky,
+            accessibilityLabel: "骰子速算",
+            action: {
+                diceViewModel = DiceQuickMathViewModel(profile: profile, modelContext: modelContext)
+                showDice = true
+            }
+        ) {
+            HStack(spacing: 8) {
+                Text("🎲").font(.system(size: 26))
+                Text("骰子速算").font(CartoonFont.bodyLarge).foregroundStyle(.white)
             }
             .frame(width: 240, height: 64)
         }
