@@ -1,0 +1,85 @@
+import SwiftUI
+import Observation
+
+/// Session logic for the Noom Math Theater feature.
+///
+/// Owns a list of 5 themed questions, tracks progress, and routes correct
+/// answers into the existing `PetGardenViewModel.feedActivePet` flow so that
+/// rewards (XP, evolution) share the same machinery as fruit feeding.
+@Observable
+@MainActor
+final class PetTheaterViewModel {
+    let garden: PetGardenViewModel
+    private let generator = PetTheaterQuestionGenerator()
+    private let difficulty: DifficultyLevel
+
+    static let sessionQuestionCount = 5
+
+    var questions: [PetTheaterQuestion] = []
+    var currentIndex: Int = 0
+    var correctCount: Int = 0
+    var totalFruitsEaten: Int = 0
+    var lastResult: Result? = nil
+    var sessionComplete: Bool = false
+
+    enum Result { case correct, wrong }
+
+    init(garden: PetGardenViewModel) {
+        self.garden = garden
+        self.difficulty = garden.profile.difficultyLevel
+        loadQuestions()
+    }
+
+    private func loadQuestions() {
+        guard let pet = garden.activePet,
+              let noom = NoomCatalog.noom(for: pet.noomNumber)
+        else { return }
+        var rng = SystemRandomNumberGenerator()
+        questions = generator.generateBatch(
+            count: Self.sessionQuestionCount,
+            noomNumber: pet.noomNumber,
+            noomName: noom.name,
+            difficulty: difficulty,
+            rng: &rng
+        )
+    }
+
+    var currentQuestion: PetTheaterQuestion? {
+        guard currentIndex < questions.count else { return nil }
+        return questions[currentIndex]
+    }
+
+    /// Submit an answer for the current question. Returns true if correct.
+    /// On correct answers, feeds the active pet a preferred fruit for XP.
+    @discardableResult
+    func submit(_ answer: Int) -> Bool {
+        guard let q = currentQuestion else { return false }
+        if answer == q.answer {
+            correctCount += 1
+            totalFruitsEaten += q.answer
+            garden.feedActivePet(fruitId: q.fruitId)
+            lastResult = .correct
+            return true
+        } else {
+            lastResult = .wrong
+            return false
+        }
+    }
+
+    /// Advance to next question (called after correct answer's celebration).
+    func advance() {
+        currentIndex += 1
+        lastResult = nil
+        if currentIndex >= questions.count {
+            sessionComplete = true
+            garden.profile.stars += 1
+        }
+    }
+
+    /// Reset the wrong-answer state so the child can try again.
+    func clearResult() { lastResult = nil }
+
+    var progressText: String {
+        "\(min(currentIndex + 1, questions.count)) / \(questions.count)"
+    }
+}

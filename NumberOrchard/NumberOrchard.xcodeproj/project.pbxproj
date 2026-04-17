@@ -29,7 +29,9 @@
 		28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */; };
 		2ADB4691A50F66D36C648D6E /* NoomQuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8439E1819D944601B74054F /* NoomQuestionGeneratorTests.swift */; };
 		2BEA113849052AD21A1C2DA3 /* combo_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D06D30700762F4165EBD7CE3 /* combo_03.aiff */; };
+		2D41F46C0DA05D085A476FCE /* PetTheaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57E4F75548D926C793502A /* PetTheaterViewModel.swift */; };
 		2EDC9FAA6BA46D1E812F7CFE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D0F26120F1022C22185A90 /* SettingsView.swift */; };
+		2F56CC6E593CE50F97BB5C51 /* PetTheaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACDADC2DC293E8A4D2449423 /* PetTheaterView.swift */; };
 		3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADC8A418254297E72F86954 /* PickFruitScene.swift */; };
 		319428A61944325A878C9DEC /* PetEvolutionLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4483CDDCDF5E85D5A0720D2C /* PetEvolutionLogicTests.swift */; };
 		31C1B5B12043369C95EAD022 /* home_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = A45D7E24218840C081D2711C /* home_bgm.wav */; };
@@ -76,6 +78,7 @@
 		7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D68C640AC4EA0111CA49A97 /* DecorationPurchaseLogic.swift */; };
 		7BA2B379DC698CDE5195C2EC /* NoomForestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60329F20E7582CA16889E1AB /* NoomForestViewModel.swift */; };
 		7C76D720642EB525CB5E7154 /* wrong_help.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D6DF7776B757FA1C3868920B /* wrong_help.aiff */; };
+		7D4CD7199EF982C887FCB769 /* PetTheaterQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82BD942A31CED6A9ACDEBE58 /* PetTheaterQuestion.swift */; };
 		7FD391BDEC66EC23F8DA48C7 /* combo_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */; };
 		809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */; };
 		8146CECFFE7FBE2EAF6949E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C086DE626E123BF698F83460 /* Assets.xcassets */; };
@@ -101,6 +104,7 @@
 		BCA7AC3C4B65AA03EB239DD9 /* DecorationInventoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA8F3B08371E6244910548 /* DecorationInventoryTests.swift */; };
 		C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */; };
 		C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */; };
+		C697DC5695C9FAC922E843B5 /* PetTheaterQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2565B9DA2B2C83DF3E565C8 /* PetTheaterQuestionTests.swift */; };
 		C8B92790BC03E6B291AF3ECD /* share_check.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 98D5BD2AA2C845AF8576A096 /* share_check.aiff */; };
 		CD050EFCD433AC484F1565FE /* PetGardenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F34FB22474419A3FF0A83 /* PetGardenView.swift */; };
 		CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */; };
@@ -197,6 +201,7 @@
 		7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggHatchingArea.swift; sourceTree = "<group>"; };
 		80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenViewModel.swift; sourceTree = "<group>"; };
 		822411B55B317E71BA909D86 /* PetXPCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculator.swift; sourceTree = "<group>"; };
+		82BD942A31CED6A9ACDEBE58 /* PetTheaterQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTheaterQuestion.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
 		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
 		867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitLogicTests.swift; sourceTree = "<group>"; };
@@ -214,6 +219,7 @@
 		A833ED9961A1756FCB64C057 /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
 		A87466AB46A614DE7EDA2DB2 /* combo_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_05.aiff; sourceTree = "<group>"; };
 		AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomRenderer.swift; sourceTree = "<group>"; };
+		ACDADC2DC293E8A4D2449423 /* PetTheaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTheaterView.swift; sourceTree = "<group>"; };
 		AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberTrainView.swift; sourceTree = "<group>"; };
 		AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomChallengeScene.swift; sourceTree = "<group>"; };
 		AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRecord.swift; sourceTree = "<group>"; };
@@ -229,7 +235,9 @@
 		B856776C53534150F3C9334F /* LearningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningProfile.swift; sourceTree = "<group>"; };
 		B8FA96B7494F81635AF6E301 /* CollectedFruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedFruit.swift; sourceTree = "<group>"; };
 		BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateView.swift; sourceTree = "<group>"; };
+		BF57E4F75548D926C793502A /* PetTheaterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTheaterViewModel.swift; sourceTree = "<group>"; };
 		C086DE626E123BF698F83460 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C2565B9DA2B2C83DF3E565C8 /* PetTheaterQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTheaterQuestionTests.swift; sourceTree = "<group>"; };
 		C45F34FB22474419A3FF0A83 /* PetGardenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenView.swift; sourceTree = "<group>"; };
 		C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildProfile.swift; sourceTree = "<group>"; };
 		C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationCatalog.swift; sourceTree = "<group>"; };
@@ -570,6 +578,9 @@
 				4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */,
 				C45F34FB22474419A3FF0A83 /* PetGardenView.swift */,
 				80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */,
+				82BD942A31CED6A9ACDEBE58 /* PetTheaterQuestion.swift */,
+				ACDADC2DC293E8A4D2449423 /* PetTheaterView.swift */,
+				BF57E4F75548D926C793502A /* PetTheaterViewModel.swift */,
 			);
 			path = NoomForest;
 			sourceTree = "<group>";
@@ -717,6 +728,7 @@
 			children = (
 				C98A9C6C3C849D2410D33761 /* CollectedNoomTests.swift */,
 				2F659494515FCA17038DBC0E /* PetProgressTests.swift */,
+				C2565B9DA2B2C83DF3E565C8 /* PetTheaterQuestionTests.swift */,
 			);
 			path = NoomForest;
 			sourceTree = "<group>";
@@ -888,6 +900,7 @@
 				319428A61944325A878C9DEC /* PetEvolutionLogicTests.swift in Sources */,
 				686176B22E955F0DEDADF21E /* PetPreferenceMapTests.swift in Sources */,
 				19A02C166C0DBBFCFAFC072B /* PetProgressTests.swift in Sources */,
+				C697DC5695C9FAC922E843B5 /* PetTheaterQuestionTests.swift in Sources */,
 				E8B9CB6ADFFACE729FC6E54D /* PetXPCalculatorTests.swift in Sources */,
 				3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */,
 				65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */,
@@ -959,6 +972,9 @@
 				882D8863595DCEB334EC6C77 /* PetGardenViewModel.swift in Sources */,
 				4AF3BD5F7B2CF1A0177B490C /* PetPreferenceMap.swift in Sources */,
 				F12C5BDBDFEE841DA46EA990 /* PetProgress.swift in Sources */,
+				7D4CD7199EF982C887FCB769 /* PetTheaterQuestion.swift in Sources */,
+				2F56CC6E593CE50F97BB5C51 /* PetTheaterView.swift in Sources */,
+				2D41F46C0DA05D085A476FCE /* PetTheaterViewModel.swift in Sources */,
 				369CFCD7B8B55D7F562FC151 /* PetXPCalculator.swift in Sources */,
 				3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */,
 				CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */,
