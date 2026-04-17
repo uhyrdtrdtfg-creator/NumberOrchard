@@ -385,13 +385,3 @@ enum NoomRenderer {
     }
 }
 
-/// Tiny seeded RNG so spot positions are stable across renders.
-/// (Retained for compatibility; no longer used by NoomRenderer itself.)
-private struct SeededRNG: RandomNumberGenerator {
-    var state: UInt64
-    init(seed: UInt64) { self.state = seed != 0 ? seed : 1 }
-    mutating func next() -> UInt64 {
-        state = state &* 6364136223846793005 &+ 1442695040888963407
-        return state
-    }
-}

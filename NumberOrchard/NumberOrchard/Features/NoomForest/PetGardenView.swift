@@ -8,18 +8,26 @@ struct PetGardenView: View {
     @State private var viewModel: PetGardenViewModel?
     @State private var theaterViewModel: PetTheaterViewModel?
     @State private var diceViewModel: DiceQuickMathViewModel?
+    @State private var matchTenViewModel: MatchTenViewModel?
+    @State private var fishingViewModel: FishingViewModel?
     @State private var showTheater = false
     @State private var showDice = false
+    @State private var showMatchTen = false
+    @State private var showFishing = false
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack(spacing: 18) {
                 if let viewModel {
                     PetFeedingArea(viewModel: viewModel)
                     if viewModel.activePet != nil {
                         theaterButton(gardenVM: viewModel)
                     }
-                    diceButton
+                    HStack(spacing: 12) {
+                        diceButton
+                        matchTenButton
+                    }
+                    fishingButton
                     EggHatchingArea(viewModel: viewModel)
                 } else {
                     ProgressView()
@@ -46,6 +54,22 @@ struct PetGardenView: View {
                 DiceQuickMathView(viewModel: vm, onDismiss: {
                     showDice = false
                     diceViewModel = nil
+                })
+            }
+        }
+        .fullScreenCover(isPresented: $showMatchTen) {
+            if let vm = matchTenViewModel {
+                MatchTenView(viewModel: vm, onDismiss: {
+                    showMatchTen = false
+                    matchTenViewModel = nil
+                })
+            }
+        }
+        .fullScreenCover(isPresented: $showFishing) {
+            if let vm = fishingViewModel {
+                FishingView(viewModel: vm, onDismiss: {
+                    showFishing = false
+                    fishingViewModel = nil
                 })
             }
         }
@@ -77,9 +101,43 @@ struct PetGardenView: View {
                 showDice = true
             }
         ) {
-            HStack(spacing: 8) {
+            VStack(spacing: 2) {
                 Text("🎲").font(.system(size: 26))
-                Text("骰子速算").font(CartoonFont.bodyLarge).foregroundStyle(.white)
+                Text("骰子速算").font(CartoonFont.bodySmall).foregroundStyle(.white)
+            }
+            .frame(width: 120, height: 72)
+        }
+    }
+
+    private var matchTenButton: some View {
+        CartoonButton(
+            tint: CartoonColor.coral,
+            accessibilityLabel: "凑十消消乐",
+            action: {
+                matchTenViewModel = MatchTenViewModel(profile: profile, modelContext: modelContext)
+                showMatchTen = true
+            }
+        ) {
+            VStack(spacing: 2) {
+                Text("🍭").font(.system(size: 26))
+                Text("凑十消消乐").font(CartoonFont.bodySmall).foregroundStyle(.white)
+            }
+            .frame(width: 120, height: 72)
+        }
+    }
+
+    private var fishingButton: some View {
+        CartoonButton(
+            tint: CartoonColor.leaf,
+            accessibilityLabel: "数字钓鱼",
+            action: {
+                fishingViewModel = FishingViewModel(profile: profile, modelContext: modelContext)
+                showFishing = true
+            }
+        ) {
+            HStack(spacing: 8) {
+                Text("🎣").font(.system(size: 26))
+                Text("数字钓鱼").font(CartoonFont.bodyLarge).foregroundStyle(.white)
             }
             .frame(width: 240, height: 64)
         }

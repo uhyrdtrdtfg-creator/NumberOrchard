@@ -44,6 +44,12 @@ struct PetTheaterView: View {
                     .offset(x: p.x, y: p.y)
                     .opacity(p.opacity)
             }
+
+            // Rare legendary fruit drop banner
+            if let drop = viewModel.lastLegendaryDrop {
+                LegendaryDropBanner(fruit: drop)
+                    .transition(.scale.combined(with: .opacity))
+            }
         }
         .onAppear {
             withAnimation(CartoonAnim.breathe) { idleBreath = true }
@@ -257,4 +263,37 @@ private struct FruitParticle: Identifiable {
     var y: CGFloat
     var size: CGFloat
     var opacity: Double
+}
+
+/// Celebratory banner shown when a correct answer rolls into a legendary
+/// fruit drop. Rendered as a gold sticker over the theater scene; auto-
+/// disappears when the view model clears `lastLegendaryDrop` on advance.
+struct LegendaryDropBanner: View {
+    let fruit: FruitItem
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Text("✨ 稀有掉落! ✨")
+                .font(CartoonFont.title)
+                .foregroundStyle(CartoonColor.ink)
+            Text(fruit.emoji).font(.system(size: 72))
+            Text(fruit.name)
+                .font(CartoonFont.titleSmall)
+                .foregroundStyle(CartoonColor.ink)
+            Text(fruit.funFact)
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.ink.opacity(0.8))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 16)
+        }
+        .padding(24)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 28).fill(CartoonColor.ink.opacity(0.9)).offset(y: 6)
+                RoundedRectangle(cornerRadius: 28).fill(CartoonColor.gold)
+                RoundedRectangle(cornerRadius: 28).stroke(CartoonColor.ink, lineWidth: 4)
+            }
+        )
+        .padding(.horizontal, 40)
+    }
 }

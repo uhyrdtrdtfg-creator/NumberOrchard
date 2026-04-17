@@ -21,6 +21,9 @@ final class PetTheaterViewModel {
     var totalFruitsEaten: Int = 0
     var lastResult: Result? = nil
     var sessionComplete: Bool = false
+    /// Legendary fruit dropped by the most recent correct answer, if any.
+    /// Cleared on next `advance()`. View layer shows a celebration overlay.
+    var lastLegendaryDrop: FruitItem? = nil
 
     enum Result { case correct, wrong }
 
@@ -50,7 +53,8 @@ final class PetTheaterViewModel {
     }
 
     /// Submit an answer for the current question. Returns true if correct.
-    /// On correct answers, feeds the active pet a preferred fruit for XP.
+    /// On correct answers, feeds the active pet a preferred fruit for XP
+    /// and rolls for a legendary-fruit easter-egg drop.
     @discardableResult
     func submit(_ answer: Int) -> Bool {
         guard let q = currentQuestion else { return false }
@@ -59,6 +63,7 @@ final class PetTheaterViewModel {
             totalFruitsEaten += q.answer
             garden.feedActivePet(fruitId: q.fruitId)
             lastResult = .correct
+            rollLegendaryDrop()
             return true
         } else {
             lastResult = .wrong
@@ -66,10 +71,25 @@ final class PetTheaterViewModel {
         }
     }
 
+    /// Roll for a rare legendary fruit. If it hits and the profile doesn't
+    /// already own the dropped fruit, add it. Exposed to the view via
+    /// `lastLegendaryDrop` for overlay display.
+    private func rollLegendaryDrop() {
+        var rng = SystemRandomNumberGenerator()
+        guard let drop = LegendaryDropRoll.roll(rng: &rng) else { return }
+        lastLegendaryDrop = drop
+        let profile = garden.profile
+        if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {
+            let cf = CollectedFruit(fruitId: drop.id)
+            profile.collectedFruits.append(cf)
+        }
+    }
+
     /// Advance to next question (called after correct answer's celebration).
     func advance() {
         currentIndex += 1
         lastResult = nil
+        lastLegendaryDrop = nil
         if currentIndex >= questions.count {
             sessionComplete = true
             garden.profile.stars += 1

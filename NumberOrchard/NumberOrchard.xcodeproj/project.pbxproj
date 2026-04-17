@@ -12,12 +12,14 @@
 		01E8C5240C61FACE54312723 /* NoomRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */; };
 		05E9E883F9EA4E8B2FCECA6B /* fruit_pick.wav in Resources */ = {isa = PBXBuildFile; fileRef = DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */; };
 		0759F6E3107B969B90869C0A /* BasicReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB6F11200DCE12E501F6F0A /* BasicReportView.swift */; };
+		07DC6A4F9B09AE225586B857 /* LegendaryDropRollTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A02F6A116326DE8D293A8 /* LegendaryDropRollTests.swift */; };
 		087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF92351482E0AA4A886C3F46 /* QuestionRecord.swift */; };
 		09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3346700B718F8495EE4352 /* EyeCareManager.swift */; };
 		09FDE69EE1B2EA4E2D36452B /* eye_care.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */; };
 		0D863C203BECF6C3D3EA13DD /* NoomChallengeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2D3CDD5B64A12F1521B294 /* NoomChallengeScene.swift */; };
 		0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31873A70D02219C3C54E64A9 /* HomeView.swift */; };
 		119D1A6A4B9696A64846FEEC /* OrchardEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */; };
+		132ACA2EE6D7954AD1933084 /* SeededRNG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8E9233B60AD4D3575440E /* SeededRNG.swift */; };
 		185AE7E8833D327E12B076F9 /* correct_01.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */; };
 		19A02C166C0DBBFCFAFC072B /* PetProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F659494515FCA17038DBC0E /* PetProgressTests.swift */; };
 		1A9D416FD999C1A609F2C0FD /* TreeGrowthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C9E931859DEF6C2A5CBD12 /* TreeGrowthViewModel.swift */; };
@@ -27,6 +29,7 @@
 		1F327F704CE207EA4EAC67F3 /* NoomSplitLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A021CAD39EF5F8DAF974DD /* NoomSplitLogic.swift */; };
 		1F6D8246E9F38FAA301AF234 /* correct_05.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 4E4EDC77EC71DB9F41595670 /* correct_05.aiff */; };
 		28DE172458CC22794974AC32 /* NumberOrchardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B873C51B1E09BC11239F0B /* NumberOrchardApp.swift */; };
+		2A8E6E08F19C7F3AB15D9021 /* MatchTenGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91AA56DF63DE2F8C9C42A8D /* MatchTenGame.swift */; };
 		2ADB4691A50F66D36C648D6E /* NoomQuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8439E1819D944601B74054F /* NoomQuestionGeneratorTests.swift */; };
 		2BEA113849052AD21A1C2DA3 /* combo_03.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D06D30700762F4165EBD7CE3 /* combo_03.aiff */; };
 		2D41F46C0DA05D085A476FCE /* PetTheaterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF57E4F75548D926C793502A /* PetTheaterViewModel.swift */; };
@@ -49,6 +52,7 @@
 		3A924772A2997942BE464F32 /* NumberTrainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2612A326CC5ACD9F2B62D /* NumberTrainScene.swift */; };
 		3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B5F110839E77BCA7F6E418 /* MapCatalog.swift */; };
 		3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B032E93606C6F6A5C51AE38A /* L5L6GenerationTests.swift */; };
+		3CE3A8CC7C7D6C1A25D723D2 /* FishingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C2EBE3374189DDDCC7BD3E /* FishingView.swift */; };
 		3DA4CBF39253A04C5F7B62DD /* PickFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */; };
 		3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */; };
 		403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */; };
@@ -66,6 +70,7 @@
 		5838DE7F03C5C7037EF0C7D1 /* RewardCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B3DE3B2195B1878609A78 /* RewardCalculatorTests.swift */; };
 		59CEED9C0DB2C64746AEB92B /* NoomMergeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574632CFB25276D06066DA8 /* NoomMergeLogic.swift */; };
 		5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */; };
+		624B9131944B2E9FF1084B69 /* MatchTenGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */; };
 		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
 		686176B22E955F0DEDADF21E /* PetPreferenceMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F5603E4E7186A11289E06 /* PetPreferenceMapTests.swift */; };
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
@@ -92,9 +97,12 @@
 		8BB297703389E441A70AC884 /* NoomCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BB54E58FBEE26A9755A642 /* NoomCatalogTests.swift */; };
 		8F595EF559A7870F3EB605FB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08C9D8B9561232DBC89FAD0 /* AppCoordinator.swift */; };
 		8FA7FF4FBF3AEE7BD9B554C5 /* NoomSplitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348682DB8233AD6BD04A6B65 /* NoomSplitLogicTests.swift */; };
+		90549C4ABC0FCCD9A767D789 /* MatchTenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790BB59C6900A509C1345A9F /* MatchTenView.swift */; };
 		94172F8CFFD39C0EB3831B21 /* NoomChallengeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C328B9C1D7050964905113 /* NoomChallengeViewModel.swift */; };
 		94B2E5B9CDB623602021DCF8 /* ParentalGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA742A7421E1A1B3B276119 /* ParentalGateView.swift */; };
+		977000659AB636D19508298D /* FishingGameStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0986EA490D5EE3FF276A3AA9 /* FishingGameStateTests.swift */; };
 		97F683BED87061B0D3AB77D8 /* wrong_hint.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */; };
+		9872F8B733C69AA51F2BE25E /* LegendaryDropRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B506AF0EA2D99F665FA677 /* LegendaryDropRoll.swift */; };
 		9A2C5B0DAD1F20F709F1E62E /* OrchardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0510E8D7639394AE33EDFCDC /* OrchardState.swift */; };
 		9A858BDEA6AD88699F7AD3F3 /* PetFeedingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */; };
 		9CEEF7A1A1EB0E54D83352A2 /* CartoonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */; };
@@ -123,6 +131,7 @@
 		DDE96EC2A6977A2D1632DC25 /* FruitCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E3CA872C854BD77BD67D69 /* FruitCollectionTests.swift */; };
 		DFA3DD06D74405D9F3D001AC /* DifficultyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */; };
 		E0F83EF40004683D9DCCBE68 /* PetEvolutionLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D64C30BB32D98C8A4508B4 /* PetEvolutionLogic.swift */; };
+		E3BC74A608E45C0A9416D8F4 /* FishingGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86149D9D7EB304E3E820538F /* FishingGameState.swift */; };
 		E61761F7D616149824277D14 /* BattleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F148C547CD404A43F136755 /* BattleView.swift */; };
 		E8B9CB6ADFFACE729FC6E54D /* PetXPCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482C1635F049A55AA815323A /* PetXPCalculatorTests.swift */; };
 		EA11573FE0027424DAFD7110 /* DifficultyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F67C1705C14EBBFCB27F3F42 /* DifficultyManager.swift */; };
@@ -159,6 +168,7 @@
 		0699752F55F1B6C201A443E3 /* DiceQuickMathViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceQuickMathViewModel.swift; sourceTree = "<group>"; };
 		08363E93B27A3A900C0CC13F /* DiceQuickMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceQuickMathTests.swift; sourceTree = "<group>"; };
 		095FAB413CFAC3FAFC822D28 /* button_click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button_click.wav; sourceTree = "<group>"; };
+		0986EA490D5EE3FF276A3AA9 /* FishingGameStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishingGameStateTests.swift; sourceTree = "<group>"; };
 		0E5DA5AADB88267E3850EAF5 /* eye_care.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = eye_care.aiff; sourceTree = "<group>"; };
 		14C328B9C1D7050964905113 /* NoomChallengeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomChallengeViewModel.swift; sourceTree = "<group>"; };
 		1A8F5603E4E7186A11289E06 /* PetPreferenceMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPreferenceMapTests.swift; sourceTree = "<group>"; };
@@ -169,6 +179,7 @@
 		2BF62867D3DF19D169E031C4 /* QuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGenerator.swift; sourceTree = "<group>"; };
 		2CEEF1B40985052EC34E1113 /* CartoonSpriteKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonSpriteKit.swift; sourceTree = "<group>"; };
 		2F088ACB345D48F488B3658A /* ParentCenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCenterView.swift; sourceTree = "<group>"; };
+		2F2A02F6A116326DE8D293A8 /* LegendaryDropRollTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendaryDropRollTests.swift; sourceTree = "<group>"; };
 		2F659494515FCA17038DBC0E /* PetProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetProgressTests.swift; sourceTree = "<group>"; };
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		348682DB8233AD6BD04A6B65 /* NoomSplitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomSplitLogicTests.swift; sourceTree = "<group>"; };
@@ -200,6 +211,7 @@
 		6716849999AC43443891C7D4 /* fruit_drop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_drop.wav; sourceTree = "<group>"; };
 		6A259DE212DCA85208D39566 /* level_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = level_up.wav; sourceTree = "<group>"; };
 		6BF89DFC78ABA035C5FD2687 /* balance.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = balance.wav; sourceTree = "<group>"; };
+		72C2EBE3374189DDDCC7BD3E /* FishingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishingView.swift; sourceTree = "<group>"; };
 		7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionGeneratorTests.swift; sourceTree = "<group>"; };
 		74290E47C61364EE77542658 /* ExplorationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorationMapView.swift; sourceTree = "<group>"; };
 		746458877D42C0483A6DCA0A /* CartoonTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonTokens.swift; sourceTree = "<group>"; };
@@ -207,12 +219,15 @@
 		75777EE9293B57CE69E74078 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		75B52E7B8B906410D0B8C918 /* Noom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Noom.swift; sourceTree = "<group>"; };
 		76CF2797BB0B9C5FB2F7A037 /* OrchardEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrchardEditView.swift; sourceTree = "<group>"; };
+		790BB59C6900A509C1345A9F /* MatchTenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTenView.swift; sourceTree = "<group>"; };
+		7AD8E9233B60AD4D3575440E /* SeededRNG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeededRNG.swift; sourceTree = "<group>"; };
 		7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EggHatchingArea.swift; sourceTree = "<group>"; };
 		80F820EF3E42638DF6686291 /* PetGardenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetGardenViewModel.swift; sourceTree = "<group>"; };
 		822411B55B317E71BA909D86 /* PetXPCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculator.swift; sourceTree = "<group>"; };
 		82BD942A31CED6A9ACDEBE58 /* PetTheaterQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTheaterQuestion.swift; sourceTree = "<group>"; };
 		83825F84A8F221612AB7A3B3 /* combo_07.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = combo_07.aiff; sourceTree = "<group>"; };
 		840B2D04C9C6D135F31D444D /* pick_too_many.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = pick_too_many.aiff; sourceTree = "<group>"; };
+		86149D9D7EB304E3E820538F /* FishingGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishingGameState.swift; sourceTree = "<group>"; };
 		867E0F2F2E0A9D8CB23BC3F4 /* PickFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitLogicTests.swift; sourceTree = "<group>"; };
 		8D68C640AC4EA0111CA49A97 /* DecorationPurchaseLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationPurchaseLogic.swift; sourceTree = "<group>"; };
 		9331B77B8F9EF693C80DFE57 /* wrong_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_hint.aiff; sourceTree = "<group>"; };
@@ -255,6 +270,7 @@
 		C642EDC30CBDA22B6A3647B3 /* DecorateOrchardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorateOrchardView.swift; sourceTree = "<group>"; };
 		C722CF93A91A5FEFD481A656 /* ShareFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitView.swift; sourceTree = "<group>"; };
 		C98A9C6C3C849D2410D33761 /* CollectedNoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoomTests.swift; sourceTree = "<group>"; };
+		C9B506AF0EA2D99F665FA677 /* LegendaryDropRoll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendaryDropRoll.swift; sourceTree = "<group>"; };
 		CAD6A5F5D5C3939B7D13E8DA /* StationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationDetailView.swift; sourceTree = "<group>"; };
 		CADC8A418254297E72F86954 /* PickFruitScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitScene.swift; sourceTree = "<group>"; };
 		CB5F47E0A502DCC992D3CA2A /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
@@ -266,6 +282,7 @@
 		D4D0F26120F1022C22185A90 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D68EE01C0D9D212D023BE78C /* DifficultyLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyLevel.swift; sourceTree = "<group>"; };
 		D6DF7776B757FA1C3868920B /* wrong_help.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = wrong_help.aiff; sourceTree = "<group>"; };
+		D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTenGameTests.swift; sourceTree = "<group>"; };
 		D85156F893459A7FB65A2E06 /* MathQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathQuestion.swift; sourceTree = "<group>"; };
 		DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCatalog.swift; sourceTree = "<group>"; };
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
@@ -273,6 +290,7 @@
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
 		E2DA8F3B08371E6244910548 /* DecorationInventoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationInventoryTests.swift; sourceTree = "<group>"; };
 		E8439E1819D944601B74054F /* NoomQuestionGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomQuestionGeneratorTests.swift; sourceTree = "<group>"; };
+		E91AA56DF63DE2F8C9C42A8D /* MatchTenGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTenGame.swift; sourceTree = "<group>"; };
 		EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProgress.swift; sourceTree = "<group>"; };
 		F1613B849416E796B62C00C6 /* CheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInView.swift; sourceTree = "<group>"; };
 		F236F1DD76935B2F03C8A8DF /* PickFruitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFruitView.swift; sourceTree = "<group>"; };
@@ -377,8 +395,18 @@
 				8920C3B05AA2BBF08BD4FD02 /* PetLogic */,
 				ECACDB2A65B0C1CF7B41E63A /* Rewards */,
 				8FA5118F9360AFC949BDB6D8 /* UI */,
+				7300412174136C6EC459B64F /* Utilities */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		34789A3205E7C11356EFB441 /* NumberFishing */ = {
+			isa = PBXGroup;
+			children = (
+				86149D9D7EB304E3E820538F /* FishingGameState.swift */,
+				72C2EBE3374189DDDCC7BD3E /* FishingView.swift */,
+			);
+			path = NumberFishing;
 			sourceTree = "<group>";
 		};
 		37B3FF3B0E15EBD4C1D2341C /* ParentCenter */ = {
@@ -519,6 +547,14 @@
 			path = Orchard;
 			sourceTree = "<group>";
 		};
+		7300412174136C6EC459B64F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7AD8E9233B60AD4D3575440E /* SeededRNG.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		7E45E63B878198F3BBADE359 /* NumberTrain */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,6 +562,15 @@
 				AEA1EEF3EFCCE712C74D9E96 /* NumberTrainView.swift */,
 			);
 			path = NumberTrain;
+			sourceTree = "<group>";
+		};
+		86E40BCBCC982AECBE7F2A61 /* MatchTen */ = {
+			isa = PBXGroup;
+			children = (
+				E91AA56DF63DE2F8C9C42A8D /* MatchTenGame.swift */,
+				790BB59C6900A509C1345A9F /* MatchTenView.swift */,
+			);
+			path = MatchTen;
 			sourceTree = "<group>";
 		};
 		8920C3B05AA2BBF08BD4FD02 /* PetLogic */ = {
@@ -540,6 +585,7 @@
 		894BC4ABF8CDB857A7607004 /* Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				2F2A02F6A116326DE8D293A8 /* LegendaryDropRollTests.swift */,
 				B53B3DE3B2195B1878609A78 /* RewardCalculatorTests.swift */,
 			);
 			path = Rewards;
@@ -575,6 +621,14 @@
 				3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		93928EC2DEDE6BEBB0D7F20C /* NumberFishing */ = {
+			isa = PBXGroup;
+			children = (
+				0986EA490D5EE3FF276A3AA9 /* FishingGameStateTests.swift */,
+			);
+			path = NumberFishing;
 			sourceTree = "<group>";
 		};
 		9C2F5BE03B10ADA0756714FD /* DiceQuickMath */ = {
@@ -625,7 +679,9 @@
 				9C2F5BE03B10ADA0756714FD /* DiceQuickMath */,
 				4E6D99A71C1D1314B9643FC0 /* Exploration */,
 				495F0B04FE2A72EB1D9A516C /* Home */,
+				86E40BCBCC982AECBE7F2A61 /* MatchTen */,
 				AFAD56A89E14823269D3A0EF /* NoomForest */,
+				34789A3205E7C11356EFB441 /* NumberFishing */,
 				CC4E86C7B1E6BF8104E301B8 /* Orchard */,
 				37B3FF3B0E15EBD4C1D2341C /* ParentCenter */,
 				53941F22D2FC489773F9E19A /* ParentChild */,
@@ -769,6 +825,7 @@
 		ECACDB2A65B0C1CF7B41E63A /* Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				C9B506AF0EA2D99F665FA677 /* LegendaryDropRoll.swift */,
 				4F3955C8B6279F8E0709080A /* RewardCalculator.swift */,
 			);
 			path = Rewards;
@@ -780,7 +837,9 @@
 				BE89C3DAEA39988A4F184B56 /* Adventure */,
 				5541ABB2040346C3C03B80E6 /* DailyFlow */,
 				03328A0B5F03DD4565418C1F /* DiceQuickMath */,
+				F558F88BBA7C308DA3DA8240 /* MatchTen */,
 				EB12209FCCF7D3DD0B6EFCC1 /* NoomForest */,
+				93928EC2DEDE6BEBB0D7F20C /* NumberFishing */,
 				6653F7663003C8AAB8CD2AC2 /* Orchard */,
 				04E429F661EF6C4DEE17F324 /* ParentChild */,
 			);
@@ -795,6 +854,14 @@
 				1A8F5603E4E7186A11289E06 /* PetPreferenceMapTests.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		F558F88BBA7C308DA3DA8240 /* MatchTen */ = {
+			isa = PBXGroup;
+			children = (
+				D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */,
+			);
+			path = MatchTen;
 			sourceTree = "<group>";
 		};
 		F972ECF8C73B7E44FA12DE77 /* Exploration */ = {
@@ -922,9 +989,12 @@
 				71A170A7EB85FEE7A5304F60 /* DiceQuickMathTests.swift in Sources */,
 				FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */,
 				B646740DB6F9DBCFBB72324C /* EyeCareManagerTests.swift in Sources */,
+				977000659AB636D19508298D /* FishingGameStateTests.swift in Sources */,
 				DDE96EC2A6977A2D1632DC25 /* FruitCollectionTests.swift in Sources */,
 				3CD21FE04267865A22939A00 /* L5L6GenerationTests.swift in Sources */,
+				07DC6A4F9B09AE225586B857 /* LegendaryDropRollTests.swift in Sources */,
 				556792948EBD7FB6269FC285 /* MapProgressionLogicTests.swift in Sources */,
+				624B9131944B2E9FF1084B69 /* MatchTenGameTests.swift in Sources */,
 				8BB297703389E441A70AC884 /* NoomCatalogTests.swift in Sources */,
 				4DC3C25A478ECDED5F2135BD /* NoomMergeLogicTests.swift in Sources */,
 				2ADB4691A50F66D36C648D6E /* NoomQuestionGeneratorTests.swift in Sources */,
@@ -977,14 +1047,19 @@
 				34394284F406C56730D61DE1 /* ExplorationMapView.swift in Sources */,
 				3291A8894AC4CC367DE1DE20 /* ExplorationMapViewModel.swift in Sources */,
 				09758ACC61056C68DD5C924A /* EyeCareManager.swift in Sources */,
+				E3BC74A608E45C0A9416D8F4 /* FishingGameState.swift in Sources */,
+				3CE3A8CC7C7D6C1A25D723D2 /* FishingView.swift in Sources */,
 				3699E75146A40F203610453B /* FruitCatalog.swift in Sources */,
 				EF7C71B1A8C666416FA0EA1B /* FruitCollectionView.swift in Sources */,
 				0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */,
 				A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */,
 				4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */,
 				FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */,
+				9872F8B733C69AA51F2BE25E /* LegendaryDropRoll.swift in Sources */,
 				3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */,
 				34DFD7D4AEA20293BED88E88 /* MapProgressionLogic.swift in Sources */,
+				2A8E6E08F19C7F3AB15D9021 /* MatchTenGame.swift in Sources */,
+				90549C4ABC0FCCD9A767D789 /* MatchTenView.swift in Sources */,
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				6B9820C7D6EA2726A0C9E65E /* Noom.swift in Sources */,
 				0D863C203BECF6C3D3EA13DD /* NoomChallengeScene.swift in Sources */,
@@ -1022,6 +1097,7 @@
 				D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */,
 				087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */,
 				D8CD90D952A88FE5EA3CD4DD /* RewardCalculator.swift in Sources */,
+				132ACA2EE6D7954AD1933084 /* SeededRNG.swift in Sources */,
 				2EDC9FAA6BA46D1E812F7CFE /* SettingsView.swift in Sources */,
 				699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */,
 				809C8AB283D466A882D7D97C /* ShareFruitView.swift in Sources */,
