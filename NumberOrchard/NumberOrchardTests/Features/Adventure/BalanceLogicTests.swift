@@ -72,3 +72,39 @@ import SpriteKit
     // Dropping far away (top-left corner) should NOT count.
     #expect(scene.isInRightPanDropZone(CGPoint(x: 10, y: scene.size.height - 10)) == false)
 }
+
+// MARK: - Pool hit-detection dead-zone regression
+//
+// Frame-contains hit testing used to create dead zones between pool blocks once
+// any had been consumed: a touch landing exactly in a vacated slot fell outside
+// every remaining block's expanded frame, so nothing was picked up and the
+// child appeared unable to drag. The closest-within-reach replacement must
+// still pick the nearest remaining block in that scenario.
+@Test @MainActor func poolHitSelectsClosestBlockWhenTouchingVacatedSlot() {
+    let scene = BalanceScene(size: CGSize(width: 1180, height: 820))
+    scene.scaleMode = .resizeFill
+    // Large targetRightAdd so multiple pool blocks spawn.
+    scene.configure(with: MathQuestion(operand1: 2, operand2: 8, operation: .add, gameMode: .balance))
+    let view = SKView(frame: CGRect(origin: .zero, size: scene.size))
+    view.presentScene(scene)
+
+    // Pool blocks are direct scene children named "pool_N".
+    let pool = scene.children.compactMap { $0 as? SKSpriteNode }
+        .filter { ($0.name ?? "").hasPrefix("pool_") }
+        .sorted { $0.position.x < $1.position.x }
+    #expect(pool.count >= 4)
+
+    // Simulate the child having dragged the block at index 2 out of the pool.
+    let removed = pool[2]
+    let vacatedPoint = removed.position
+    removed.removeFromParent()
+
+    // Touching the now-empty slot must still resolve to a real remaining block.
+    let picked = scene.hitTestPoolBlock(at: vacatedPoint)
+    #expect(picked != nil, "touching a vacated pool slot should pick the nearest remaining block")
+    #expect(picked !== removed)
+
+    // Touching far above the pool (e.g. mid-screen) should NOT grab a pool block.
+    let farAway = CGPoint(x: scene.size.width / 2, y: scene.size.height * 0.6)
+    #expect(scene.hitTestPoolBlock(at: farAway) == nil)
+}

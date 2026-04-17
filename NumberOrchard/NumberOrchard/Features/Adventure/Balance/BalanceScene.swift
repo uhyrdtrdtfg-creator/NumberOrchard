@@ -284,22 +284,27 @@ class BalanceScene: SKScene {
     // MARK: - Touch handling
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard !gameState.isComplete, let touch = touches.first else { return }
+        guard gameState != nil, !gameState.isComplete, let touch = touches.first else { return }
         let location = touch.location(in: self)
 
-        // Use an expanded hit area around each pool block (kids' fingers are imprecise).
-        // Pick the CLOSEST block within hit range (not just the first match).
-        let padding = CartoonSKTouch.largeHitPadding
+        // Previous frame-contains hit test left dead zones between pool blocks
+        // once some had been removed (gap-to-expanded-range did not overlap).
+        // Switch to a closest-block-within-reach strategy:
+        //   - only consider pool blocks currently in the scene
+        //   - require the touch be in the pool's vertical band (don't steal
+        //     taps meant for the pans above)
+        //   - pick the closest remaining block within `maxCapture` pt
+        let verticalBand: CGFloat = 90
+        let maxCapture: CGFloat = 120
         var bestBlock: SKSpriteNode?
-        var bestDistance: CGFloat = .greatestFiniteMagnitude
+        var bestDistSq: CGFloat = maxCapture * maxCapture
         for block in poolBlocks where block.parent != nil {
-            let expandedFrame = block.frame.insetBy(dx: -padding, dy: -padding)
-            guard expandedFrame.contains(location) else { continue }
-            let dx = block.position.x - location.x
             let dy = block.position.y - location.y
-            let dist = dx * dx + dy * dy
-            if dist < bestDistance {
-                bestDistance = dist
+            guard abs(dy) <= verticalBand else { continue }
+            let dx = block.position.x - location.x
+            let distSq = dx * dx + dy * dy
+            if distSq <= bestDistSq {
+                bestDistSq = distSq
                 bestBlock = block
             }
         }
@@ -308,6 +313,29 @@ class BalanceScene: SKScene {
             block.zPosition = 100
             block.run(SKAction.scale(to: 1.15, duration: 0.1))
         }
+    }
+
+    /// Testing hook: resolve which pool block would be picked up for a touch
+    /// at `scenePoint`, or nil if none is within reach. Mirrors `touchesBegan`
+    /// hit logic so regression tests can cover the post-consumption dead-zone
+    /// fix without synthesising UITouch events.
+    func hitTestPoolBlock(at scenePoint: CGPoint) -> SKSpriteNode? {
+        guard gameState != nil, !gameState.isComplete else { return nil }
+        let verticalBand: CGFloat = 90
+        let maxCapture: CGFloat = 120
+        var best: SKSpriteNode?
+        var bestDistSq: CGFloat = maxCapture * maxCapture
+        for block in poolBlocks where block.parent != nil {
+            let dy = block.position.y - scenePoint.y
+            guard abs(dy) <= verticalBand else { continue }
+            let dx = block.position.x - scenePoint.x
+            let d = dx * dx + dy * dy
+            if d <= bestDistSq {
+                bestDistSq = d
+                best = block
+            }
+        }
+        return best
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
