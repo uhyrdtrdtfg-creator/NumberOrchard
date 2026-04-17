@@ -19,7 +19,7 @@ struct NoomForestView: View {
                 topBar
 
                 Text("🐾 小精灵森林")
-                    .font(.system(size: 36, weight: .black, design: .rounded))
+                    .font(CartoonFont.displayLarge)
                     .foregroundStyle(CartoonColor.text)
 
                 tabPicker
@@ -28,7 +28,7 @@ struct NoomForestView: View {
                     PetGardenView(profile: profile)
                 } else {
                     Text("图鉴: \(viewModel?.unlockedCount ?? 0) / 20")
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
+                        .font(CartoonFont.bodyLarge)
                         .foregroundStyle(CartoonColor.text.opacity(0.7))
 
                     dexGrid
@@ -42,7 +42,7 @@ struct NoomForestView: View {
                     action: onStartChallenge
                 ) {
                     Text("🎮 开始挑战")
-                        .font(.system(size: 28, weight: .black, design: .rounded))
+                        .font(CartoonFont.titleSmall)
                         .foregroundStyle(.white)
                         .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
                         .frame(width: 260, height: 76)
@@ -87,7 +87,7 @@ struct NoomForestView: View {
                     viewModel?.selectedTab = tab
                 }) {
                     Text(tab.title)
-                        .font(.system(size: 20, weight: .black, design: .rounded))
+                        .font(CartoonFont.body)
                         .padding(.horizontal, 22).padding(.vertical, 10)
                         .foregroundStyle(selected ? .white : CartoonColor.text)
                         .background(
@@ -144,19 +144,19 @@ struct NoomForestView: View {
                 .scaledToFit()
                 .frame(width: 200, height: 200)
             Text(noom.name)
-                .font(.system(size: 36, weight: .black, design: .rounded))
+                .font(CartoonFont.displayLarge)
                 .foregroundStyle(CartoonColor.text)
             Text("我是数字 \(noom.number)！")
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .font(CartoonFont.bodyLarge)
                 .foregroundStyle(CartoonColor.text.opacity(0.7))
             CartoonPanel(cornerRadius: 20) {
                 Text(noom.catchphrase)
-                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .font(CartoonFont.bodyLarge)
                     .foregroundStyle(CartoonColor.text)
                     .padding(20)
             }
             Button("关闭") { inspectedNoom = nil }
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .font(CartoonFont.body)
                 .padding(.top)
         }
         .padding(40)

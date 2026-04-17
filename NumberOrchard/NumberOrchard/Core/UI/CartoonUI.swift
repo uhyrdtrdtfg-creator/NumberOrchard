@@ -107,12 +107,80 @@ enum CartoonDimensions {
 // MARK: - Shared backgrounds
 
 struct CartoonSkyBackground: View {
+    /// When true, adds drifting clouds and a sun accent. Defaults to true so
+    /// every existing caller gets the richer background for free. Pass `false`
+    /// for tight/modal contexts where decoration would compete with content.
+    var decorations: Bool = true
+
     var body: some View {
-        LinearGradient(
-            colors: [CartoonColor.skyTop, CartoonColor.skyBottom],
-            startPoint: .top, endPoint: .bottom
-        )
+        ZStack {
+            LinearGradient(
+                colors: [CartoonColor.skyTop, CartoonColor.skyBottom],
+                startPoint: .top, endPoint: .bottom
+            )
+            if decorations {
+                CartoonSkyDecorations()
+            }
+        }
         .ignoresSafeArea()
+    }
+}
+
+/// Decorative sky layer: a soft sun + three drifting clouds at different
+/// depths. Pure cosmetic, ignores hit-testing so it never steals taps.
+private struct CartoonSkyDecorations: View {
+    @State private var drift: CGFloat = 0
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                // Sun — top-right, behind clouds.
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.white.opacity(0.85), CartoonColor.gold.opacity(0.35), .clear],
+                            center: .center, startRadius: 10, endRadius: 110
+                        )
+                    )
+                    .frame(width: 220, height: 220)
+                    .position(x: geo.size.width * 0.88, y: geo.size.height * 0.12)
+
+                cloud(size: 160, opacity: 0.85)
+                    .position(x: geo.size.width * 0.18 + drift * 40,
+                              y: geo.size.height * 0.18)
+                cloud(size: 110, opacity: 0.75)
+                    .position(x: geo.size.width * 0.70 - drift * 25,
+                              y: geo.size.height * 0.30)
+                cloud(size: 140, opacity: 0.65)
+                    .position(x: geo.size.width * 0.45 + drift * 30,
+                              y: geo.size.height * 0.55)
+            }
+            .onAppear {
+                withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
+                    drift = 1
+                }
+            }
+        }
+        .allowsHitTesting(false)
+    }
+
+    /// Puffy cloud built from 3 overlapping circles.
+    private func cloud(size: CGFloat, opacity: Double) -> some View {
+        ZStack {
+            Circle()
+                .fill(.white)
+                .frame(width: size * 0.70, height: size * 0.70)
+                .offset(x: -size * 0.22, y: size * 0.08)
+            Circle()
+                .fill(.white)
+                .frame(width: size * 0.85, height: size * 0.85)
+            Circle()
+                .fill(.white)
+                .frame(width: size * 0.60, height: size * 0.60)
+                .offset(x: size * 0.28, y: size * 0.06)
+        }
+        .frame(width: size, height: size * 0.6)
+        .opacity(opacity)
     }
 }
 

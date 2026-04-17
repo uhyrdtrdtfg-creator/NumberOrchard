@@ -25,10 +25,10 @@ struct PetFeedingArea: View {
                 VStack(spacing: 12) {
                     HStack {
                         Text(noom.name)
-                            .font(.system(size: 26, weight: .black, design: .rounded))
+                            .font(CartoonFont.titleSmall)
                             .foregroundStyle(CartoonColor.text)
                         Text(stageLabel(pet.stage))
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .font(CartoonFont.caption)
                             .foregroundStyle(CartoonColor.text.opacity(0.6))
                     }
 
@@ -48,7 +48,7 @@ struct PetFeedingArea: View {
 
                         if let xpText = floatingXPText {
                             Text(xpText)
-                                .font(.system(size: 28, weight: .black, design: .rounded))
+                                .font(CartoonFont.title)
                                 .foregroundStyle(viewModel.lastFedWasPreferred ? CartoonColor.gold : .white)
                                 .shadow(color: CartoonColor.ink, radius: 0, x: 0, y: 2)
                                 .offset(y: -80)
@@ -60,7 +60,7 @@ struct PetFeedingArea: View {
                     xpBar(pet: pet)
 
                     Button("切换宠物") { showSwitcher = true }
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(CartoonFont.bodySmall)
                         .padding(.horizontal, 16).padding(.vertical, 6)
                         .background(Capsule().fill(CartoonColor.paper))
                         .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2))
@@ -69,7 +69,7 @@ struct PetFeedingArea: View {
             }
         } else {
             Text("还没有宠物呢，去小精灵挑战解锁吧！")
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text.opacity(0.6))
                 .padding()
         }
@@ -98,7 +98,7 @@ struct PetFeedingArea: View {
                 Capsule().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 2.5).frame(width: 200, height: 22)
             }
             Text("\(pet.xp) / \(nextThreshold) XP")
-                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .font(CartoonFont.caption)
                 .foregroundStyle(CartoonColor.text.opacity(0.7))
         }
     }
@@ -108,7 +108,7 @@ struct PetFeedingArea: View {
         let fruits = viewModel.availableFruits()
         if fruits.isEmpty {
             Text("还没有水果呢！冒险中三星通关可以解锁。")
-                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text.opacity(0.6))
                 .padding()
         } else {
@@ -140,7 +140,7 @@ struct PetFeedingArea: View {
     private var petSwitcherSheet: some View {
         VStack {
             Text("选择宠物")
-                .font(.system(size: 26, weight: .black, design: .rounded))
+                .font(CartoonFont.titleSmall)
                 .padding()
             ScrollView {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 4), spacing: 14) {
@@ -161,7 +161,7 @@ struct PetFeedingArea: View {
                                     .scaledToFit()
                                     .frame(width: 80, height: 80)
                                     Text(noom.name)
-                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .font(CartoonFont.caption)
                                         .foregroundStyle(CartoonColor.text)
                                 }
                             }

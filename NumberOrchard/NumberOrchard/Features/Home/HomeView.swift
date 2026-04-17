@@ -24,7 +24,9 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            CartoonSkyBackground()
+            // HomeSkyLayer provides its own emoji sun + clouds, so we opt
+            // out of CartoonSkyBackground's new cloud decoration layer here.
+            CartoonSkyBackground(decorations: false)
             HomeSkyLayer()
             CartoonGround(height: 280)
             HomeDecorationsLayer(decorations: profile.decorations)
