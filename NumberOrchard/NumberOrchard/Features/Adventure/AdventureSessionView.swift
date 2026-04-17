@@ -60,7 +60,7 @@ struct AdventureSessionView: View {
                 .foregroundStyle(CartoonColor.text.opacity(0.7))
             CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "返回", action: onFinish) {
                 Text("返回")
-                    .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                    .font(CartoonFont.titleSmall)
                     .foregroundStyle(.white)
                     .frame(width: 180, height: 64)
             }
@@ -123,19 +123,19 @@ struct AdventureSessionView: View {
             ConfettiView()
             VStack(spacing: CartoonDimensions.spacingMedium + 2) {
                 Text("太棒了！")
-                    .font(.system(size: CartoonDimensions.fontTitleHuge, weight: .black, design: .rounded))
+                    .font(CartoonFont.displayHuge)
                     .foregroundStyle(CartoonColor.text)
                     .modifier(PopInModifier(delay: 0.1))
 
                 if let reward = viewModel.lastReward {
                     VStack(spacing: 10) {
                         Text("获得 ⭐ +\(reward.starsEarned)")
-                            .font(.system(size: CartoonDimensions.fontTitle, weight: .black, design: .rounded))
+                            .font(CartoonFont.title)
                             .foregroundStyle(CartoonColor.gold)
                             .modifier(PopInModifier(delay: 0.3))
                         if reward.seedsEarned > 0 {
                             Text("获得 🌱 +\(reward.seedsEarned)")
-                                .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                                .font(CartoonFont.titleSmall)
                                 .foregroundStyle(CartoonColor.leaf)
                                 .modifier(PopInModifier(delay: 0.5))
                         }
@@ -161,7 +161,7 @@ struct AdventureSessionView: View {
 
                 CartoonButton(tint: CartoonColor.leaf, accessibilityLabel: "回到果园", action: onFinish) {
                     Text("🌳 回到果园")
-                        .font(.system(size: CartoonDimensions.fontTitleSmall, weight: .black, design: .rounded))
+                        .font(CartoonFont.titleSmall)
                         .foregroundStyle(.white)
                         .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
                         .frame(width: 280, height: 80)

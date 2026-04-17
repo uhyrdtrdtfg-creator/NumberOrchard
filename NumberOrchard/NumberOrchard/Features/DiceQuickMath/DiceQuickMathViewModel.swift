@@ -38,6 +38,9 @@ final class DiceQuickMathViewModel {
     var correctCount: Int = 0
     var fastestSeconds: TimeInterval = .infinity
     var lastResult: Bool? = nil
+    /// Legendary fruit dropped by the last correct answer, if any.
+    /// Cleared on advance; view layer shows a banner when non-nil.
+    var lastLegendaryDrop: FruitItem? = nil
 
     private var roundStart: Date = .distantPast
 
@@ -59,6 +62,8 @@ final class DiceQuickMathViewModel {
     }
 
     /// Submit the child's typed answer. Returns true if correct.
+    /// Correct answers additionally roll for a legendary-fruit easter-egg
+    /// drop (1% chance) and add it to the profile's collection if won.
     @discardableResult
     func submit(_ answer: Int) -> Bool {
         guard phase == .answering else { return false }
@@ -70,9 +75,20 @@ final class DiceQuickMathViewModel {
             correctCount += 1
             totalPoints += Self.points(for: elapsed, correct: true)
             if elapsed < fastestSeconds { fastestSeconds = elapsed }
+            rollLegendaryDrop()
         }
         phase = .resultShown
         return correct
+    }
+
+    private func rollLegendaryDrop() {
+        var rng = SystemRandomNumberGenerator()
+        guard let drop = LegendaryDropRoll.roll(rng: &rng) else { return }
+        lastLegendaryDrop = drop
+        if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {
+            let cf = CollectedFruit(fruitId: drop.id)
+            profile.collectedFruits.append(cf)
+        }
     }
 
     /// Advance to the next round (called after a short result display).
@@ -84,6 +100,7 @@ final class DiceQuickMathViewModel {
         }
         currentRound += 1
         lastResult = nil
+        lastLegendaryDrop = nil
         phase = .rolling
     }
 

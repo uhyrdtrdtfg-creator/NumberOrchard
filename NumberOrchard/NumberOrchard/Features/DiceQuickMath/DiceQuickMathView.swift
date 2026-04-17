@@ -28,6 +28,11 @@ struct DiceQuickMathView: View {
                 Spacer(minLength: 10)
             }
             .padding(.horizontal, 24)
+
+            if let drop = viewModel.lastLegendaryDrop {
+                LegendaryDropBanner(fruit: drop)
+                    .transition(.scale.combined(with: .opacity))
+            }
         }
         .onAppear(perform: scheduleRollStop)
         .onChange(of: viewModel.phase) { _, new in

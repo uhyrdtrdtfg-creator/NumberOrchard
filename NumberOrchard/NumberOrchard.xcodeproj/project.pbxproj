@@ -57,7 +57,9 @@
 		3FD5934316B6213C4BB38D0B /* ChildProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BCA8BA3BAF404288DA582 /* ChildProfile.swift */; };
 		403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6219AA0C32C4ADE8710C404 /* DecorationCatalog.swift */; };
 		42A248AD182B20E6B6D95592 /* CollectedNoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A9C6C3C849D2410D33761 /* CollectedNoomTests.swift */; };
+		43B5D3A81939680D141DE35D /* LegendaryDropBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2489EDF39F4E6DA97C6CD6 /* LegendaryDropBanner.swift */; };
 		4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B856776C53534150F3C9334F /* LearningProfile.swift */; };
+		448A582141AEFC73A9EEE379 /* NoomDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B2AC69AAB3895EB25B4C60 /* NoomDiaryView.swift */; };
 		44B006F9FAA275C62DD55DE8 /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = A833ED9961A1756FCB64C057 /* wrong.wav */; };
 		4AF3BD5F7B2CF1A0177B490C /* PetPreferenceMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B89812B1768D58C624AD1 /* PetPreferenceMap.swift */; };
 		4B982840B4B8DC7F66D1356B /* correct_04.aiff in Resources */ = {isa = PBXBuildFile; fileRef = FA44B685768E893018DAF829 /* correct_04.aiff */; };
@@ -189,6 +191,7 @@
 		43B5F110839E77BCA7F6E418 /* MapCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCatalog.swift; sourceTree = "<group>"; };
 		43DD743CACB7A8940E4E0B48 /* PetProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetProgress.swift; sourceTree = "<group>"; };
 		4483CDDCDF5E85D5A0720D2C /* PetEvolutionLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetEvolutionLogicTests.swift; sourceTree = "<group>"; };
+		47B2AC69AAB3895EB25B4C60 /* NoomDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomDiaryView.swift; sourceTree = "<group>"; };
 		482C1635F049A55AA815323A /* PetXPCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculatorTests.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoom.swift; sourceTree = "<group>"; };
@@ -285,6 +288,7 @@
 		D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTenGameTests.swift; sourceTree = "<group>"; };
 		D85156F893459A7FB65A2E06 /* MathQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathQuestion.swift; sourceTree = "<group>"; };
 		DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCatalog.swift; sourceTree = "<group>"; };
+		DB2489EDF39F4E6DA97C6CD6 /* LegendaryDropBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendaryDropBanner.swift; sourceTree = "<group>"; };
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
 		DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
@@ -657,6 +661,7 @@
 				5447E44C12B101400A365ECF /* NoomChallengeSessionView.swift */,
 				1F7E067CF1575D00668ACDF0 /* NoomChallengeView.swift */,
 				14C328B9C1D7050964905113 /* NoomChallengeViewModel.swift */,
+				47B2AC69AAB3895EB25B4C60 /* NoomDiaryView.swift */,
 				B4D7BBE76755CE793324D73D /* NoomForestView.swift */,
 				60329F20E7582CA16889E1AB /* NoomForestViewModel.swift */,
 				BE9F508065AC49ED77141A66 /* NoomPersonality.swift */,
@@ -685,8 +690,17 @@
 				CC4E86C7B1E6BF8104E301B8 /* Orchard */,
 				37B3FF3B0E15EBD4C1D2341C /* ParentCenter */,
 				53941F22D2FC489773F9E19A /* ParentChild */,
+				B6439ABBF01B26A66CEBACD9 /* Shared */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		B6439ABBF01B26A66CEBACD9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DB2489EDF39F4E6DA97C6CD6 /* LegendaryDropBanner.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		BE89C3DAEA39988A4F184B56 /* Adventure */ = {
@@ -1055,6 +1069,7 @@
 				A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */,
 				4457D6DBFB67C06388E084C0 /* LearningProfile.swift in Sources */,
 				FECD7ED716E074CCBCA3EF40 /* LearningSession.swift in Sources */,
+				43B5D3A81939680D141DE35D /* LegendaryDropBanner.swift in Sources */,
 				9872F8B733C69AA51F2BE25E /* LegendaryDropRoll.swift in Sources */,
 				3BCD91B13F5DB3093802DA0C /* MapCatalog.swift in Sources */,
 				34DFD7D4AEA20293BED88E88 /* MapProgressionLogic.swift in Sources */,
@@ -1066,6 +1081,7 @@
 				A7F2DC617F4178E54401DB5C /* NoomChallengeSessionView.swift in Sources */,
 				1AA96E102102F42CAAE7CD8F /* NoomChallengeView.swift in Sources */,
 				94172F8CFFD39C0EB3831B21 /* NoomChallengeViewModel.swift in Sources */,
+				448A582141AEFC73A9EEE379 /* NoomDiaryView.swift in Sources */,
 				36ACDC3D143601E3A2E70C09 /* NoomForestView.swift in Sources */,
 				7BA2B379DC698CDE5195C2EC /* NoomForestViewModel.swift in Sources */,
 				59CEED9C0DB2C64746AEB92B /* NoomMergeLogic.swift in Sources */,

@@ -14,6 +14,7 @@ struct PetGardenView: View {
     @State private var showDice = false
     @State private var showMatchTen = false
     @State private var showFishing = false
+    @State private var showDiary = false
 
     var body: some View {
         ScrollView {
@@ -27,7 +28,10 @@ struct PetGardenView: View {
                         diceButton
                         matchTenButton
                     }
-                    fishingButton
+                    HStack(spacing: 12) {
+                        fishingButton
+                        diaryButton
+                    }
                     EggHatchingArea(viewModel: viewModel)
                 } else {
                     ProgressView()
@@ -72,6 +76,9 @@ struct PetGardenView: View {
                     fishingViewModel = nil
                 })
             }
+        }
+        .fullScreenCover(isPresented: $showDiary) {
+            NoomDiaryView(profile: profile, onDismiss: { showDiary = false })
         }
     }
 
@@ -135,11 +142,25 @@ struct PetGardenView: View {
                 showFishing = true
             }
         ) {
-            HStack(spacing: 8) {
+            VStack(spacing: 2) {
                 Text("🎣").font(.system(size: 26))
-                Text("数字钓鱼").font(CartoonFont.bodyLarge).foregroundStyle(.white)
+                Text("数字钓鱼").font(CartoonFont.bodySmall).foregroundStyle(.white)
             }
-            .frame(width: 240, height: 64)
+            .frame(width: 120, height: 72)
+        }
+    }
+
+    private var diaryButton: some View {
+        CartoonButton(
+            tint: CartoonColor.wood,
+            accessibilityLabel: "成长日记",
+            action: { showDiary = true }
+        ) {
+            VStack(spacing: 2) {
+                Text("📓").font(.system(size: 26))
+                Text("成长日记").font(CartoonFont.bodySmall).foregroundStyle(.white)
+            }
+            .frame(width: 120, height: 72)
         }
     }
 }
