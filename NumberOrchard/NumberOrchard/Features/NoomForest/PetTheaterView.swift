@@ -9,7 +9,9 @@ struct PetTheaterView: View {
 
     @State private var entered = ""
     @State private var bounce = false
+    @State private var spin = false
     @State private var shake = false
+    @State private var idleBreath = false
     @State private var fruitRain: [FruitParticle] = []
 
     var body: some View {
@@ -43,6 +45,9 @@ struct PetTheaterView: View {
                     .opacity(p.opacity)
             }
         }
+        .onAppear {
+            withAnimation(CartoonAnim.breathe) { idleBreath = true }
+        }
     }
 
     // MARK: - Subviews
@@ -61,7 +66,7 @@ struct PetTheaterView: View {
             }
             Spacer()
             Text("🎭 数学小剧场")
-                .font(.system(size: 24, weight: .black, design: .rounded))
+                .font(CartoonFont.titleSmall)
                 .foregroundStyle(CartoonColor.text)
             Spacer()
             Color.clear.frame(width: 56, height: 56)
@@ -71,20 +76,20 @@ struct PetTheaterView: View {
 
     private var progressIndicator: some View {
         Text("第 \(viewModel.progressText) 题")
-            .font(.system(size: 18, weight: .bold, design: .rounded))
+            .font(CartoonFont.bodySmall)
             .foregroundStyle(CartoonColor.text.opacity(0.7))
     }
 
     private func speechBubble(text: String) -> some View {
         CartoonPanel(cornerRadius: 24) {
             Text(text)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .font(CartoonFont.bodyLarge)
                 .foregroundStyle(CartoonColor.text)
                 .multilineTextAlignment(.center)
                 .padding(18)
         }
         .offset(x: shake ? -8 : 0)
-        .animation(.default, value: shake)
+        .animation(CartoonAnim.snappy, value: shake)
     }
 
     private func petStage(noom: Noom, stage: Int) -> some View {
@@ -95,8 +100,10 @@ struct PetTheaterView: View {
         .resizable()
         .scaledToFit()
         .frame(width: 160, height: 160)
-        .scaleEffect(bounce ? 1.25 : 1.0)
-        .animation(.spring(response: 0.35, dampingFraction: 0.55), value: bounce)
+        .scaleEffect(bounce ? 1.25 : (idleBreath ? 1.03 : 1.0))
+        .rotationEffect(.degrees(spin ? 10 : 0))
+        .animation(CartoonAnim.bouncy, value: bounce)
+        .animation(CartoonAnim.bouncy, value: spin)
     }
 
     private var inputDisplay: some View {
@@ -108,7 +115,7 @@ struct PetTheaterView: View {
                 .stroke(CartoonColor.ink.opacity(0.7), lineWidth: 3)
                 .frame(width: 160, height: 60)
             Text(entered.isEmpty ? "?" : entered)
-                .font(.system(size: 36, weight: .black, design: .rounded))
+                .font(CartoonFont.numericLarge)
                 .foregroundStyle(CartoonColor.text)
         }
     }
@@ -150,7 +157,7 @@ struct PetTheaterView: View {
                 RoundedRectangle(cornerRadius: 18).stroke(CartoonColor.ink.opacity(0.7), lineWidth: 3)
                     .frame(width: 76, height: 60)
                 Text(label)
-                    .font(.system(size: 26, weight: .black, design: .rounded))
+                    .font(CartoonFont.titleSmall)
                     .foregroundStyle(tint == CartoonColor.paper ? CartoonColor.text : .white)
             }
         }
@@ -163,26 +170,27 @@ struct PetTheaterView: View {
             Text("🎉")
                 .font(.system(size: 80))
             Text("太棒啦！")
-                .font(.system(size: 36, weight: .black, design: .rounded))
+                .font(CartoonFont.displayLarge)
                 .foregroundStyle(CartoonColor.text)
             if let pet = viewModel.garden.activePet,
                let noom = NoomCatalog.noom(for: pet.noomNumber) {
                 Text("你让\(noom.name)吃到了 \(viewModel.totalFruitsEaten) 个水果！")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(CartoonFont.body)
                     .foregroundStyle(CartoonColor.text.opacity(0.8))
                     .multilineTextAlignment(.center)
             }
             Text("答对 \(viewModel.correctCount) / \(viewModel.questions.count)  +1 ⭐")
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .font(CartoonFont.body)
                 .foregroundStyle(CartoonColor.gold)
             Spacer().frame(height: 20)
             CartoonButton(tint: CartoonColor.gold, accessibilityLabel: "完成", action: onDismiss) {
                 Text("回到花园")
-                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .font(CartoonFont.bodyLarge)
                     .foregroundStyle(.white)
                     .frame(width: 200, height: 60)
             }
         }
+        .transition(.scale.combined(with: .opacity))
     }
 
     // MARK: - Actions
@@ -207,23 +215,26 @@ struct PetTheaterView: View {
 
     private func triggerCelebration() {
         bounce = true
+        spin = true
         let emoji = viewModel.currentQuestion?.fruitEmoji ?? "⭐"
-        fruitRain = (0..<8).map { i in
+        fruitRain = (0..<10).map { _ in
             FruitParticle(
                 id: UUID(), emoji: emoji,
-                x: CGFloat.random(in: -120...120),
-                y: -40, size: CGFloat.random(in: 28...40),
+                x: CGFloat.random(in: -140...140),
+                y: -40, size: CGFloat.random(in: 28...46),
                 opacity: 1.0
             )
         }
-        // Animate particles outward.
-        withAnimation(.easeOut(duration: 1.0)) {
+        withAnimation(CartoonAnim.fall) {
             fruitRain = fruitRain.map {
                 var p = $0
-                p.y = 200
+                p.y = 240
                 p.opacity = 0
                 return p
             }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            spin = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             bounce = false
