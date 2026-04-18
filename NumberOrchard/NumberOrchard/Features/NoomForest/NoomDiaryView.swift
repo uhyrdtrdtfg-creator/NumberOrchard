@@ -167,8 +167,36 @@ private struct DiaryPage: View {
                 if !preferredFruits.isEmpty {
                     statRow(label: "最爱吃", value: preferredFruits.joined(separator: " "))
                 }
+                skillRow
             }
             .padding(18)
+        }
+    }
+
+    @ViewBuilder
+    private var skillRow: some View {
+        let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
+        let unlocked = NoomSkill.isUnlocked(stage: pet.stage)
+        HStack {
+            Text("独门技能")
+                .font(CartoonFont.body)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            Spacer()
+            HStack(spacing: 6) {
+                Text(skill.emoji)
+                Text(unlocked ? skill.displayName : "\(skill.displayName) (🔒)")
+                    .font(CartoonFont.bodyLarge)
+                    .foregroundStyle(unlocked ? CartoonColor.text : CartoonColor.text.opacity(0.45))
+            }
+        }
+        if unlocked {
+            Text(skill.explanation)
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.text.opacity(0.65))
+        } else {
+            Text("长大到少年期(stage ≥ 1)即可解锁")
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.text.opacity(0.45))
         }
     }
 

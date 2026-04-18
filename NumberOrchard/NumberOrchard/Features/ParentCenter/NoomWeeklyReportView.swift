@@ -102,31 +102,47 @@ struct NoomWeeklyReportView: View {
             return AnyView(EmptyView())
         }
         let days = daysSince(pet.noomNumber)
+        let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
+        let skillUnlocked = NoomSkill.isUnlocked(stage: pet.stage)
         return AnyView(
             CartoonPanel(cornerRadius: 18, strokeWidth: 3) {
-                HStack(spacing: 14) {
-                    Image(uiImage: NoomRenderer.image(
-                        for: noom, expression: .happy,
-                        size: CGSize(width: 56, height: 56), stage: pet.stage
-                    ))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 56, height: 56)
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 14) {
+                        Image(uiImage: NoomRenderer.image(
+                            for: noom, expression: .happy,
+                            size: CGSize(width: 56, height: 56), stage: pet.stage
+                        ))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 56, height: 56)
 
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(noom.name)
-                            .font(CartoonFont.bodyLarge)
-                            .foregroundStyle(CartoonColor.text)
-                        Text(sentence(for: pet, days: days))
-                            .font(CartoonFont.caption)
-                            .foregroundStyle(CartoonColor.text.opacity(0.7))
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(noom.name)
+                                .font(CartoonFont.bodyLarge)
+                                .foregroundStyle(CartoonColor.text)
+                            Text(sentence(for: pet, days: days))
+                                .font(CartoonFont.caption)
+                                .foregroundStyle(CartoonColor.text.opacity(0.7))
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text(stageLabel(pet.stage))
+                                .font(CartoonFont.caption)
+                                .foregroundStyle(tint(for: pet.stage))
+                            Text("\(pet.xp) XP")
+                                .font(CartoonFont.caption)
+                                .foregroundStyle(CartoonColor.text.opacity(0.6))
+                        }
                     }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(stageLabel(pet.stage))
+                    HStack(spacing: 6) {
+                        Text(skill.emoji)
+                        Text(skillUnlocked ? skill.displayName : "\(skill.displayName) 🔒")
                             .font(CartoonFont.caption)
-                            .foregroundStyle(tint(for: pet.stage))
-                        Text("\(pet.xp) XP")
+                            .foregroundStyle(skillUnlocked ? CartoonColor.text.opacity(0.8) : CartoonColor.text.opacity(0.4))
+                        Text("·")
+                            .font(CartoonFont.caption)
+                            .foregroundStyle(CartoonColor.text.opacity(0.35))
+                        Text(skillUnlocked ? skill.explanation : "长大到少年期解锁")
                             .font(CartoonFont.caption)
                             .foregroundStyle(CartoonColor.text.opacity(0.6))
                     }

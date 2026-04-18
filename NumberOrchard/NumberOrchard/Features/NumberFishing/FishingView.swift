@@ -29,15 +29,25 @@ final class FishingViewModel {
         }
     }
 
-    func catchFish(at idx: Int) { state.catchFish(at: idx) }
-    func release(bucketIndex idx: Int) { _ = state.release(bucketIndex: idx) }
+    func catchFish(at idx: Int) {
+        state.catchFish(at: idx)
+        AudioManager.shared.playSound("fruit_pick.wav")
+    }
+    func release(bucketIndex idx: Int) {
+        _ = state.release(bucketIndex: idx)
+        AudioManager.shared.playSound("button_click.wav")
+    }
 
     /// Lock in the bucket — if it hits target, record a win and advance.
     /// If overfilled or under, the view offers retry via clearBucket.
     func submit() {
         guard state.isComplete else { return }
         correctRounds += 1
+        AudioManager.shared.playSound("correct.wav")
         advance()
+        if sessionComplete {
+            AudioManager.shared.playSound("level_up.wav")
+        }
     }
 
     func clearBucket() {
@@ -45,6 +55,7 @@ final class FishingViewModel {
         while !state.bucketFish.isEmpty {
             _ = state.release(bucketIndex: 0)
         }
+        AudioManager.shared.playSound("button_click.wav")
     }
 
     private func advance() {

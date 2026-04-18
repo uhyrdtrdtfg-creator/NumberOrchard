@@ -14,6 +14,13 @@ final class PetTheaterViewModel {
     private let difficulty: DifficultyLevel
 
     static let sessionQuestionCount = 5
+    /// Default thinking budget per question (seconds). Shown as an optional
+    /// countdown pill at the top of the theater. Kids can take as long as
+    /// they want — the timer never auto-submits — but the tick encourages
+    /// quick answers.
+    static let baseThinkSeconds: TimeInterval = 10
+    /// Bonus seconds granted when the active Noom has the `calmClock` skill.
+    static let calmClockBonusSeconds: TimeInterval = 2
 
     var questions: [PetTheaterQuestion] = []
     var currentIndex: Int = 0
@@ -26,6 +33,14 @@ final class PetTheaterViewModel {
     var lastLegendaryDrop: FruitItem? = nil
 
     enum Result { case correct, wrong }
+
+    /// Total thinking budget for the current question, scaled by the
+    /// active Noom's `calmClock` skill. Non-reactive; view reads once per
+    /// question and drives its own countdown animation.
+    var thinkBudgetSeconds: TimeInterval {
+        Self.baseThinkSeconds + (garden.activeSkill == .calmClock
+                                 ? Self.calmClockBonusSeconds : 0)
+    }
 
     init(garden: PetGardenViewModel) {
         self.garden = garden

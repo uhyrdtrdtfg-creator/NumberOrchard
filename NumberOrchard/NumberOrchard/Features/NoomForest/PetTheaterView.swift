@@ -81,9 +81,21 @@ struct PetTheaterView: View {
     }
 
     private var progressIndicator: some View {
-        Text("第 \(viewModel.progressText) 题")
-            .font(CartoonFont.bodySmall)
-            .foregroundStyle(CartoonColor.text.opacity(0.7))
+        HStack(spacing: 14) {
+            Text("第 \(viewModel.progressText) 题")
+                .font(CartoonFont.bodySmall)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+            if viewModel.garden.activeSkill == .calmClock {
+                Text("⏳ +\(Int(PetTheaterViewModel.calmClockBonusSeconds))s 从容")
+                    .font(CartoonFont.caption)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 4)
+                    .background(Capsule().fill(CartoonColor.gold.opacity(0.25)))
+                    .foregroundStyle(CartoonColor.text)
+            }
+            ThinkCountdownPill(totalSeconds: viewModel.thinkBudgetSeconds,
+                               resetKey: viewModel.currentIndex)
+        }
     }
 
     private func speechBubble(text: String) -> some View {
@@ -207,11 +219,19 @@ struct PetTheaterView: View {
         let correct = viewModel.submit(value)
         entered = ""
         if correct {
+            AudioManager.shared.playSound("correct.wav")
+            if viewModel.lastLegendaryDrop != nil {
+                AudioManager.shared.playSound("level_up.wav")
+            }
             triggerCelebration()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
                 viewModel.advance()
+                if viewModel.sessionComplete {
+                    AudioManager.shared.playSound("star_collect.wav")
+                }
             }
         } else {
+            AudioManager.shared.playSound("wrong.wav")
             triggerShake()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 viewModel.clearResult()
@@ -252,6 +272,51 @@ struct PetTheaterView: View {
         shake = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             shake = false
+        }
+    }
+}
+
+/// A friendly countdown pill that ticks from `totalSeconds` to 0 over the
+/// current question. Purely visual — never auto-submits an answer — its
+/// job is to give kids a gentle sense of pace. Restarts whenever
+/// `resetKey` changes (used by the parent when advancing questions).
+private struct ThinkCountdownPill: View {
+    let totalSeconds: TimeInterval
+    let resetKey: Int
+
+    @State private var remaining: TimeInterval = 0
+    @State private var ticker: Task<Void, Never>? = nil
+
+    var body: some View {
+        let fraction = max(0, min(1, remaining / totalSeconds))
+        let tint: Color = fraction > 0.5 ? CartoonColor.leaf
+            : fraction > 0.25 ? CartoonColor.gold : CartoonColor.coral
+        return HStack(spacing: 6) {
+            Image(systemName: "clock.fill")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(tint)
+            Text("\(Int(ceil(remaining)))s")
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.text)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 4)
+        .background(Capsule().fill(tint.opacity(0.2)))
+        .overlay(Capsule().stroke(tint.opacity(0.5), lineWidth: 1))
+        .onAppear { restart() }
+        .onChange(of: resetKey, initial: false) { _, _ in restart() }
+        .onDisappear { ticker?.cancel() }
+    }
+
+    private func restart() {
+        ticker?.cancel()
+        remaining = totalSeconds
+        ticker = Task { @MainActor in
+            while !Task.isCancelled && remaining > 0 {
+                try? await Task.sleep(nanoseconds: 200_000_000)
+                remaining -= 0.2
+            }
+            remaining = 0
         }
     }
 }

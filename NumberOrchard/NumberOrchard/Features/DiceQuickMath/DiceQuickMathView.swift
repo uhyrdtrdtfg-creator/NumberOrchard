@@ -208,10 +208,13 @@ struct DiceQuickMathView: View {
     private func scheduleRollStop() {
         guard viewModel.phase == .rolling else { return }
         rollDeadlineTask?.cancel()
+        // Tumble sound plays once when the dice start rolling.
+        AudioManager.shared.playSound("button_click.wav")
         rollDeadlineTask = Task { @MainActor in
             try? await Task.sleep(nanoseconds: UInt64(DiceQuickMathViewModel.rollDuration * 1_000_000_000))
             if !Task.isCancelled, viewModel.phase == .rolling {
                 viewModel.startAnswering()
+                AudioManager.shared.playSound("fruit_drop.wav")
             }
         }
     }
@@ -219,10 +222,14 @@ struct DiceQuickMathView: View {
     private func submit() {
         guard viewModel.phase == .answering, let value = Int(entered) else { return }
         let correct = viewModel.submit(value)
+        AudioManager.shared.playSound(correct ? "correct.wav" : "wrong.wav")
         if correct {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                 entered = ""
                 viewModel.advance()
+                if viewModel.phase == .complete {
+                    AudioManager.shared.playSound("level_up.wav")
+                }
             }
         } else {
             // Brief pause, then let child retry the same roll.
