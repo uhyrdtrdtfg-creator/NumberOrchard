@@ -44,8 +44,13 @@ final class MatchTenViewModel {
             lastClearAt = (r, c)
             lastClearBurst = combo >= 2 ? "+\(pts) x\(combo) 连击!" : "+\(pts)"
             playComboSfx(combo: combo)
+            // Escalating haptic intensity mirrors the SFX tier.
+            combo >= 5 ? Haptics.milestone() : Haptics.success()
         case .invalidPair, .notAdjacent:
             feedbackTile = (r, c)
+            Haptics.warning()
+        case .selected, .deselected:
+            Haptics.tap()
         default:
             break
         }

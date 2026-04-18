@@ -82,6 +82,7 @@ struct TierEvolutionBanner: View {
         .onAppear {
             withAnimation(CartoonAnim.bouncy) { appeared = true }
             AudioManager.shared.playSound("level_up.wav")
+            Haptics.milestone()
             DispatchQueue.main.asyncAfter(deadline: .now() + autoDismissAfter) {
                 onDismiss()
             }

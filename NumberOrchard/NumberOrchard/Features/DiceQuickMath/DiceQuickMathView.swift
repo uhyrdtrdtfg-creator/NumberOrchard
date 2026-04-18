@@ -154,6 +154,7 @@ struct DiceQuickMathView: View {
         guard viewModel.phase == .answering, let value = Int(entered) else { return }
         let correct = viewModel.submit(value)
         AudioManager.shared.playSound(correct ? "correct.wav" : "wrong.wav")
+        if correct { Haptics.success() } else { Haptics.warning() }
         if correct {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
                 entered = ""

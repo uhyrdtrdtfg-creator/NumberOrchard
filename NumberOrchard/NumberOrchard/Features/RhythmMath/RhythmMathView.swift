@@ -47,9 +47,11 @@ final class RhythmMathViewModel {
             combo += 1
             score += 10 * combo
             AudioManager.shared.playSound("star_collect.wav")
+            combo >= 5 ? Haptics.milestone() : Haptics.success()
         } else {
             combo = 0
             AudioManager.shared.playSound("wrong.wav")
+            Haptics.warning()
         }
         advance()
     }

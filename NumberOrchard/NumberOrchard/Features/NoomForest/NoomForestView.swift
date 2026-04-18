@@ -119,22 +119,7 @@ struct NoomForestView: View {
 
     private func noomCell(noom: Noom) -> some View {
         let unlocked = viewModel?.isUnlocked(noom.number) ?? false
-        return ZStack {
-            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 110, height: 110).offset(y: 5)
-            Circle().fill(unlocked ? Color(uiColor: noom.bodyColor) : Color.gray.opacity(0.4))
-                .frame(width: 110, height: 110)
-            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 110, height: 110)
-            if unlocked {
-                Image(uiImage: NoomRenderer.image(for: noom, expression: .neutral, size: CGSize(width: 100, height: 100)))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
-            } else {
-                Image(systemName: "lock.fill")
-                    .font(.system(size: 36, weight: .black))
-                    .foregroundStyle(CartoonColor.ink.opacity(0.55))
-            }
-        }
+        return IdleBobbingNoomCell(noom: noom, unlocked: unlocked)
     }
 
     private func noomDetailSheet(noom: Noom) -> some View {
@@ -161,5 +146,52 @@ struct NoomForestView: View {
         }
         .padding(40)
         .presentationDetents([.medium])
+    }
+}
+
+/// Dex grid cell with a gentle idle bob. Each cell's bob is phase-
+/// offset by the Noom number so they don't all breathe in sync —
+/// dex reads as a lively crowd rather than a marching band.
+private struct IdleBobbingNoomCell: View {
+    let noom: Noom
+    let unlocked: Bool
+
+    @State private var bob = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        ZStack {
+            Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 110, height: 110).offset(y: 5)
+            Circle().fill(unlocked ? Color(uiColor: noom.bodyColor) : Color.gray.opacity(0.4))
+                .frame(width: 110, height: 110)
+            Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3.5).frame(width: 110, height: 110)
+            if unlocked {
+                // Full personality-face portrait (same renderer as feeding
+                // area) so the dex shows the creature's real look, not
+                // just a silhouette.
+                Image(uiImage: NoomRenderer.image(
+                    for: noom, expression: .happy,
+                    size: CGSize(width: 100, height: 100)
+                ))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 100)
+                .offset(y: reduceMotion ? 0 : (bob ? -2 : 2))
+            } else {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 36, weight: .black))
+                    .foregroundStyle(CartoonColor.ink.opacity(0.55))
+            }
+        }
+        .onAppear {
+            guard !reduceMotion else { return }
+            // Phase-shift per Noom number so the crowd doesn't bob in unison.
+            let delay = Double(noom.number % 5) * 0.2
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) {
+                    bob = true
+                }
+            }
+        }
     }
 }

@@ -4,10 +4,14 @@ import SwiftData
 struct PetFeedingArea: View {
     @Bindable var viewModel: PetGardenViewModel
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var floatingXPText: String?
     @State private var showSwitcher = false
     @State private var showEvolutionEffect = false
     @State private var showWardrobe = false
+    /// Slow idle bob for the active pet's portrait. Makes the feeding
+    /// area feel alive even while the child isn't interacting.
+    @State private var idleBob = false
 
     private let evolutionLogic = PetEvolutionLogic()
 
@@ -74,7 +78,14 @@ struct PetFeedingArea: View {
                         .frame(width: 140, height: 140)
                         .scaleEffect(showEvolutionEffect ? 1.4 : 1.0)
                         .rotationEffect(.degrees(showEvolutionEffect ? 360 : 0))
+                        .offset(y: reduceMotion ? 0 : (idleBob ? -4 : 4))
                         .animation(.easeInOut(duration: 1.0), value: showEvolutionEffect)
+                        .animation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true),
+                                   value: idleBob)
+                        .onAppear {
+                            guard !reduceMotion else { return }
+                            idleBob = true
+                        }
 
                         if let xpText = floatingXPText {
                             Text(xpText)
@@ -98,16 +109,33 @@ struct PetFeedingArea: View {
                     }
 
                     HStack(spacing: 10) {
-                        Button("切换宠物") { showSwitcher = true }
+                        Button("切换宠物") { Haptics.tap(); showSwitcher = true }
                             .font(CartoonFont.bodySmall)
                             .padding(.horizontal, 16).padding(.vertical, 6)
                             .background(Capsule().fill(CartoonColor.paper))
                             .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2))
-                        Button("👗 衣柜") { showWardrobe = true }
-                            .font(CartoonFont.bodySmall)
-                            .padding(.horizontal, 16).padding(.vertical, 6)
-                            .background(Capsule().fill(CartoonColor.berry.opacity(0.25)))
-                            .overlay(Capsule().stroke(CartoonColor.berry.opacity(0.7), lineWidth: 2))
+                            .buttonStyle(PressableButtonStyle())
+                        Button(action: { Haptics.tap(); showWardrobe = true }) {
+                            HStack(spacing: 4) {
+                                Text("👗 衣柜")
+                                    .font(CartoonFont.bodySmall)
+                                if canClaimGacha {
+                                    // Red dot signals "free daily gift waiting"
+                                    // so the child notices the gacha without
+                                    // needing to open the wardrobe first.
+                                    Circle()
+                                        .fill(CartoonColor.coral)
+                                        .frame(width: 8, height: 8)
+                                        .overlay(Circle().stroke(.white, lineWidth: 1.5))
+                                }
+                            }
+                        }
+                        .foregroundStyle(CartoonColor.text)
+                        .padding(.horizontal, 16).padding(.vertical, 6)
+                        .background(Capsule().fill(CartoonColor.berry.opacity(0.25)))
+                        .overlay(Capsule().stroke(CartoonColor.berry.opacity(0.7), lineWidth: 2))
+                        .buttonStyle(PressableButtonStyle())
+                        .accessibilityLabel(canClaimGacha ? "衣柜 有新礼物" : "衣柜")
                     }
                 }
                 .padding(20)
@@ -188,24 +216,34 @@ struct PetFeedingArea: View {
                 HStack(spacing: 12) {
                     ForEach(fruits) { fruit in
                         Button(action: { feed(fruit) }) {
-                            Text(fruit.emoji)
-                                .font(.system(size: 50))
-                                .frame(width: 64, height: 64)
-                                .background(
-                                    ZStack {
-                                        Circle().fill(CartoonColor.ink.opacity(0.9)).offset(y: 3)
-                                        Circle().fill(CartoonColor.paper)
-                                        Circle().stroke(CartoonColor.ink.opacity(0.7), lineWidth: 2.5)
-                                    }
-                                )
+                            FruitBadge(
+                                fruitId: fruit.id,
+                                size: 64,
+                                showGlow: isPreferred(fruit)
+                            )
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(PressableButtonStyle())
+                        .accessibilityLabel(fruit.name)
+                        .accessibilityHint(isPreferred(fruit) ? "爱吃的水果" : "普通水果")
                     }
                 }
                 .padding(.horizontal, 20)
             }
             .frame(height: 80)
         }
+    }
+
+    /// True if the fruit matches one of the active Noom's preferred
+    /// IDs — used to glow the badge gold in the inventory.
+    private func isPreferred(_ fruit: FruitItem) -> Bool {
+        guard let pet = viewModel.activePet else { return false }
+        return PetPreferenceMap.isPreferred(fruitId: fruit.id, for: pet.noomNumber)
+    }
+
+    /// True if the child is eligible to claim today's wardrobe gacha.
+    /// Surfaced as a red dot on the 衣柜 button so they notice the gift.
+    private var canClaimGacha: Bool {
+        DailyGachaLogic.isClaimable(lastClaim: viewModel.profile.lastGachaDate)
     }
 
     @ViewBuilder

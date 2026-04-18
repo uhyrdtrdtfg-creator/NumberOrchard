@@ -32,10 +32,12 @@ final class FishingViewModel {
     func catchFish(at idx: Int) {
         state.catchFish(at: idx)
         AudioManager.shared.playSound("fruit_pick.wav")
+        Haptics.tap()
     }
     func release(bucketIndex idx: Int) {
         _ = state.release(bucketIndex: idx)
         AudioManager.shared.playSound("button_click.wav")
+        Haptics.tap()
     }
 
     /// Lock in the bucket — if it hits target, record a win and advance.
@@ -44,9 +46,11 @@ final class FishingViewModel {
         guard state.isComplete else { return }
         correctRounds += 1
         AudioManager.shared.playSound("correct.wav")
+        Haptics.success()
         advance()
         if sessionComplete {
             AudioManager.shared.playSound("level_up.wav")
+            Haptics.milestone()
         }
     }
 

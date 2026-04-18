@@ -166,8 +166,10 @@ struct PetTheaterView: View {
         entered = ""
         if correct {
             AudioManager.shared.playSound("correct.wav")
+            Haptics.success()
             if viewModel.lastLegendaryDrop != nil {
                 AudioManager.shared.playSound("level_up.wav")
+                Haptics.milestone()
             }
             triggerCelebration()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
@@ -178,6 +180,7 @@ struct PetTheaterView: View {
             }
         } else {
             AudioManager.shared.playSound("wrong.wav")
+            Haptics.warning()
             triggerShake()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                 viewModel.clearResult()

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		002715E9C80D3AA21DF8D679 /* SessionCompleteCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E642990B596F9E2E96ACBCCE /* SessionCompleteCard.swift */; };
+		006A18492A82FFE820EAA766 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80D9977FB1716ADCEBFF2A /* Haptics.swift */; };
 		00C6C802DB77AA322E48EB1B /* ShareFruitLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */; };
 		01B969F9B736A4C8258A8AAF /* StationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3CDE5676CB87A20F3E0B33 /* StationProgress.swift */; };
 		01E8C5240C61FACE54312723 /* NoomRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC202FF20BF8B9C9D5E876A9 /* NoomRenderer.swift */; };
@@ -136,6 +137,7 @@
 		C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */; };
 		C114D34469509C05C1C3B7B3 /* NoomSkinCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B966442D7395EE771126CA9 /* NoomSkinCatalogTests.swift */; };
 		C36D0BD74A3D839CB2D16011 /* AdventureSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C1285EADB5202A217E4B29 /* AdventureSessionView.swift */; };
+		C45121E3B93390D8B57B078D /* PressableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E252825C613D3F08E85E4F3 /* PressableButtonStyle.swift */; };
 		C697DC5695C9FAC922E843B5 /* PetTheaterQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2565B9DA2B2C83DF3E565C8 /* PetTheaterQuestionTests.swift */; };
 		C6CD9DAEF76EECA7438C8E81 /* MazeGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DECA1B6033285976501E2D /* MazeGrid.swift */; };
 		C703E3D0F2F6021ACDE3B05E /* NumberPad.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6DEC638F1E0672CAADA057 /* NumberPad.swift */; };
@@ -228,6 +230,7 @@
 		4A4EB5A085CE8574B8ABA335 /* DailyGachaLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGachaLogicTests.swift; sourceTree = "<group>"; };
 		4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoom.swift; sourceTree = "<group>"; };
 		4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFeedingArea.swift; sourceTree = "<group>"; };
+		4E252825C613D3F08E85E4F3 /* PressableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressableButtonStyle.swift; sourceTree = "<group>"; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
 		4E954AE641E8C07C32967649 /* CartoonEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonEmptyState.swift; sourceTree = "<group>"; };
 		4E9B89812B1768D58C624AD1 /* PetPreferenceMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetPreferenceMap.swift; sourceTree = "<group>"; };
@@ -355,6 +358,7 @@
 		F6F410B89DC7790278D280E2 /* ShareFruitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFruitLogicTests.swift; sourceTree = "<group>"; };
 		F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = adventure_bgm.wav; sourceTree = "<group>"; };
 		FA44B685768E893018DAF829 /* correct_04.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_04.aiff; sourceTree = "<group>"; };
+		FA80D9977FB1716ADCEBFF2A /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		FC5747B52D2567AB5400E83D /* idle_hint.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = idle_hint.aiff; sourceTree = "<group>"; };
 		FCC8845E4E0EE3DC8E774D4D /* correct_01.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_01.aiff; sourceTree = "<group>"; };
 		FFB36B19CCBC1612F48026A4 /* NoomQuestionGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomQuestionGenerator.swift; sourceTree = "<group>"; };
@@ -625,6 +629,7 @@
 		7300412174136C6EC459B64F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FA80D9977FB1716ADCEBFF2A /* Haptics.swift */,
 				7AD8E9233B60AD4D3575440E /* SeededRNG.swift */,
 			);
 			path = Utilities;
@@ -705,6 +710,7 @@
 				2CEEF1B40985052EC34E1113 /* CartoonSpriteKit.swift */,
 				746458877D42C0483A6DCA0A /* CartoonTokens.swift */,
 				3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */,
+				4E252825C613D3F08E85E4F3 /* PressableButtonStyle.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1200,6 +1206,7 @@
 				B05FC88B0DCC9438BE27F120 /* FruitBadge.swift in Sources */,
 				3699E75146A40F203610453B /* FruitCatalog.swift in Sources */,
 				EF7C71B1A8C666416FA0EA1B /* FruitCollectionView.swift in Sources */,
+				006A18492A82FFE820EAA766 /* Haptics.swift in Sources */,
 				0DC967DA6DBBF0122EDDB838 /* HomeView.swift in Sources */,
 				A83A880A0C0DA7A1C1F4CDC7 /* HomeViewModel.swift in Sources */,
 				1CC787A483D4E7D35AC076FC /* KitchenView.swift in Sources */,
@@ -1254,6 +1261,7 @@
 				3091EFA73A8985DD336D9C2A /* PickFruitScene.swift in Sources */,
 				CD3FE2054CC33AB6E330629A /* PickFruitView.swift in Sources */,
 				C11437988B04C75CA42D11F7 /* PlacedDecorationView.swift in Sources */,
+				C45121E3B93390D8B57B078D /* PressableButtonStyle.swift in Sources */,
 				D216E88A1D37B932CA4C7A04 /* QuestionGenerator.swift in Sources */,
 				087CB3E331AB2662E7AA9257 /* QuestionRecord.swift in Sources */,
 				D8CD90D952A88FE5EA3CD4DD /* RewardCalculator.swift in Sources */,
