@@ -13,6 +13,7 @@ struct NumberOrchardApp: App {
             CollectedFruit.self,
             CollectedNoom.self,
             PetProgress.self,
+            CollectedSkin.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

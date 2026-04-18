@@ -13,6 +13,10 @@ final class PetGardenViewModel {
     var lastEvolvedNoomNumber: Int?
     var lastFedXP: Int = 0
     var lastFedWasPreferred: Bool = false
+    /// When the most recent feed pushed the active pet from a lower skill
+    /// tier to a higher one, this tuple is populated so the view can show
+    /// a full-screen "技能进化!" banner. Cleared after the view dismisses.
+    var pendingTierEvolution: (noom: Noom, skill: NoomSkill, newTier: NoomSkill.Tier)? = nil
 
     init(profile: ChildProfile, modelContext: ModelContext) {
         self.profile = profile
@@ -56,6 +60,7 @@ final class PetGardenViewModel {
             xp = Int(Double(xp) * (1.0 + NoomSkill.xpBoostFraction(tier: tier)))
         }
         let oldStage = pet.stage
+        let oldTier = NoomSkill.tier(forStage: oldStage)
         pet.xp += xp
         let newStage = evolutionLogic.stage(for: pet.xp)
         var didEvolve = false
@@ -66,6 +71,16 @@ final class PetGardenViewModel {
             }
             lastEvolvedNoomNumber = pet.noomNumber
             didEvolve = true
+            // Surface skill-tier transitions (none→one, one→two) so the
+            // view layer can celebrate them with a dedicated banner.
+            let newTier = NoomSkill.tier(forStage: newStage)
+            if newTier > oldTier, let noom = NoomCatalog.noom(for: pet.noomNumber) {
+                pendingTierEvolution = (
+                    noom: noom,
+                    skill: NoomSkillCatalog.skill(for: pet.noomNumber),
+                    newTier: newTier
+                )
+            }
         }
         let preferred = PetPreferenceMap.isPreferred(fruitId: fruitId, for: pet.noomNumber)
         lastFedXP = xp
@@ -84,6 +99,17 @@ final class PetGardenViewModel {
     var activeSkillTier: NoomSkill.Tier {
         guard let pet = activePet else { return .none }
         return NoomSkill.tier(forStage: pet.stage)
+    }
+
+    /// Currently-equipped cosmetic hat on the active pet, if any.
+    /// Looked up lazily against the profile's CollectedSkin rows so
+    /// putting on a new hat in the wardrobe immediately reflects here.
+    var activeSkin: NoomSkin? {
+        guard let pet = activePet else { return nil }
+        guard let cs = profile.collectedSkins.first(where: {
+            $0.equippedOnNoomNumber == pet.noomNumber
+        }) else { return nil }
+        return NoomSkinCatalog.skin(id: cs.skinId)
     }
 
     /// Mature small Nooms eligible for hatching (1-10 only).

@@ -1,10 +1,13 @@
 import SwiftUI
+import SwiftData
 
 struct PetFeedingArea: View {
     @Bindable var viewModel: PetGardenViewModel
+    @Environment(\.modelContext) private var modelContext
     @State private var floatingXPText: String?
     @State private var showSwitcher = false
     @State private var showEvolutionEffect = false
+    @State private var showWardrobe = false
 
     private let evolutionLogic = PetEvolutionLogic()
 
@@ -15,6 +18,32 @@ struct PetFeedingArea: View {
         }
         .sheet(isPresented: $showSwitcher) {
             petSwitcherSheet
+        }
+        .fullScreenCover(isPresented: $showWardrobe) {
+            wardrobeSheet
+        }
+        .overlay(alignment: .center) {
+            if let evo = viewModel.pendingTierEvolution {
+                TierEvolutionBanner(
+                    noom: evo.noom, skill: evo.skill, newTier: evo.newTier,
+                    onDismiss: { viewModel.pendingTierEvolution = nil }
+                )
+                .zIndex(10)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var wardrobeSheet: some View {
+        if let pet = viewModel.activePet {
+            NoomWardrobeView(
+                viewModel: NoomWardrobeViewModel(
+                    profile: viewModel.profile,
+                    activePet: pet,
+                    modelContext: modelContext
+                ),
+                onDismiss: { showWardrobe = false }
+            )
         }
     }
 
@@ -37,7 +66,8 @@ struct PetFeedingArea: View {
                             for: noom,
                             expression: .happy,
                             size: CGSize(width: 140, height: 140),
-                            stage: pet.stage
+                            stage: pet.stage,
+                            skin: viewModel.activeSkin
                         ))
                         .resizable()
                         .scaledToFit()
@@ -67,11 +97,18 @@ struct PetFeedingArea: View {
                             .foregroundStyle(CartoonColor.text.opacity(0.5))
                     }
 
-                    Button("切换宠物") { showSwitcher = true }
-                        .font(CartoonFont.bodySmall)
-                        .padding(.horizontal, 16).padding(.vertical, 6)
-                        .background(Capsule().fill(CartoonColor.paper))
-                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2))
+                    HStack(spacing: 10) {
+                        Button("切换宠物") { showSwitcher = true }
+                            .font(CartoonFont.bodySmall)
+                            .padding(.horizontal, 16).padding(.vertical, 6)
+                            .background(Capsule().fill(CartoonColor.paper))
+                            .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2))
+                        Button("👗 衣柜") { showWardrobe = true }
+                            .font(CartoonFont.bodySmall)
+                            .padding(.horizontal, 16).padding(.vertical, 6)
+                            .background(Capsule().fill(CartoonColor.berry.opacity(0.25)))
+                            .overlay(Capsule().stroke(CartoonColor.berry.opacity(0.7), lineWidth: 2))
+                    }
                 }
                 .padding(20)
             }

@@ -13,7 +13,16 @@ enum NoomExpression: Sendable {
 ///   - life-stage decoration (bow / crown+cape)
 /// The same Noom always renders identically (no per-frame randomness).
 enum NoomRenderer {
-    static func image(for noom: Noom, expression: NoomExpression, size: CGSize, stage: Int = 0) -> UIImage {
+    /// Render a Noom. If `skin` is non-nil it overrides the default
+    /// stage decoration (so an equipped hat replaces the crown at adult
+    /// stage — avoids the wardrobe glyph fighting the auto-crown).
+    static func image(
+        for noom: Noom,
+        expression: NoomExpression,
+        size: CGSize,
+        stage: Int = 0,
+        skin: NoomSkin? = nil
+    ) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         let personality = NoomPersonality.forNoom(noom.number)
         return renderer.image { ctx in
@@ -23,8 +32,19 @@ enum NoomRenderer {
             drawBlush(in: ctx.cgContext, size: size, personality: personality)
             drawFace(in: ctx.cgContext, size: size, expression: expression, personality: personality)
             drawNameBadge(in: ctx.cgContext, size: size, number: noom.number, bodyColor: noom.bodyColor)
-            drawStageDecoration(in: ctx.cgContext, size: size, stage: stage)
+            if let skin {
+                drawSkinHat(in: ctx.cgContext, size: size, glyph: skin.glyph)
+            } else {
+                drawStageDecoration(in: ctx.cgContext, size: size, stage: stage)
+            }
         }
+    }
+
+    /// Equipped cosmetic hat, drawn in the crown slot (on top of head).
+    private static func drawSkinHat(in ctx: CGContext, size: CGSize, glyph: String) {
+        drawIcon(glyph,
+                 at: CGPoint(x: size.width / 2, y: -size.height * 0.02),
+                 fontSize: size.width * 0.30, color: nil)
     }
 
     // MARK: - Body
