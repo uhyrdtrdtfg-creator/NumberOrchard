@@ -44,14 +44,16 @@ final class PetGardenViewModel {
     }
 
     /// Feed `fruitId` to the active pet. Returns the XP gained, whether it was preferred, and whether evolved.
-    /// If the active pet has an unlocked `xpBoost` skill, XP is multiplied by 1.5×.
+    /// If the active pet has an unlocked `xpBoost` skill, XP is boosted by the tier's fraction
+    /// (Tier 1 = +50%, Tier 2 = +100%).
     @discardableResult
     func feedActivePet(fruitId: String) -> (xp: Int, preferred: Bool, didEvolve: Bool) {
         guard let pet = activePet else { return (0, false, false) }
         var xp = xpCalculator.xpFor(fruitId: fruitId, noomNumber: pet.noomNumber)
         let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
-        if skill == .xpBoost && NoomSkill.isUnlocked(stage: pet.stage) {
-            xp = Int(Double(xp) * 1.5)
+        let tier = NoomSkill.tier(forStage: pet.stage)
+        if skill == .xpBoost && tier != .none {
+            xp = Int(Double(xp) * (1.0 + NoomSkill.xpBoostFraction(tier: tier)))
         }
         let oldStage = pet.stage
         pet.xp += xp
@@ -75,6 +77,13 @@ final class PetGardenViewModel {
     var activeSkill: NoomSkill? {
         guard let pet = activePet, NoomSkill.isUnlocked(stage: pet.stage) else { return nil }
         return NoomSkillCatalog.skill(for: pet.noomNumber)
+    }
+
+    /// Tier of the active pet's skill (none / one / two). Game systems use
+    /// this to scale the skill's effect — see NoomSkill.*(tier:) helpers.
+    var activeSkillTier: NoomSkill.Tier {
+        guard let pet = activePet else { return .none }
+        return NoomSkill.tier(forStage: pet.stage)
     }
 
     /// Mature small Nooms eligible for hatching (1-10 only).

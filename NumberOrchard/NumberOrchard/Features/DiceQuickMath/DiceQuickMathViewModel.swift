@@ -78,7 +78,9 @@ final class DiceQuickMathViewModel {
         if correct {
             correctCount += 1
             var pts = Self.points(for: elapsed, correct: true)
-            if activeSkill == .diceBonus { pts += 5 }
+            if activeSkill == .diceBonus {
+                pts += NoomSkill.diceBonusPoints(tier: activeSkillTier)
+            }
             totalPoints += pts
             if elapsed < fastestSeconds { fastestSeconds = elapsed }
             rollLegendaryDrop()
@@ -91,18 +93,29 @@ final class DiceQuickMathViewModel {
     /// against the profile at call time so switching the active pet while
     /// the game is open takes effect on the next submission.
     private var activeSkill: NoomSkill? {
-        let active = profile.petProgress.first(where: { $0.isActive })
-            ?? profile.petProgress.first
-        guard let pet = active, NoomSkill.isUnlocked(stage: pet.stage) else { return nil }
+        guard let pet = activePet, NoomSkill.isUnlocked(stage: pet.stage) else { return nil }
         return NoomSkillCatalog.skill(for: pet.noomNumber)
+    }
+
+    private var activeSkillTier: NoomSkill.Tier {
+        guard let pet = activePet else { return .none }
+        return NoomSkill.tier(forStage: pet.stage)
+    }
+
+    private var activePet: PetProgress? {
+        profile.petProgress.first(where: { $0.isActive })
+            ?? profile.petProgress.first
     }
 
     private func rollLegendaryDrop() {
         var rng = SystemRandomNumberGenerator()
-        let rate = activeSkill == .luckyDrop
-            ? LegendaryDropRoll.defaultRate * 2
-            : LegendaryDropRoll.defaultRate
-        guard let drop = LegendaryDropRoll.roll(rate: rate, rng: &rng) else { return }
+        let multiplier = activeSkill == .luckyDrop
+            ? NoomSkill.luckyDropMultiplier(tier: activeSkillTier)
+            : 1.0
+        guard let drop = LegendaryDropRoll.roll(
+            rate: LegendaryDropRoll.defaultRate * multiplier,
+            rng: &rng
+        ) else { return }
         lastLegendaryDrop = drop
         if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {
             let cf = CollectedFruit(fruitId: drop.id)

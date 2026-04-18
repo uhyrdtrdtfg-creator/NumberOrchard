@@ -60,7 +60,7 @@ struct PetFeedingArea: View {
                     xpBar(pet: pet)
 
                     if let skill = viewModel.activeSkill {
-                        skillBadge(skill: skill)
+                        skillBadge(skill: skill, tier: viewModel.activeSkillTier)
                     } else if pet.stage == 0 {
                         Text("长大后解锁技能～")
                             .font(CartoonFont.caption)
@@ -83,16 +83,21 @@ struct PetFeedingArea: View {
         }
     }
 
-    private func skillBadge(skill: NoomSkill) -> some View {
-        HStack(spacing: 6) {
+    private func skillBadge(skill: NoomSkill, tier: NoomSkill.Tier) -> some View {
+        // Tier 2 (adult) gets a brighter coral frame + "★★" glyph to make
+        // it visually obvious the skill has upgraded.
+        let isTier2 = tier == .two
+        let frame: Color = isTier2 ? CartoonColor.coral : CartoonColor.gold
+        let stars = isTier2 ? "★★" : "★"
+        return HStack(spacing: 6) {
             Text(skill.emoji)
-            Text(skill.displayName)
+            Text("\(skill.displayName) \(stars)")
                 .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text)
             Text("·")
                 .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text.opacity(0.4))
-            Text(skill.explanation)
+            Text(skill.explanation(tier: tier))
                 .font(CartoonFont.caption)
                 .foregroundStyle(CartoonColor.text.opacity(0.7))
         }
@@ -100,8 +105,8 @@ struct PetFeedingArea: View {
         .padding(.vertical, 6)
         .background(
             Capsule()
-                .fill(CartoonColor.gold.opacity(0.25))
-                .overlay(Capsule().stroke(CartoonColor.gold.opacity(0.7), lineWidth: 1.5))
+                .fill(frame.opacity(0.25))
+                .overlay(Capsule().stroke(frame.opacity(0.7), lineWidth: 1.5))
         )
     }
 

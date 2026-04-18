@@ -103,7 +103,9 @@ struct NoomWeeklyReportView: View {
         }
         let days = daysSince(pet.noomNumber)
         let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
-        let skillUnlocked = NoomSkill.isUnlocked(stage: pet.stage)
+        let tier = NoomSkill.tier(forStage: pet.stage)
+        let skillUnlocked = tier != .none
+        let tierStars = tier == .two ? "★★" : (tier == .one ? "★" : "")
         return AnyView(
             CartoonPanel(cornerRadius: 18, strokeWidth: 3) {
                 VStack(alignment: .leading, spacing: 8) {
@@ -136,13 +138,15 @@ struct NoomWeeklyReportView: View {
                     }
                     HStack(spacing: 6) {
                         Text(skill.emoji)
-                        Text(skillUnlocked ? skill.displayName : "\(skill.displayName) 🔒")
+                        Text(skillUnlocked ? "\(skill.displayName) \(tierStars)" : "\(skill.displayName) 🔒")
                             .font(CartoonFont.caption)
-                            .foregroundStyle(skillUnlocked ? CartoonColor.text.opacity(0.8) : CartoonColor.text.opacity(0.4))
+                            .foregroundStyle(skillUnlocked
+                                             ? (tier == .two ? CartoonColor.coral : CartoonColor.text.opacity(0.85))
+                                             : CartoonColor.text.opacity(0.4))
                         Text("·")
                             .font(CartoonFont.caption)
                             .foregroundStyle(CartoonColor.text.opacity(0.35))
-                        Text(skillUnlocked ? skill.explanation : "长大到少年期解锁")
+                        Text(skillUnlocked ? skill.explanation(tier: tier) : "长大到少年期解锁")
                             .font(CartoonFont.caption)
                             .foregroundStyle(CartoonColor.text.opacity(0.6))
                     }

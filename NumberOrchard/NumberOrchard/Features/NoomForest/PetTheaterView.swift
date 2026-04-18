@@ -85,8 +85,8 @@ struct PetTheaterView: View {
             Text("第 \(viewModel.progressText) 题")
                 .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text.opacity(0.7))
-            if viewModel.garden.activeSkill == .calmClock {
-                Text("⏳ +\(Int(PetTheaterViewModel.calmClockBonusSeconds))s 从容")
+            if viewModel.garden.activeSkill == .calmClock, viewModel.calmClockBonus > 0 {
+                Text("⏳ +\(Int(viewModel.calmClockBonus))s 从容")
                     .font(CartoonFont.caption)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)

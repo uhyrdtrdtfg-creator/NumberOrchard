@@ -35,11 +35,21 @@ final class PetTheaterViewModel {
     enum Result { case correct, wrong }
 
     /// Total thinking budget for the current question, scaled by the
-    /// active Noom's `calmClock` skill. Non-reactive; view reads once per
-    /// question and drives its own countdown animation.
+    /// active Noom's `calmClock` skill. Tier 1 = +2s, Tier 2 = +4s.
+    /// Non-reactive; view reads once per question and drives its own
+    /// countdown animation.
     var thinkBudgetSeconds: TimeInterval {
-        Self.baseThinkSeconds + (garden.activeSkill == .calmClock
-                                 ? Self.calmClockBonusSeconds : 0)
+        let bonus = garden.activeSkill == .calmClock
+            ? NoomSkill.calmClockBonusSeconds(tier: garden.activeSkillTier)
+            : 0
+        return Self.baseThinkSeconds + bonus
+    }
+
+    /// Exposed for the view's "⏳ +Ns 从容" badge.
+    var calmClockBonus: TimeInterval {
+        garden.activeSkill == .calmClock
+            ? NoomSkill.calmClockBonusSeconds(tier: garden.activeSkillTier)
+            : 0
     }
 
     init(garden: PetGardenViewModel) {
@@ -90,15 +100,17 @@ final class PetTheaterViewModel {
     /// already own the dropped fruit, add it. Exposed to the view via
     /// `lastLegendaryDrop` for overlay display.
     ///
-    /// Active pet's `luckyDrop` skill (unlocked at stage ≥ 1) doubles the
-    /// drop rate — one of the reasons to favour keeping a lucky Noom as
-    /// the active pet across sessions.
+    /// Active pet's `luckyDrop` skill scales the drop rate by tier:
+    /// Tier 1 (少年) = ×2, Tier 2 (成年) = ×4.
     private func rollLegendaryDrop() {
         var rng = SystemRandomNumberGenerator()
-        let rate = garden.activeSkill == .luckyDrop
-            ? LegendaryDropRoll.defaultRate * 2
-            : LegendaryDropRoll.defaultRate
-        guard let drop = LegendaryDropRoll.roll(rate: rate, rng: &rng) else { return }
+        let multiplier = garden.activeSkill == .luckyDrop
+            ? NoomSkill.luckyDropMultiplier(tier: garden.activeSkillTier)
+            : 1.0
+        guard let drop = LegendaryDropRoll.roll(
+            rate: LegendaryDropRoll.defaultRate * multiplier,
+            rng: &rng
+        ) else { return }
         lastLegendaryDrop = drop
         let profile = garden.profile
         if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {

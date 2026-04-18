@@ -19,13 +19,14 @@ final class MatchTenViewModel {
         self.profile = profile
         self.modelContext = modelContext
         // If the active Noom has the `comboSeed` skill, start the game
-        // with a built-in ×1 combo so the very first clear scores double.
+        // with a built-in combo seeded by the pet's tier:
+        //   Tier 1 (少年) → combo 1   Tier 2 (成年) → combo 2
         let active = profile.petProgress.first(where: { $0.isActive })
             ?? profile.petProgress.first
         var starting = 0
-        if let pet = active, NoomSkill.isUnlocked(stage: pet.stage),
+        if let pet = active,
            NoomSkillCatalog.skill(for: pet.noomNumber) == .comboSeed {
-            starting = 1
+            starting = NoomSkill.comboSeed(tier: NoomSkill.tier(forStage: pet.stage))
         }
         self.game = MatchTenGame(rows: rows, cols: cols,
                                  targetClears: targetClears,

@@ -176,7 +176,9 @@ private struct DiaryPage: View {
     @ViewBuilder
     private var skillRow: some View {
         let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
-        let unlocked = NoomSkill.isUnlocked(stage: pet.stage)
+        let tier = NoomSkill.tier(forStage: pet.stage)
+        let unlocked = tier != .none
+        let tierStars = tier == .two ? "★★" : (tier == .one ? "★" : "")
         HStack {
             Text("独门技能")
                 .font(CartoonFont.body)
@@ -184,17 +186,19 @@ private struct DiaryPage: View {
             Spacer()
             HStack(spacing: 6) {
                 Text(skill.emoji)
-                Text(unlocked ? skill.displayName : "\(skill.displayName) (🔒)")
+                Text(unlocked ? "\(skill.displayName) \(tierStars)" : "\(skill.displayName) (🔒)")
                     .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(unlocked ? CartoonColor.text : CartoonColor.text.opacity(0.45))
+                    .foregroundStyle(unlocked
+                                     ? (tier == .two ? CartoonColor.coral : CartoonColor.text)
+                                     : CartoonColor.text.opacity(0.45))
             }
         }
         if unlocked {
-            Text(skill.explanation)
+            Text(skill.explanation(tier: tier))
                 .font(CartoonFont.caption)
                 .foregroundStyle(CartoonColor.text.opacity(0.65))
         } else {
-            Text("长大到少年期(stage ≥ 1)即可解锁")
+            Text("长大到少年期 ★ 解锁,成年 ★★ 进化")
                 .font(CartoonFont.caption)
                 .foregroundStyle(CartoonColor.text.opacity(0.45))
         }
