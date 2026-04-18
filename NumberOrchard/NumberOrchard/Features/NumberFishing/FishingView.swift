@@ -152,9 +152,17 @@ struct FishingView: View {
                 ForEach(Array(viewModel.state.bucketFish.enumerated()), id: \.offset) { idx, v in
                     Button(action: { viewModel.release(bucketIndex: idx) }) {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 14).fill(CartoonColor.paper)
+                            // Paper chip with soft top sheen, matches the
+                            // sticker aesthetic used elsewhere.
+                            RoundedRectangle(cornerRadius: CartoonRadius.rounded)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.white, CartoonColor.paper],
+                                        startPoint: .top, endPoint: .bottom
+                                    )
+                                )
                                 .frame(width: 56, height: 56)
-                            RoundedRectangle(cornerRadius: 14)
+                            RoundedRectangle(cornerRadius: CartoonRadius.rounded)
                                 .stroke(CartoonColor.ink.opacity(0.7), lineWidth: 2.5)
                                 .frame(width: 56, height: 56)
                             Text("\(v)")
@@ -162,7 +170,8 @@ struct FishingView: View {
                                 .foregroundStyle(CartoonColor.text)
                         }
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(PressableButtonStyle())
+                    .accessibilityLabel("放回鱼 \(v)")
                 }
                 if viewModel.state.bucketFish.isEmpty {
                     Text("点鱼放进桶里～")

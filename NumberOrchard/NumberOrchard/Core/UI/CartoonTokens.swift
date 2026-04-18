@@ -24,6 +24,22 @@ enum CartoonFont {
     static let numericLarge  = Font.system(size: 36, weight: .black, design: .rounded)
 }
 
+/// Semantic corner-radius scale. Before this existed, the app mixed 14
+/// different literal corner values across buttons, panels, and tiles —
+/// the result felt inconsistent at a glance. Four levels is plenty for
+/// a children's app. Callers pick by purpose, not by pixel count.
+enum CartoonRadius {
+    /// 14pt — inner chips, tiny badges, maze cells, fishing bucket items.
+    static let tiny: CGFloat    = 14
+    /// 18pt — standard buttons, number-pad keys, match-ten tiles.
+    static let rounded: CGFloat = 18
+    /// 22pt — cards, panels, speech bubbles.
+    static let chunky: CGFloat  = 22
+    /// 28pt — hero panels, evolution banners, the large session-complete
+    /// sticker.
+    static let xl: CGFloat      = 28
+}
+
 /// Animation presets — keep the app's motion language coherent. Spring-based
 /// for child-friendly bounciness; eased only for non-physical fades.
 enum CartoonAnim {

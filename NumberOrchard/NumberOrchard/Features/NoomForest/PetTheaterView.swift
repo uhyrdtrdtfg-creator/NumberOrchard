@@ -118,10 +118,17 @@ struct PetTheaterView: View {
 
     private var inputDisplay: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(CartoonColor.paper)
+            // Soft "display screen" with a subtle top-to-bottom gradient
+            // that hints at depth (like a real calculator LCD bezel).
+            RoundedRectangle(cornerRadius: CartoonRadius.rounded)
+                .fill(
+                    LinearGradient(
+                        colors: [Color.white, CartoonColor.paper],
+                        startPoint: .top, endPoint: .bottom
+                    )
+                )
                 .frame(width: 160, height: 60)
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: CartoonRadius.rounded)
                 .stroke(CartoonColor.ink.opacity(0.7), lineWidth: 3)
                 .frame(width: 160, height: 60)
             Text(entered.isEmpty ? "?" : entered)

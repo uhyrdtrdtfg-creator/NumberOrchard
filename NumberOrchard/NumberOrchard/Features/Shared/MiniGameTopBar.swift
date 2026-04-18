@@ -33,11 +33,23 @@ struct MiniGameTopBar<Trailing: View>: View {
                         .foregroundStyle(CartoonColor.text)
                 }
             }
+            .buttonStyle(PressableButtonStyle())
             .accessibilityLabel("关闭")
             Spacer()
+            // Title wrapped in a paper capsule so it reads as a label
+            // over any background (sky / ground / full-screen colour)
+            // and matches the rest of the app's sticker aesthetic.
             Text(title)
                 .font(CartoonFont.titleSmall)
                 .foregroundStyle(CartoonColor.text)
+                .padding(.horizontal, 18).padding(.vertical, 8)
+                .background(
+                    Capsule().fill(CartoonColor.paper)
+                )
+                .overlay(
+                    Capsule().stroke(CartoonColor.ink.opacity(0.7), lineWidth: 2.5)
+                )
+                .shadow(color: CartoonColor.ink.opacity(0.25), radius: 0, x: 0, y: 2)
             Spacer()
             ZStack(alignment: .trailing) {
                 // Invisible spacer mirroring the close button so the title

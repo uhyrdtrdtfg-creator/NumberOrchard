@@ -28,36 +28,47 @@ struct SessionCompleteCard: View {
     }
 
     var body: some View {
-        VStack(spacing: 18) {
-            Spacer().frame(height: 30)
-            Text(emoji).font(.system(size: 80))
-            Text(title)
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
-            if let primaryStat {
-                Text(primaryStat)
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(CartoonColor.text.opacity(0.8))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 20)
+        // Wrap the celebration in a paper panel so it reads as a
+        // finished sticker rather than floating text over the sky —
+        // the sheen + shadow give the reveal real visual weight.
+        CartoonPanel(cornerRadius: CartoonRadius.xl) {
+            VStack(spacing: 18) {
+                Spacer().frame(height: 20)
+                Text(emoji)
+                    .font(.system(size: 96))
+                    .shadow(color: CartoonColor.ink.opacity(0.2), radius: 0, x: 0, y: 3)
+                Text(title)
+                    .font(CartoonFont.displayLarge)
+                    .foregroundStyle(CartoonColor.text)
+                if let primaryStat {
+                    Text(primaryStat)
+                        .font(CartoonFont.bodyLarge)
+                        .foregroundStyle(CartoonColor.text.opacity(0.8))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                }
+                if let rewardLine {
+                    Text(rewardLine)
+                        .font(CartoonFont.title)
+                        .foregroundStyle(CartoonColor.gold)
+                }
+                Spacer().frame(height: 4)
+                CartoonButton(
+                    tint: CartoonColor.gold,
+                    cornerRadius: CartoonRadius.chunky,
+                    accessibilityLabel: buttonTitle,
+                    action: onDismiss
+                ) {
+                    Text(buttonTitle)
+                        .font(CartoonFont.bodyLarge)
+                        .foregroundStyle(.white)
+                        .frame(width: 200, height: 60)
+                }
+                Spacer().frame(height: 20)
             }
-            if let rewardLine {
-                Text(rewardLine)
-                    .font(CartoonFont.title)
-                    .foregroundStyle(CartoonColor.gold)
-            }
-            Spacer().frame(height: 10)
-            CartoonButton(
-                tint: CartoonColor.gold,
-                accessibilityLabel: buttonTitle,
-                action: onDismiss
-            ) {
-                Text(buttonTitle)
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(.white)
-                    .frame(width: 200, height: 60)
-            }
+            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 40)
         .transition(.scale.combined(with: .opacity))
     }
 }

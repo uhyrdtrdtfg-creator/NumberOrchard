@@ -237,29 +237,47 @@ struct CartoonGround: View {
 struct CartoonPanel<Content: View>: View {
     var fill: Color = CartoonColor.paper
     var stroke: Color = CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke)
-    var cornerRadius: CGFloat = CartoonDimensions.radiusXLarge
+    var cornerRadius: CGFloat = CartoonRadius.xl
     var strokeWidth: CGFloat = CartoonDimensions.strokeHeavy
+    /// When true (default) paints a soft white gradient across the top
+    /// 30% of the panel — makes cards read like vinyl stickers with
+    /// light catching the upper edge, instead of flat rectangles.
+    var sheen: Bool = true
     let content: () -> Content
 
     init(
         fill: Color = CartoonColor.paper,
         stroke: Color = CartoonColor.ink.opacity(CartoonDimensions.inkOpacityStroke),
-        cornerRadius: CGFloat = CartoonDimensions.radiusXLarge,
+        cornerRadius: CGFloat = CartoonRadius.xl,
         strokeWidth: CGFloat = CartoonDimensions.strokeHeavy,
+        sheen: Bool = true,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.fill = fill
         self.stroke = stroke
         self.cornerRadius = cornerRadius
         self.strokeWidth = strokeWidth
+        self.sheen = sheen
         self.content = content
     }
 
     var body: some View {
         content()
             .background(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(fill)
+                ZStack {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(fill)
+                    if sheen {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.55), Color.white.opacity(0.0)],
+                                    startPoint: .top, endPoint: .center
+                                )
+                            )
+                            .allowsHitTesting(false)
+                    }
+                }
             )
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)

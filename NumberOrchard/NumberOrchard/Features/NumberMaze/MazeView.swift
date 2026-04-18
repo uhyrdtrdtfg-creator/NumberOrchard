@@ -162,10 +162,13 @@ struct MazeView: View {
         let borderColor: Color = isTip ? CartoonColor.coral : CartoonColor.ink.opacity(0.6)
         return Button { viewModel.tap(r, c) } label: {
             ZStack {
-                RoundedRectangle(cornerRadius: 10).fill(CartoonColor.ink.opacity(0.85))
+                RoundedRectangle(cornerRadius: CartoonRadius.tiny)
+                    .fill(CartoonColor.ink.opacity(0.85))
                     .frame(width: 54, height: 54).offset(y: 2)
-                RoundedRectangle(cornerRadius: 10).fill(tint).frame(width: 54, height: 54)
-                RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: isTip ? 3 : 1.5)
+                RoundedRectangle(cornerRadius: CartoonRadius.tiny)
+                    .fill(tint).frame(width: 54, height: 54)
+                RoundedRectangle(cornerRadius: CartoonRadius.tiny)
+                    .stroke(borderColor, lineWidth: isTip ? 3 : 1.5)
                     .frame(width: 54, height: 54)
                 VStack(spacing: 2) {
                     Text("\(viewModel.grid.cells[r][c])")

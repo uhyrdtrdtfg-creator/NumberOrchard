@@ -163,30 +163,33 @@ struct PetGardenView: View {
         emoji: String, label: String, tint: Color,
         action: @escaping () -> Void
     ) -> some View {
-        CartoonButton(tint: tint, accessibilityLabel: label, action: action) {
-            VStack(spacing: 4) {
-                Text(emoji).font(.system(size: 28))
+        CartoonButton(tint: tint, cornerRadius: CartoonRadius.chunky,
+                      accessibilityLabel: label, action: action) {
+            VStack(spacing: 6) {
+                Text(emoji).font(.system(size: 34))
                 Text(label)
                     .font(CartoonFont.bodySmall)
                     .foregroundStyle(.white)
+                    .shadow(color: CartoonColor.ink.opacity(0.4), radius: 0, x: 0, y: 1)
                     .minimumScaleFactor(0.75)
                     .lineLimit(1)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 78)
+            .frame(height: 88)
         }
     }
 
     private func tileLocked(emoji: String, label: String) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 24)
+            RoundedRectangle(cornerRadius: CartoonRadius.chunky)
                 .fill(CartoonColor.paper.opacity(0.7))
-                .frame(height: 78)
-            RoundedRectangle(cornerRadius: 24)
-                .stroke(CartoonColor.ink.opacity(0.35), style: StrokeStyle(lineWidth: 2, dash: [6]))
-                .frame(height: 78)
-            VStack(spacing: 4) {
-                Text(emoji).font(.system(size: 26)).opacity(0.55)
+                .frame(height: 88)
+            RoundedRectangle(cornerRadius: CartoonRadius.chunky)
+                .stroke(CartoonColor.ink.opacity(0.35),
+                        style: StrokeStyle(lineWidth: 2, dash: [6]))
+                .frame(height: 88)
+            VStack(spacing: 6) {
+                Text(emoji).font(.system(size: 32)).opacity(0.55)
                 Text(label)
                     .font(CartoonFont.caption)
                     .foregroundStyle(CartoonColor.text.opacity(0.45))
