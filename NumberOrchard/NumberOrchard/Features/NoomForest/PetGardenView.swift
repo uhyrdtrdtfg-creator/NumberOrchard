@@ -27,22 +27,7 @@ struct PetGardenView: View {
             VStack(spacing: 18) {
                 if let viewModel {
                     PetFeedingArea(viewModel: viewModel)
-                    if viewModel.activePet != nil {
-                        theaterButton(gardenVM: viewModel)
-                    }
-                    HStack(spacing: 12) {
-                        diceButton
-                        matchTenButton
-                    }
-                    HStack(spacing: 12) {
-                        fishingButton
-                        diaryButton
-                    }
-                    HStack(spacing: 12) {
-                        rhythmButton
-                        kitchenButton
-                        mazeButton
-                    }
+                    miniGameGrid(gardenVM: viewModel)
                     EggHatchingArea(viewModel: viewModel)
                 } else {
                     ProgressView()
@@ -117,136 +102,95 @@ struct PetGardenView: View {
         }
     }
 
-    private func theaterButton(gardenVM: PetGardenViewModel) -> some View {
-        CartoonButton(
-            tint: CartoonColor.berry,
-            accessibilityLabel: "数学小剧场",
-            action: {
-                theaterViewModel = PetTheaterViewModel(garden: gardenVM)
-                showTheater = true
+    // MARK: - Unified mini-game grid
+    //
+    // All 9 entry points rendered as a 3×3 grid of same-size tiles. Each
+    // tile carries its own emoji / label / tint / action; callers don't
+    // care about the underlying ViewModel construction order. Keeps the
+    // garden scannable even as new mini-games are added.
+    @ViewBuilder
+    private func miniGameGrid(gardenVM: PetGardenViewModel) -> some View {
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 3)
+        LazyVGrid(columns: columns, spacing: 10) {
+            // Row 1 — Noom-centric math (theater needs an owned pet)
+            if gardenVM.activePet != nil {
+                tile(emoji: "🎭", label: "数学剧场", tint: CartoonColor.berry) {
+                    theaterViewModel = PetTheaterViewModel(garden: gardenVM)
+                    showTheater = true
+                }
+            } else {
+                tileLocked(emoji: "🎭", label: "剧场")
             }
-        ) {
-            HStack(spacing: 8) {
-                Text("🎭").font(.system(size: 26))
-                Text("数学小剧场").font(CartoonFont.bodyLarge).foregroundStyle(.white)
-            }
-            .frame(width: 240, height: 64)
-        }
-    }
-
-    private var diceButton: some View {
-        CartoonButton(
-            tint: CartoonColor.sky,
-            accessibilityLabel: "骰子速算",
-            action: {
+            tile(emoji: "🎲", label: "骰子速算", tint: CartoonColor.sky) {
                 diceViewModel = DiceQuickMathViewModel(profile: profile, modelContext: modelContext)
                 showDice = true
             }
-        ) {
-            VStack(spacing: 2) {
-                Text("🎲").font(.system(size: 26))
-                Text("骰子速算").font(CartoonFont.bodySmall).foregroundStyle(.white)
-            }
-            .frame(width: 120, height: 72)
-        }
-    }
-
-    private var matchTenButton: some View {
-        CartoonButton(
-            tint: CartoonColor.coral,
-            accessibilityLabel: "凑十消消乐",
-            action: {
-                matchTenViewModel = MatchTenViewModel(profile: profile, modelContext: modelContext)
-                showMatchTen = true
-            }
-        ) {
-            VStack(spacing: 2) {
-                Text("🍭").font(.system(size: 26))
-                Text("凑十消消乐").font(CartoonFont.bodySmall).foregroundStyle(.white)
-            }
-            .frame(width: 120, height: 72)
-        }
-    }
-
-    private var fishingButton: some View {
-        CartoonButton(
-            tint: CartoonColor.leaf,
-            accessibilityLabel: "数字钓鱼",
-            action: {
-                fishingViewModel = FishingViewModel(profile: profile, modelContext: modelContext)
-                showFishing = true
-            }
-        ) {
-            VStack(spacing: 2) {
-                Text("🎣").font(.system(size: 26))
-                Text("数字钓鱼").font(CartoonFont.bodySmall).foregroundStyle(.white)
-            }
-            .frame(width: 120, height: 72)
-        }
-    }
-
-    private var diaryButton: some View {
-        CartoonButton(
-            tint: CartoonColor.wood,
-            accessibilityLabel: "成长日记",
-            action: { showDiary = true }
-        ) {
-            VStack(spacing: 2) {
-                Text("📓").font(.system(size: 26))
-                Text("成长日记").font(CartoonFont.bodySmall).foregroundStyle(.white)
-            }
-            .frame(width: 120, height: 72)
-        }
-    }
-
-    private var rhythmButton: some View {
-        CartoonButton(
-            tint: CartoonColor.berry,
-            accessibilityLabel: "节奏数学",
-            action: {
+            tile(emoji: "🎵", label: "节奏数学", tint: CartoonColor.berry) {
                 rhythmViewModel = RhythmMathViewModel(profile: profile, modelContext: modelContext)
                 showRhythm = true
             }
-        ) {
-            VStack(spacing: 2) {
-                Text("🎵").font(.system(size: 22))
-                Text("节奏数学").font(CartoonFont.caption).foregroundStyle(.white)
-            }
-            .frame(width: 96, height: 68)
-        }
-    }
 
-    private var kitchenButton: some View {
-        CartoonButton(
-            tint: CartoonColor.coral,
-            accessibilityLabel: "烹饪小厨房",
-            action: {
-                kitchenViewModel = KitchenViewModel(profile: profile, modelContext: modelContext)
-                showKitchen = true
+            // Row 2 — combination / applied math
+            tile(emoji: "🍭", label: "凑十消消", tint: CartoonColor.coral) {
+                matchTenViewModel = MatchTenViewModel(profile: profile, modelContext: modelContext)
+                showMatchTen = true
             }
-        ) {
-            VStack(spacing: 2) {
-                Text("🍳").font(.system(size: 22))
-                Text("烹饪小厨房").font(CartoonFont.caption).foregroundStyle(.white)
+            tile(emoji: "🎣", label: "数字钓鱼", tint: CartoonColor.leaf) {
+                fishingViewModel = FishingViewModel(profile: profile, modelContext: modelContext)
+                showFishing = true
             }
-            .frame(width: 96, height: 68)
-        }
-    }
-
-    private var mazeButton: some View {
-        CartoonButton(
-            tint: CartoonColor.leaf,
-            accessibilityLabel: "数字迷宫",
-            action: {
+            tile(emoji: "🧩", label: "数字迷宫", tint: CartoonColor.leaf) {
                 mazeViewModel = MazeViewModel(profile: profile, modelContext: modelContext)
                 showMaze = true
             }
-        ) {
-            VStack(spacing: 2) {
-                Text("🧩").font(.system(size: 22))
-                Text("数字迷宫").font(CartoonFont.caption).foregroundStyle(.white)
+
+            // Row 3 — applied math + memory
+            tile(emoji: "🍳", label: "烹饪厨房", tint: CartoonColor.coral) {
+                kitchenViewModel = KitchenViewModel(profile: profile, modelContext: modelContext)
+                showKitchen = true
             }
-            .frame(width: 96, height: 68)
+            tile(emoji: "📓", label: "成长日记", tint: CartoonColor.wood) {
+                showDiary = true
+            }
+            // 9th slot reserved for future mini-games; shown as a
+            // "more coming" placeholder so the grid stays visually
+            // complete and the layout doesn't jump around.
+            tileLocked(emoji: "✨", label: "更多…")
+        }
+    }
+
+    private func tile(
+        emoji: String, label: String, tint: Color,
+        action: @escaping () -> Void
+    ) -> some View {
+        CartoonButton(tint: tint, accessibilityLabel: label, action: action) {
+            VStack(spacing: 4) {
+                Text(emoji).font(.system(size: 28))
+                Text(label)
+                    .font(CartoonFont.bodySmall)
+                    .foregroundStyle(.white)
+                    .minimumScaleFactor(0.75)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 78)
+        }
+    }
+
+    private func tileLocked(emoji: String, label: String) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 24)
+                .fill(CartoonColor.paper.opacity(0.7))
+                .frame(height: 78)
+            RoundedRectangle(cornerRadius: 24)
+                .stroke(CartoonColor.ink.opacity(0.35), style: StrokeStyle(lineWidth: 2, dash: [6]))
+                .frame(height: 78)
+            VStack(spacing: 4) {
+                Text(emoji).font(.system(size: 26)).opacity(0.55)
+                Text(label)
+                    .font(CartoonFont.caption)
+                    .foregroundStyle(CartoonColor.text.opacity(0.45))
+            }
         }
     }
 }

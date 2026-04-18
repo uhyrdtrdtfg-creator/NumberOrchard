@@ -121,25 +121,11 @@ struct RhythmMathView: View {
     }
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark").font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("🎵 节奏数学").font(CartoonFont.titleSmall).foregroundStyle(CartoonColor.text)
-            Spacer()
-            Text("第 \(viewModel.progressText)")
-                .font(CartoonFont.bodySmall)
-                .foregroundStyle(CartoonColor.text.opacity(0.7))
-                .frame(width: 96, alignment: .trailing)
-        }
-        .padding(.top, 16)
+        MiniGameTopBar(
+            title: "🎵 节奏数学",
+            progress: "第 \(viewModel.progressText)",
+            onClose: onDismiss
+        )
     }
 
     private var scoreBar: some View {
@@ -190,22 +176,12 @@ struct RhythmMathView: View {
     }
 
     private var completeView: some View {
-        VStack(spacing: 18) {
-            Spacer().frame(height: 40)
-            Text("🎵🎉").font(.system(size: 80))
-            Text("节奏结束!")
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
-            Text("得分 \(viewModel.score)  +\(max(1, viewModel.score / 50)) ⭐")
-                .font(CartoonFont.title)
-                .foregroundStyle(CartoonColor.gold)
-            Spacer().frame(height: 10)
-            CartoonButton(tint: CartoonColor.gold, accessibilityLabel: "完成", action: onDismiss) {
-                Text("回到花园")
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(.white)
-                    .frame(width: 200, height: 60)
-            }
-        }
+        SessionCompleteCard(
+            emoji: "🎵🎉",
+            title: "节奏结束!",
+            primaryStat: "得分 \(viewModel.score)",
+            rewardLine: "+\(max(1, viewModel.score / 50)) ⭐",
+            onDismiss: onDismiss
+        )
     }
 }

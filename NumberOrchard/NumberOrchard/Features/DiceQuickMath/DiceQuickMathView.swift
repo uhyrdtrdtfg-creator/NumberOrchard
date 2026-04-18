@@ -44,25 +44,7 @@ struct DiceQuickMathView: View {
     // MARK: - Layout pieces
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("🎲 骰子速算")
-                .font(CartoonFont.titleSmall)
-                .foregroundStyle(CartoonColor.text)
-            Spacer()
-            Color.clear.frame(width: 56, height: 56)
-        }
-        .padding(.top, 16)
+        MiniGameTopBar(title: "🎲 骰子速算", onClose: onDismiss)
     }
 
     private var progressLabel: some View {
@@ -116,49 +98,16 @@ struct DiceQuickMathView: View {
     }
 
     private var numberPad: some View {
-        VStack(spacing: 10) {
-            ForEach(0..<3, id: \.self) { row in
-                HStack(spacing: 10) {
-                    ForEach(1...3, id: \.self) { col in
-                        padKey("\(row * 3 + col)")
-                    }
+        NumberPad(
+            disabled: viewModel.phase == .rolling,
+            onDigit: { digit in
+                if viewModel.phase == .answering && entered.count < 2 {
+                    entered += "\(digit)"
                 }
-            }
-            HStack(spacing: 10) {
-                padKey("清", tint: CartoonColor.coral) { entered = "" }
-                padKey("0")
-                padKey("✓", tint: CartoonColor.leaf) { submit() }
-            }
-        }
-    }
-
-    private func padKey(
-        _ label: String,
-        tint: Color = CartoonColor.paper,
-        action: (() -> Void)? = nil
-    ) -> some View {
-        Button(action: {
-            if let action {
-                action()
-            } else if viewModel.phase == .answering && entered.count < 2 {
-                entered += label
-            }
-        }) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 18).fill(CartoonColor.ink.opacity(0.9))
-                    .frame(width: 76, height: 60).offset(y: 3)
-                RoundedRectangle(cornerRadius: 18).fill(tint)
-                    .frame(width: 76, height: 60)
-                RoundedRectangle(cornerRadius: 18).stroke(CartoonColor.ink.opacity(0.7), lineWidth: 3)
-                    .frame(width: 76, height: 60)
-                Text(label)
-                    .font(CartoonFont.titleSmall)
-                    .foregroundStyle(tint == CartoonColor.paper ? CartoonColor.text : .white)
-            }
-        }
-        .buttonStyle(.plain)
-        .disabled(viewModel.phase == .rolling)
-        .opacity(viewModel.phase == .rolling ? 0.55 : 1.0)
+            },
+            onClear: { entered = "" },
+            onSubmit: submit
+        )
     }
 
     private var pointsBadge: some View {
@@ -176,31 +125,13 @@ struct DiceQuickMathView: View {
     }
 
     private var sessionComplete: some View {
-        VStack(spacing: 18) {
-            Spacer().frame(height: 30)
-            Text("🎲🎉")
-                .font(.system(size: 80))
-            Text("速算挑战结束！")
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
-            Text("总分 \(viewModel.totalPoints)  答对 \(viewModel.correctCount)/\(viewModel.rolls.count)")
-                .font(CartoonFont.bodyLarge)
-                .foregroundStyle(CartoonColor.text.opacity(0.8))
-            Text("最快答题 \(viewModel.sessionFastestDisplay)")
-                .font(CartoonFont.body)
-                .foregroundStyle(CartoonColor.text.opacity(0.7))
-            Text("+\(DiceQuickMathViewModel.stars(forTotalPoints: viewModel.totalPoints)) ⭐")
-                .font(CartoonFont.title)
-                .foregroundStyle(CartoonColor.gold)
-            Spacer().frame(height: 10)
-            CartoonButton(tint: CartoonColor.gold, accessibilityLabel: "完成", action: onDismiss) {
-                Text("回到花园")
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(.white)
-                    .frame(width: 200, height: 60)
-            }
-        }
-        .transition(.scale.combined(with: .opacity))
+        SessionCompleteCard(
+            emoji: "🎲🎉",
+            title: "速算挑战结束!",
+            primaryStat: "总分 \(viewModel.totalPoints)  答对 \(viewModel.correctCount)/\(viewModel.rolls.count)\n最快答题 \(viewModel.sessionFastestDisplay)",
+            rewardLine: "+\(DiceQuickMathViewModel.stars(forTotalPoints: viewModel.totalPoints)) ⭐",
+            onDismiss: onDismiss
+        )
     }
 
     // MARK: - Actions

@@ -59,25 +59,7 @@ struct PetTheaterView: View {
     // MARK: - Subviews
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("🎭 数学小剧场")
-                .font(CartoonFont.titleSmall)
-                .foregroundStyle(CartoonColor.text)
-            Spacer()
-            Color.clear.frame(width: 56, height: 56)
-        }
-        .padding(.top, 16)
+        MiniGameTopBar(title: "🎭 数学小剧场", onClose: onDismiss)
     }
 
     private var progressIndicator: some View {
@@ -111,8 +93,18 @@ struct PetTheaterView: View {
     }
 
     private func petStage(noom: Noom, stage: Int) -> some View {
-        Image(uiImage: NoomRenderer.image(
-            for: noom, expression: .happy,
+        // Noom mirrors the child's last action: correct → surprised
+        // (wide eyes celebrating), wrong → neutral (gently sad), idle
+        // or before answering → happy.
+        let expression: NoomExpression = {
+            switch viewModel.lastResult {
+            case .correct: return .surprised
+            case .wrong:   return .neutral
+            case .none:    return .happy
+            }
+        }()
+        return Image(uiImage: NoomRenderer.image(
+            for: noom, expression: expression,
             size: CGSize(width: 160, height: 160), stage: stage
         ))
         .resizable()
@@ -139,76 +131,30 @@ struct PetTheaterView: View {
     }
 
     private var numberPad: some View {
-        VStack(spacing: 10) {
-            ForEach(0..<3, id: \.self) { row in
-                HStack(spacing: 10) {
-                    ForEach(1...3, id: \.self) { col in
-                        padKey("\(row * 3 + col)")
-                    }
-                }
-            }
-            HStack(spacing: 10) {
-                padKey("清", tint: CartoonColor.coral) { entered = "" }
-                padKey("0")
-                padKey("✓", tint: CartoonColor.leaf) { submit() }
-            }
-        }
-    }
-
-    private func padKey(
-        _ label: String,
-        tint: Color = CartoonColor.paper,
-        action: (() -> Void)? = nil
-    ) -> some View {
-        Button(action: {
-            if let action {
-                action()
-            } else if entered.count < 2 {
-                entered += label
-            }
-        }) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 18).fill(CartoonColor.ink.opacity(0.9))
-                    .frame(width: 76, height: 60).offset(y: 3)
-                RoundedRectangle(cornerRadius: 18).fill(tint)
-                    .frame(width: 76, height: 60)
-                RoundedRectangle(cornerRadius: 18).stroke(CartoonColor.ink.opacity(0.7), lineWidth: 3)
-                    .frame(width: 76, height: 60)
-                Text(label)
-                    .font(CartoonFont.titleSmall)
-                    .foregroundStyle(tint == CartoonColor.paper ? CartoonColor.text : .white)
-            }
-        }
-        .buttonStyle(.plain)
+        NumberPad(
+            onDigit: { digit in
+                if entered.count < 2 { entered += "\(digit)" }
+            },
+            onClear: { entered = "" },
+            onSubmit: submit
+        )
     }
 
     private var sessionCompleteView: some View {
-        VStack(spacing: 18) {
-            Spacer().frame(height: 40)
-            Text("🎉")
-                .font(.system(size: 80))
-            Text("太棒啦！")
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
+        let petName: String = {
             if let pet = viewModel.garden.activePet,
                let noom = NoomCatalog.noom(for: pet.noomNumber) {
-                Text("你让\(noom.name)吃到了 \(viewModel.totalFruitsEaten) 个水果！")
-                    .font(CartoonFont.body)
-                    .foregroundStyle(CartoonColor.text.opacity(0.8))
-                    .multilineTextAlignment(.center)
+                return "你让\(noom.name)吃到了 \(viewModel.totalFruitsEaten) 个水果!"
             }
-            Text("答对 \(viewModel.correctCount) / \(viewModel.questions.count)  +1 ⭐")
-                .font(CartoonFont.body)
-                .foregroundStyle(CartoonColor.gold)
-            Spacer().frame(height: 20)
-            CartoonButton(tint: CartoonColor.gold, accessibilityLabel: "完成", action: onDismiss) {
-                Text("回到花园")
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(.white)
-                    .frame(width: 200, height: 60)
-            }
-        }
-        .transition(.scale.combined(with: .opacity))
+            return "这一局小剧场结束啦!"
+        }()
+        return SessionCompleteCard(
+            emoji: "🎉",
+            title: "太棒啦!",
+            primaryStat: "\(petName)\n答对 \(viewModel.correctCount) / \(viewModel.questions.count)",
+            rewardLine: "+1 ⭐",
+            onDismiss: onDismiss
+        )
     }
 
     // MARK: - Actions

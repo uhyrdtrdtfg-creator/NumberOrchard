@@ -44,46 +44,21 @@ struct NoomDiaryView: View {
     }
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("📓 成长日记")
-                .font(CartoonFont.titleSmall)
-                .foregroundStyle(CartoonColor.text)
-            Spacer()
+        MiniGameTopBar(title: "📓 成长日记", onClose: onDismiss) {
             if !ownedPets.isEmpty {
                 Text("\(currentPage + 1) / \(ownedPets.count)")
                     .font(CartoonFont.bodySmall)
                     .foregroundStyle(CartoonColor.text.opacity(0.7))
-                    .frame(width: 56, alignment: .trailing)
-            } else {
-                Color.clear.frame(width: 56, height: 56)
             }
         }
-        .padding(.top, 16)
     }
 
     private var emptyState: some View {
-        VStack(spacing: 16) {
-            Spacer().frame(height: 60)
-            Text("📔").font(.system(size: 80))
-            Text("日记本还空着")
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
-            Text("去解锁第一只小精灵吧！")
-                .font(CartoonFont.bodyLarge)
-                .foregroundStyle(CartoonColor.text.opacity(0.7))
-            Spacer()
-        }
+        CartoonEmptyState(
+            emoji: "📔",
+            title: "日记本还空着",
+            hint: "去解锁第一只小精灵吧!"
+        )
     }
 
     private func unlockDate(for noomNumber: Int) -> Date? {

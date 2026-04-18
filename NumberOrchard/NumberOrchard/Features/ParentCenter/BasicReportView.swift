@@ -42,33 +42,34 @@ struct BasicReportView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
-                GroupBox("今日学习") {
+            VStack(spacing: 20) {
+                section(title: "📅 今日学习") {
                     HStack(spacing: 40) {
                         statItem(value: "\(todayQuestionCount)", label: "做题数")
                         statItem(value: "\(Int(todayAccuracy * 100))%", label: "正确率")
-                        statItem(value: String(format: "%.0f 分钟", todayDurationMinutes), label: "用时")
+                        statItem(value: String(format: "%.0f 分", todayDurationMinutes), label: "用时")
                     }
                     .padding(.vertical, 8)
                 }
 
-                GroupBox("本周趋势") {
+                section(title: "📈 本周趋势") {
                     Chart(last7DaysData, id: \.date) { item in
                         BarMark(
                             x: .value("日期", item.date, unit: .day),
                             y: .value("题数", item.count)
                         )
-                        .foregroundStyle(.green)
+                        .foregroundStyle(CartoonColor.leaf)
                     }
                     .frame(height: 150)
                     .chartXAxis {
-                        AxisMarks(values: .stride(by: .day)) { value in
+                        AxisMarks(values: .stride(by: .day)) { _ in
                             AxisValueLabel(format: .dateTime.weekday(.abbreviated))
                         }
                     }
+                    .padding(.top, 8)
                 }
 
-                GroupBox("总体进度") {
+                section(title: "🏆 总体进度") {
                     HStack(spacing: 40) {
                         statItem(value: "\(profile.totalQuestions)", label: "总题量")
                         statItem(value: "\(profile.consecutiveLoginDays) 天", label: "连续学习")
@@ -81,14 +82,31 @@ struct BasicReportView: View {
         }
     }
 
+    /// Cartoon-themed replacement for the native GroupBox — title floats
+    /// as a CartoonFont.titleSmall label, contents sit inside a
+    /// CartoonPanel. Keeps the parent-center report visually aligned
+    /// with the rest of the app.
+    @ViewBuilder
+    private func section<Content: View>(title: String,
+                                        @ViewBuilder content: @escaping () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(CartoonFont.titleSmall)
+                .foregroundStyle(CartoonColor.text)
+            CartoonPanel(cornerRadius: 22) {
+                content().padding(16)
+            }
+        }
+    }
+
     private func statItem(value: String, label: String) -> some View {
         VStack(spacing: 4) {
             Text(value)
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(CartoonFont.title)
+                .foregroundStyle(CartoonColor.text)
             Text(label)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.text.opacity(0.65))
         }
     }
 }

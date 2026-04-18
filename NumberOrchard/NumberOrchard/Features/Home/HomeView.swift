@@ -24,12 +24,17 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-            // HomeSkyLayer provides its own emoji sun + clouds, so we opt
-            // out of CartoonSkyBackground's new cloud decoration layer here.
-            CartoonSkyBackground(decorations: false)
-            HomeSkyLayer()
+            // Use the shared vector sky (soft sun + drifting clouds) so the
+            // home screen matches the rest of the app. The previous
+            // HomeSkyLayer drew its own emoji sun + clouds, which fought
+            // with the later-added vector treatment in CartoonSkyBackground.
+            CartoonSkyBackground()
             CartoonGround(height: 280)
+            // Decorations must render ABOVE the foreground VStack
+            // (HomeTreeHero's large emoji otherwise sits on top of
+            // anything the child has placed in the orchard band).
             HomeDecorationsLayer(decorations: profile.decorations)
+                .zIndex(5)
 
             VStack(spacing: 0) {
                 HomeTopHUD(
@@ -92,34 +97,6 @@ struct HomeView: View {
     }
 }
 
-// MARK: - Sky layer (sun + clouds)
-
-private struct HomeSkyLayer: View {
-    @State private var sunRotating = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    var body: some View {
-        GeometryReader { geo in
-            Text("🌞")
-                .font(.system(size: 110))
-                .rotationEffect(.degrees(reduceMotion ? 0 : (sunRotating ? 12 : -12)))
-                .animation(reduceMotion ? nil : .easeInOut(duration: 4).repeatForever(autoreverses: true), value: sunRotating)
-                .position(x: geo.size.width * 0.88, y: geo.size.height * 0.14)
-
-            Text("☁️")
-                .font(.system(size: 90))
-                .position(x: geo.size.width * 0.15, y: geo.size.height * 0.18)
-
-            Text("☁️")
-                .font(.system(size: 60))
-                .position(x: geo.size.width * 0.55, y: geo.size.height * 0.12)
-        }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
-        .onAppear { sunRotating = true }
-    }
-}
-
 // MARK: - Ground decorations
 
 private struct HomeDecorationsLayer: View {
@@ -134,8 +111,15 @@ private struct HomeDecorationsLayer: View {
 
     var body: some View {
         GeometryReader { geo in
-            let bandTop = geo.size.height * 0.55
-            let bandHeight = geo.size.height * 0.18
+            // Ground hill tops out around 280pt high. Previously the
+            // decoration band (0.55-0.73) sat right where the shared
+            // vector sun-and-clouds backdrop draws its lowest cloud —
+            // clouds + tree both ended up covering decorations. Lifting
+            // the band to 0.48-0.62 places decorations in the grassy
+            // strip between the tree hero and the hill curve, visible
+            // under any scenery.
+            let bandTop = geo.size.height * 0.48
+            let bandHeight = geo.size.height * 0.14
             ForEach(sortedPlaced, id: \.element.id) { index, deco in
                 if let item = DecorationCatalog.item(id: deco.itemId) {
                     PlacedDecorationView(

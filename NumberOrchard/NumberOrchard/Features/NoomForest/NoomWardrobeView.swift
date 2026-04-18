@@ -244,26 +244,10 @@ struct NoomWardrobeView: View {
     }
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark")
-                        .font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("👗 小精灵衣柜")
-                .font(CartoonFont.titleSmall)
-                .foregroundStyle(CartoonColor.text)
-            Spacer()
+        MiniGameTopBar(title: "👗 小精灵衣柜", onClose: onDismiss) {
             CartoonHUD(icon: "star.fill", value: "\(viewModel.profile.stars)", tint: CartoonColor.gold)
         }
         .padding(.horizontal, 20)
-        .padding(.top, 16)
     }
 
     @ViewBuilder

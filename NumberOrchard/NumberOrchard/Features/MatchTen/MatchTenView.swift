@@ -114,24 +114,7 @@ struct MatchTenView: View {
     }
 
     private var topBar: some View {
-        HStack {
-            Button(action: onDismiss) {
-                ZStack {
-                    Circle().fill(CartoonColor.ink.opacity(0.9)).frame(width: 56, height: 56).offset(y: 3)
-                    Circle().fill(CartoonColor.paper).frame(width: 56, height: 56)
-                    Circle().stroke(CartoonColor.ink.opacity(0.8), lineWidth: 3).frame(width: 56, height: 56)
-                    Image(systemName: "xmark").font(.system(size: 22, weight: .black))
-                        .foregroundStyle(CartoonColor.text)
-                }
-            }
-            Spacer()
-            Text("🍭 凑十消消乐")
-                .font(CartoonFont.titleSmall)
-                .foregroundStyle(CartoonColor.text)
-            Spacer()
-            Color.clear.frame(width: 56, height: 56)
-        }
-        .padding(.top, 16)
+        MiniGameTopBar(title: "🍭 凑十消消乐", onClose: onDismiss)
     }
 
     private var progressPill: some View {
@@ -200,24 +183,13 @@ struct MatchTenView: View {
     }
 
     private var completeView: some View {
-        VStack(spacing: 18) {
-            Spacer().frame(height: 40)
-            Text("🎉").font(.system(size: 80))
-            Text("全部清空啦！")
-                .font(CartoonFont.displayLarge)
-                .foregroundStyle(CartoonColor.text)
-            Text("+3 ⭐")
-                .font(CartoonFont.title)
-                .foregroundStyle(CartoonColor.gold)
-            Spacer().frame(height: 10)
-            CartoonButton(tint: CartoonColor.gold, accessibilityLabel: "完成", action: onDismiss) {
-                Text("回到花园")
-                    .font(CartoonFont.bodyLarge)
-                    .foregroundStyle(.white)
-                    .frame(width: 200, height: 60)
-            }
-        }
-        .transition(.scale.combined(with: .opacity))
+        SessionCompleteCard(
+            emoji: "🎉",
+            title: "全部清空啦!",
+            primaryStat: "得分 \(viewModel.game.score)",
+            rewardLine: "+3 ⭐",
+            onDismiss: onDismiss
+        )
     }
 }
 

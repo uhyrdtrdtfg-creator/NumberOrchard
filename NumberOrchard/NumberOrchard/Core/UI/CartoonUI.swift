@@ -147,13 +147,17 @@ private struct CartoonSkyDecorations: View {
 
                 cloud(size: 160, opacity: 0.85)
                     .position(x: geo.size.width * 0.18 + drift * 40,
-                              y: geo.size.height * 0.18)
+                              y: geo.size.height * 0.14)
                 cloud(size: 110, opacity: 0.75)
                     .position(x: geo.size.width * 0.70 - drift * 25,
-                              y: geo.size.height * 0.30)
+                              y: geo.size.height * 0.22)
+                // Third cloud used to sit at y=0.55, where it overlapped
+                // the Home orchard decoration band. Keep all clouds in
+                // the upper third so any scene with ground decor stays
+                // unobscured.
                 cloud(size: 140, opacity: 0.65)
                     .position(x: geo.size.width * 0.45 + drift * 30,
-                              y: geo.size.height * 0.55)
+                              y: geo.size.height * 0.32)
             }
             .onAppear {
                 withAnimation(.easeInOut(duration: 6).repeatForever(autoreverses: true)) {
