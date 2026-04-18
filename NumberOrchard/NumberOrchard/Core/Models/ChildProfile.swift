@@ -18,6 +18,11 @@ final class ChildProfile {
     var seeds: Int
     var consecutiveLoginDays: Int
     var lastLoginDate: Date?
+    /// Calendar day (local) on which the child most recently claimed the
+    /// free daily wardrobe gacha. `nil` means they've never claimed.
+    /// Stored as Date to keep it SwiftData-friendly; day resolution is
+    /// derived via Calendar.startOfDay at read time.
+    var lastGachaDate: Date?
 
     var dailyTimeLimitMinutes: Int
 
@@ -56,6 +61,7 @@ final class ChildProfile {
         self.seeds = 0
         self.consecutiveLoginDays = 0
         self.lastLoginDate = nil
+        self.lastGachaDate = nil
         self.dailyTimeLimitMinutes = 20
     }
 

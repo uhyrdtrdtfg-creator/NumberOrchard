@@ -42,6 +42,7 @@
 		3291A8894AC4CC367DE1DE20 /* ExplorationMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6F591402A2A70FC6588965 /* ExplorationMapViewModel.swift */; };
 		3429843323A048D9A3E03C64 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9452C4C6F4C0CBA089556782 /* correct.wav */; };
 		34394284F406C56730D61DE1 /* ExplorationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74290E47C61364EE77542658 /* ExplorationMapView.swift */; };
+		34C16077ABF2953AFAB334FE /* DailyGachaLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2D0B424555CFB050FDA7B5 /* DailyGachaLogic.swift */; };
 		34DFD7D4AEA20293BED88E88 /* MapProgressionLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657E3FED607855E96CCD1DD9 /* MapProgressionLogic.swift */; };
 		35626976F61FA247618FFFCD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF67ED2B785DD79D28846F /* AudioManager.swift */; };
 		367C8CF3CDBBC9D1F677E156 /* fruit_drop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6716849999AC43443891C7D4 /* fruit_drop.wav */; };
@@ -74,6 +75,7 @@
 		59CEED9C0DB2C64746AEB92B /* NoomMergeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574632CFB25276D06066DA8 /* NoomMergeLogic.swift */; };
 		5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */; };
 		624B9131944B2E9FF1084B69 /* MatchTenGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */; };
+		63718C4E5BC50E0B5A89F640 /* DailyGachaLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EB5A085CE8574B8ABA335 /* DailyGachaLogicTests.swift */; };
 		65EB313F2D50B6360F71C079 /* QuestionGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7371076232AB2040023448E2 /* QuestionGeneratorTests.swift */; };
 		686176B22E955F0DEDADF21E /* PetPreferenceMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8F5603E4E7186A11289E06 /* PetPreferenceMapTests.swift */; };
 		699697391AA5E9ABF895DE97 /* ShareFruitScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04066175F83F93B3EA8399FE /* ShareFruitScene.swift */; };
@@ -205,6 +207,7 @@
 		47B2AC69AAB3895EB25B4C60 /* NoomDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomDiaryView.swift; sourceTree = "<group>"; };
 		482C1635F049A55AA815323A /* PetXPCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetXPCalculatorTests.swift; sourceTree = "<group>"; };
 		489AD9724C88E35591B15085 /* NumberOrchard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = NumberOrchard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A4EB5A085CE8574B8ABA335 /* DailyGachaLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGachaLogicTests.swift; sourceTree = "<group>"; };
 		4B7242DB6ACB4C624D689D4D /* CollectedNoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedNoom.swift; sourceTree = "<group>"; };
 		4BD411D2AEADFF4550FBF3B3 /* PetFeedingArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFeedingArea.swift; sourceTree = "<group>"; };
 		4E4EDC77EC71DB9F41595670 /* correct_05.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = correct_05.aiff; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 		DA3505CB44FB7D2174221020 /* CollectedSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectedSkin.swift; sourceTree = "<group>"; };
 		DA97A8495EFFF1EF96933A5B /* FruitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitCatalog.swift; sourceTree = "<group>"; };
 		DB2489EDF39F4E6DA97C6CD6 /* LegendaryDropBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendaryDropBanner.swift; sourceTree = "<group>"; };
+		DB2D0B424555CFB050FDA7B5 /* DailyGachaLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyGachaLogic.swift; sourceTree = "<group>"; };
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
 		DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
@@ -612,6 +616,7 @@
 		894BC4ABF8CDB857A7607004 /* Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				4A4EB5A085CE8574B8ABA335 /* DailyGachaLogicTests.swift */,
 				2F2A02F6A116326DE8D293A8 /* LegendaryDropRollTests.swift */,
 				B53B3DE3B2195B1878609A78 /* RewardCalculatorTests.swift */,
 			);
@@ -865,6 +870,7 @@
 		ECACDB2A65B0C1CF7B41E63A /* Rewards */ = {
 			isa = PBXGroup;
 			children = (
+				DB2D0B424555CFB050FDA7B5 /* DailyGachaLogic.swift */,
 				C9B506AF0EA2D99F665FA677 /* LegendaryDropRoll.swift */,
 				4F3955C8B6279F8E0709080A /* RewardCalculator.swift */,
 			);
@@ -1026,6 +1032,7 @@
 			files = (
 				6C8CD1ED18BC4F15CDC91317 /* BalanceLogicTests.swift in Sources */,
 				42A248AD182B20E6B6D95592 /* CollectedNoomTests.swift in Sources */,
+				63718C4E5BC50E0B5A89F640 /* DailyGachaLogicTests.swift in Sources */,
 				BCA7AC3C4B65AA03EB239DD9 /* DecorationInventoryTests.swift in Sources */,
 				71A170A7EB85FEE7A5304F60 /* DiceQuickMathTests.swift in Sources */,
 				FC9B8A538D681E8CA7E1A1B6 /* DifficultyManagerTests.swift in Sources */,
@@ -1079,6 +1086,7 @@
 				53426505444B3FCD1EB344CE /* CollectedFruit.swift in Sources */,
 				6DF427575DC41DB9B81DA099 /* CollectedNoom.swift in Sources */,
 				82FEC3F8D92608A941D4C39F /* CollectedSkin.swift in Sources */,
+				34C16077ABF2953AFAB334FE /* DailyGachaLogic.swift in Sources */,
 				D26D178B8F0C646AE7AD7461 /* DecorateOrchardView.swift in Sources */,
 				403C228C46DD174FE148BD7A /* DecorationCatalog.swift in Sources */,
 				7AD669ED61EE9C50091794FD /* DecorationPurchaseLogic.swift in Sources */,

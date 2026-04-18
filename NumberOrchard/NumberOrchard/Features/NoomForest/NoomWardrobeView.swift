@@ -9,11 +9,17 @@ final class NoomWardrobeViewModel {
     let activePet: PetProgress
     private let modelContext: ModelContext
 
+    /// Last skin rolled by the gacha today, shown to the child as a
+    /// "got this!" banner until dismissed.
+    var lastGachaRoll: NoomSkin? = nil
+
     init(profile: ChildProfile, activePet: PetProgress, modelContext: ModelContext) {
         self.profile = profile
         self.activePet = activePet
         self.modelContext = modelContext
     }
+
+    // MARK: - Ownership / equip
 
     func isOwned(_ skin: NoomSkin) -> Bool {
         profile.collectedSkins.contains { $0.skinId == skin.id }
@@ -25,11 +31,34 @@ final class NoomWardrobeViewModel {
         }
     }
 
-    /// Deduct stars and record ownership. No-op if already owned or
-    /// insufficient stars. Returns whether the purchase went through.
+    /// Items equipped on the active pet, grouped by slot. A pet can wear
+    /// up to one item per slot.
+    var equipped: [NoomSkin.Slot: NoomSkin] {
+        var map: [NoomSkin.Slot: NoomSkin] = [:]
+        for cs in profile.collectedSkins
+        where cs.equippedOnNoomNumber == activePet.noomNumber {
+            if let s = NoomSkinCatalog.skin(id: cs.skinId) {
+                map[s.slot] = s
+            }
+        }
+        return map
+    }
+
+    /// True if the active pet's stage meets this skin's unlock gate.
+    /// Items like the 🎭 drama mask need Adult stage; lower-tier items
+    /// have unlockStage == 0 and are always satisfied.
+    func stageMeetsUnlock(_ skin: NoomSkin) -> Bool {
+        activePet.stage >= skin.unlockStage
+    }
+
+    /// Deduct stars and record ownership. No-op if already owned, stage-
+    /// gated, or insufficient stars. Returns whether the purchase went
+    /// through.
     @discardableResult
     func buy(_ skin: NoomSkin) -> Bool {
-        guard !isOwned(skin), profile.stars >= skin.cost else { return false }
+        guard !isOwned(skin),
+              stageMeetsUnlock(skin),
+              profile.stars >= skin.cost else { return false }
         profile.stars -= skin.cost
         let cs = CollectedSkin(skinId: skin.id)
         profile.collectedSkins.append(cs)
@@ -37,32 +66,69 @@ final class NoomWardrobeViewModel {
         return true
     }
 
-    /// Equip `skin` on the current active pet. Any other hat previously
-    /// on this Noom is moved back to the closet. Idempotent.
+    /// Equip `skin` on the current active pet. Only the previously-
+    /// equipped item *in the same slot* is displaced — a hat and collar
+    /// can coexist. Respects unlock gate.
     func equip(_ skin: NoomSkin) {
-        guard isOwned(skin) else { return }
+        guard isOwned(skin), stageMeetsUnlock(skin) else { return }
         for cs in profile.collectedSkins
         where cs.equippedOnNoomNumber == activePet.noomNumber {
-            cs.equippedOnNoomNumber = nil
+            if let other = NoomSkinCatalog.skin(id: cs.skinId), other.slot == skin.slot {
+                cs.equippedOnNoomNumber = nil
+            }
         }
         if let target = profile.collectedSkins.first(where: { $0.skinId == skin.id }) {
             target.equippedOnNoomNumber = activePet.noomNumber
         }
     }
 
-    /// Take off whatever hat the active pet is wearing.
-    func unequipCurrent() {
+    /// Take off whatever items the active pet is wearing, optionally
+    /// scoped to a single slot.
+    func unequipCurrent(slot: NoomSkin.Slot? = nil) {
         for cs in profile.collectedSkins
         where cs.equippedOnNoomNumber == activePet.noomNumber {
-            cs.equippedOnNoomNumber = nil
+            if let slot {
+                if let s = NoomSkinCatalog.skin(id: cs.skinId), s.slot == slot {
+                    cs.equippedOnNoomNumber = nil
+                }
+            } else {
+                cs.equippedOnNoomNumber = nil
+            }
         }
     }
 
-    var currentSkin: NoomSkin? {
-        guard let cs = profile.collectedSkins.first(where: {
-            $0.equippedOnNoomNumber == activePet.noomNumber
-        }), let skin = NoomSkinCatalog.skin(id: cs.skinId) else { return nil }
-        return skin
+    // MARK: - Daily gacha
+
+    var canClaimGacha: Bool {
+        DailyGachaLogic.isClaimable(lastClaim: profile.lastGachaDate)
+    }
+
+    /// Roll the daily gacha. If the child already owns the rolled skin,
+    /// it silently re-rolls up to 3 times to try to pick a fresh one.
+    /// Returns the awarded skin (already added to the wardrobe).
+    @discardableResult
+    func claimDailyGacha() -> NoomSkin? {
+        guard canClaimGacha else { return nil }
+        var rng = SystemRandomNumberGenerator()
+        var award: NoomSkin?
+        for _ in 0..<3 {
+            guard let pick = DailyGachaLogic.roll(rng: &rng) else { break }
+            if !isOwned(pick) {
+                award = pick
+                break
+            }
+            award = pick
+        }
+        guard let final = award else { return nil }
+        if !isOwned(final) {
+            let cs = CollectedSkin(skinId: final.id)
+            profile.collectedSkins.append(cs)
+            modelContext.insert(cs)
+        }
+        profile.lastGachaDate = Date()
+        lastGachaRoll = final
+        AudioManager.shared.playSound("level_up.wav")
+        return final
     }
 }
 
@@ -73,19 +139,19 @@ struct NoomWardrobeView: View {
     @Bindable var viewModel: NoomWardrobeViewModel
     let onDismiss: () -> Void
 
+    @State private var selectedSlot: NoomSkin.Slot = .hat
+
     var body: some View {
         ZStack {
             CartoonSkyBackground()
             VStack(spacing: 14) {
                 topBar
                 previewPanel
-                Text("衣柜")
-                    .font(CartoonFont.titleSmall)
-                    .foregroundStyle(CartoonColor.text)
-                    .padding(.top, 4)
+                gachaRow
+                slotPicker
                 ScrollView {
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 14), count: 3), spacing: 14) {
-                        ForEach(NoomSkinCatalog.all) { skin in
+                        ForEach(NoomSkinCatalog.all.filter { $0.slot == selectedSlot }) { skin in
                             skinCell(skin)
                         }
                     }
@@ -93,7 +159,88 @@ struct NoomWardrobeView: View {
                     .padding(.bottom, 40)
                 }
             }
+
+            if let roll = viewModel.lastGachaRoll {
+                gachaBanner(skin: roll)
+            }
         }
+    }
+
+    private var slotPicker: some View {
+        HStack(spacing: 12) {
+            ForEach(NoomSkin.Slot.allCases, id: \.self) { slot in
+                let selected = selectedSlot == slot
+                Button {
+                    selectedSlot = slot
+                } label: {
+                    Text(slot == .hat ? "👒 帽子" : "🎀 颈饰")
+                        .font(CartoonFont.body)
+                        .foregroundStyle(selected ? .white : CartoonColor.text)
+                        .padding(.horizontal, 20).padding(.vertical, 8)
+                        .background(
+                            Capsule().fill(selected ? CartoonColor.gold : CartoonColor.paper)
+                        )
+                        .overlay(
+                            Capsule().stroke(CartoonColor.ink.opacity(0.7), lineWidth: 2)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    private var gachaRow: some View {
+        HStack {
+            Text("🎁 每日免费抽取")
+                .font(CartoonFont.bodySmall)
+                .foregroundStyle(CartoonColor.text.opacity(0.8))
+            Spacer()
+            if viewModel.canClaimGacha {
+                Button("领取今日") { _ = viewModel.claimDailyGacha() }
+                    .font(CartoonFont.bodyLarge)
+                    .padding(.horizontal, 18).padding(.vertical, 6)
+                    .background(Capsule().fill(CartoonColor.coral))
+                    .foregroundStyle(.white)
+                    .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.7), lineWidth: 2))
+            } else {
+                Text("明天再来～")
+                    .font(CartoonFont.caption)
+                    .padding(.horizontal, 14).padding(.vertical, 6)
+                    .background(Capsule().fill(CartoonColor.ink.opacity(0.2)))
+                    .foregroundStyle(CartoonColor.text.opacity(0.55))
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+
+    private func gachaBanner(skin: NoomSkin) -> some View {
+        VStack(spacing: 10) {
+            Text("🎉 每日礼物 🎉")
+                .font(CartoonFont.title)
+                .foregroundStyle(CartoonColor.ink)
+            Text(skin.glyph).font(.system(size: 72))
+            Text(skin.name)
+                .font(CartoonFont.titleSmall)
+                .foregroundStyle(CartoonColor.ink)
+            Text(skin.flavour)
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.ink.opacity(0.8))
+            Button("收下") { viewModel.lastGachaRoll = nil }
+                .font(CartoonFont.bodyLarge)
+                .padding(.horizontal, 22).padding(.vertical, 8)
+                .background(Capsule().fill(CartoonColor.leaf))
+                .foregroundStyle(.white)
+        }
+        .padding(24)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: 28).fill(CartoonColor.ink.opacity(0.9)).offset(y: 6)
+                RoundedRectangle(cornerRadius: 28).fill(CartoonColor.gold)
+                RoundedRectangle(cornerRadius: 28).stroke(CartoonColor.ink, lineWidth: 4)
+            }
+        )
+        .padding(.horizontal, 40)
+        .transition(.scale.combined(with: .opacity))
     }
 
     private var topBar: some View {
@@ -122,13 +269,14 @@ struct NoomWardrobeView: View {
     @ViewBuilder
     private var previewPanel: some View {
         if let noom = NoomCatalog.noom(for: viewModel.activePet.noomNumber) {
+            let equipped = viewModel.equipped
             CartoonPanel(cornerRadius: 22) {
                 HStack(spacing: 16) {
                     Image(uiImage: NoomRenderer.image(
                         for: noom, expression: .happy,
                         size: CGSize(width: 120, height: 120),
                         stage: viewModel.activePet.stage,
-                        skin: viewModel.currentSkin
+                        skins: Array(equipped.values)
                     ))
                     .resizable()
                     .scaledToFit()
@@ -138,19 +286,28 @@ struct NoomWardrobeView: View {
                         Text(noom.name)
                             .font(CartoonFont.title)
                             .foregroundStyle(CartoonColor.text)
-                        if let s = viewModel.currentSkin {
-                            Text("正穿: \(s.glyph) \(s.name)")
-                                .font(CartoonFont.bodySmall)
-                                .foregroundStyle(CartoonColor.text.opacity(0.7))
-                            Button("脱下") { viewModel.unequipCurrent() }
-                                .font(CartoonFont.caption)
-                                .padding(.horizontal, 12).padding(.vertical, 4)
-                                .background(Capsule().fill(CartoonColor.paper))
-                                .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 1.5))
-                        } else {
-                            Text("还没戴帽子～")
+                        if equipped.isEmpty {
+                            Text("光着头呢～")
                                 .font(CartoonFont.bodySmall)
                                 .foregroundStyle(CartoonColor.text.opacity(0.6))
+                        } else {
+                            ForEach(NoomSkin.Slot.allCases, id: \.self) { slot in
+                                if let s = equipped[slot] {
+                                    HStack(spacing: 6) {
+                                        Text(s.glyph)
+                                        Text(s.name)
+                                            .font(CartoonFont.bodySmall)
+                                            .foregroundStyle(CartoonColor.text.opacity(0.7))
+                                        Button("脱下") {
+                                            viewModel.unequipCurrent(slot: slot)
+                                        }
+                                        .font(CartoonFont.caption)
+                                        .padding(.horizontal, 10).padding(.vertical, 2)
+                                        .background(Capsule().fill(CartoonColor.paper))
+                                        .overlay(Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 1.5))
+                                    }
+                                }
+                            }
                         }
                     }
                     Spacer()
@@ -165,17 +322,29 @@ struct NoomWardrobeView: View {
         let owned = viewModel.isOwned(skin)
         let equipped = viewModel.isEquipped(skin)
         let canAfford = viewModel.profile.stars >= skin.cost
+        let unlocked = viewModel.stageMeetsUnlock(skin)
         return VStack(spacing: 6) {
-            Text(skin.glyph).font(.system(size: 54))
+            ZStack {
+                Text(skin.glyph)
+                    .font(.system(size: 54))
+                    .opacity(unlocked ? 1.0 : 0.4)
+                if !unlocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 22, weight: .black))
+                        .foregroundStyle(CartoonColor.ink.opacity(0.7))
+                        .offset(x: 20, y: 18)
+                }
+            }
             Text(skin.name)
                 .font(CartoonFont.bodySmall)
-                .foregroundStyle(CartoonColor.text)
-            Text(skin.flavour)
+                .foregroundStyle(unlocked ? CartoonColor.text : CartoonColor.text.opacity(0.5))
+            Text(unlocked ? skin.flavour : "成年后解锁")
                 .font(CartoonFont.caption)
                 .foregroundStyle(CartoonColor.text.opacity(0.6))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            actionButton(skin: skin, owned: owned, equipped: equipped, canAfford: canAfford)
+            actionButton(skin: skin, owned: owned, equipped: equipped,
+                         canAfford: canAfford, unlocked: unlocked)
         }
         .padding(12)
         .background(
@@ -188,8 +357,15 @@ struct NoomWardrobeView: View {
     }
 
     @ViewBuilder
-    private func actionButton(skin: NoomSkin, owned: Bool, equipped: Bool, canAfford: Bool) -> some View {
-        if equipped {
+    private func actionButton(skin: NoomSkin, owned: Bool, equipped: Bool,
+                              canAfford: Bool, unlocked: Bool) -> some View {
+        if !unlocked {
+            Text("🔒 成年解锁")
+                .font(CartoonFont.caption)
+                .padding(.horizontal, 12).padding(.vertical, 5)
+                .background(Capsule().fill(CartoonColor.ink.opacity(0.25)))
+                .foregroundStyle(CartoonColor.text.opacity(0.5))
+        } else if equipped {
             Text("已佩戴")
                 .font(CartoonFont.caption)
                 .padding(.horizontal, 12).padding(.vertical, 5)

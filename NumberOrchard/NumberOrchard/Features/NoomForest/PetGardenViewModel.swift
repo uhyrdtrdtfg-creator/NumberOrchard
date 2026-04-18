@@ -102,14 +102,20 @@ final class PetGardenViewModel {
     }
 
     /// Currently-equipped cosmetic hat on the active pet, if any.
-    /// Looked up lazily against the profile's CollectedSkin rows so
-    /// putting on a new hat in the wardrobe immediately reflects here.
+    /// Legacy convenience — prefer `activeSkins` which returns every
+    /// equipped slot (hat + collar). Looked up lazily against the
+    /// profile's CollectedSkin rows so putting on a new item in the
+    /// wardrobe immediately reflects here.
     var activeSkin: NoomSkin? {
-        guard let pet = activePet else { return nil }
-        guard let cs = profile.collectedSkins.first(where: {
-            $0.equippedOnNoomNumber == pet.noomNumber
-        }) else { return nil }
-        return NoomSkinCatalog.skin(id: cs.skinId)
+        activeSkins.first(where: { $0.slot == .hat })
+    }
+
+    /// All cosmetic items equipped on the active pet across every slot.
+    var activeSkins: [NoomSkin] {
+        guard let pet = activePet else { return [] }
+        return profile.collectedSkins
+            .filter { $0.equippedOnNoomNumber == pet.noomNumber }
+            .compactMap { NoomSkinCatalog.skin(id: $0.skinId) }
     }
 
     /// Mature small Nooms eligible for hatching (1-10 only).

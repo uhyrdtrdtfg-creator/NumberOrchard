@@ -67,7 +67,7 @@ struct PetFeedingArea: View {
                             expression: .happy,
                             size: CGSize(width: 140, height: 140),
                             stage: pet.stage,
-                            skin: viewModel.activeSkin
+                            skins: viewModel.activeSkins
                         ))
                         .resizable()
                         .scaledToFit()

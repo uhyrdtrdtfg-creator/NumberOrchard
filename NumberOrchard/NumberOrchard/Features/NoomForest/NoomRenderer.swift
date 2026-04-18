@@ -13,16 +13,24 @@ enum NoomExpression: Sendable {
 ///   - life-stage decoration (bow / crown+cape)
 /// The same Noom always renders identically (no per-frame randomness).
 enum NoomRenderer {
-    /// Render a Noom. If `skin` is non-nil it overrides the default
-    /// stage decoration (so an equipped hat replaces the crown at adult
-    /// stage — avoids the wardrobe glyph fighting the auto-crown).
+    /// Render a Noom. `skin` remains the single-hat convenience argument
+    /// for callers that only care about hats; `skins` is the new
+    /// multi-slot API that lets a hat + collar render together. When
+    /// a non-empty `skins` is provided it takes precedence over `skin`.
+    /// A non-nil hat skin still suppresses the default stage crown so
+    /// the wardrobe glyph doesn't fight the auto-crown.
     static func image(
         for noom: Noom,
         expression: NoomExpression,
         size: CGSize,
         stage: Int = 0,
-        skin: NoomSkin? = nil
+        skin: NoomSkin? = nil,
+        skins: [NoomSkin] = []
     ) -> UIImage {
+        let effective = skins.isEmpty ? [skin].compactMap { $0 } : skins
+        let hat = effective.first(where: { $0.slot == .hat })
+        let collar = effective.first(where: { $0.slot == .collar })
+
         let renderer = UIGraphicsImageRenderer(size: size)
         let personality = NoomPersonality.forNoom(noom.number)
         return renderer.image { ctx in
@@ -32,8 +40,11 @@ enum NoomRenderer {
             drawBlush(in: ctx.cgContext, size: size, personality: personality)
             drawFace(in: ctx.cgContext, size: size, expression: expression, personality: personality)
             drawNameBadge(in: ctx.cgContext, size: size, number: noom.number, bodyColor: noom.bodyColor)
-            if let skin {
-                drawSkinHat(in: ctx.cgContext, size: size, glyph: skin.glyph)
+            if let collar {
+                drawSkinCollar(in: ctx.cgContext, size: size, glyph: collar.glyph)
+            }
+            if let hat {
+                drawSkinHat(in: ctx.cgContext, size: size, glyph: hat.glyph)
             } else {
                 drawStageDecoration(in: ctx.cgContext, size: size, stage: stage)
             }
@@ -45,6 +56,13 @@ enum NoomRenderer {
         drawIcon(glyph,
                  at: CGPoint(x: size.width / 2, y: -size.height * 0.02),
                  fontSize: size.width * 0.30, color: nil)
+    }
+
+    /// Collar slot — drawn slightly above the chest badge, below the face.
+    private static func drawSkinCollar(in ctx: CGContext, size: CGSize, glyph: String) {
+        drawIcon(glyph,
+                 at: CGPoint(x: size.width / 2, y: size.height * 0.62),
+                 fontSize: size.width * 0.18, color: nil)
     }
 
     // MARK: - Body
