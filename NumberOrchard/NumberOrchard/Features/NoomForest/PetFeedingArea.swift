@@ -59,6 +59,14 @@ struct PetFeedingArea: View {
 
                     xpBar(pet: pet)
 
+                    if let skill = viewModel.activeSkill {
+                        skillBadge(skill: skill)
+                    } else if pet.stage == 0 {
+                        Text("长大后解锁技能～")
+                            .font(CartoonFont.caption)
+                            .foregroundStyle(CartoonColor.text.opacity(0.5))
+                    }
+
                     Button("切换宠物") { showSwitcher = true }
                         .font(CartoonFont.bodySmall)
                         .padding(.horizontal, 16).padding(.vertical, 6)
@@ -73,6 +81,28 @@ struct PetFeedingArea: View {
                 .foregroundStyle(CartoonColor.text.opacity(0.6))
                 .padding()
         }
+    }
+
+    private func skillBadge(skill: NoomSkill) -> some View {
+        HStack(spacing: 6) {
+            Text(skill.emoji)
+            Text(skill.displayName)
+                .font(CartoonFont.bodySmall)
+                .foregroundStyle(CartoonColor.text)
+            Text("·")
+                .font(CartoonFont.bodySmall)
+                .foregroundStyle(CartoonColor.text.opacity(0.4))
+            Text(skill.explanation)
+                .font(CartoonFont.caption)
+                .foregroundStyle(CartoonColor.text.opacity(0.7))
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(
+            Capsule()
+                .fill(CartoonColor.gold.opacity(0.25))
+                .overlay(Capsule().stroke(CartoonColor.gold.opacity(0.7), lineWidth: 1.5))
+        )
     }
 
     private func xpBar(pet: PetProgress) -> some View {

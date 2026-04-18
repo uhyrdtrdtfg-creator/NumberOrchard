@@ -41,10 +41,12 @@ struct MatchTenGame: Sendable {
     }
 
     init(rows: Int = 4, cols: Int = 5, targetClears: Int = 10,
+         startingCombo: Int = 0,
          seed: UInt64 = UInt64.random(in: 1...UInt64.max)) {
         self.rows = rows
         self.cols = cols
         self.targetClears = targetClears
+        self.combo = startingCombo
         var rng = SeededRNG(seed: seed)
         self.grid = Self.makeGrid(rows: rows, cols: cols, rng: &rng)
     }

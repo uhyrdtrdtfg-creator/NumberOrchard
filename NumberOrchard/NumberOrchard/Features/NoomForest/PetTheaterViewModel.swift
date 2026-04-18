@@ -74,9 +74,16 @@ final class PetTheaterViewModel {
     /// Roll for a rare legendary fruit. If it hits and the profile doesn't
     /// already own the dropped fruit, add it. Exposed to the view via
     /// `lastLegendaryDrop` for overlay display.
+    ///
+    /// Active pet's `luckyDrop` skill (unlocked at stage ≥ 1) doubles the
+    /// drop rate — one of the reasons to favour keeping a lucky Noom as
+    /// the active pet across sessions.
     private func rollLegendaryDrop() {
         var rng = SystemRandomNumberGenerator()
-        guard let drop = LegendaryDropRoll.roll(rng: &rng) else { return }
+        let rate = garden.activeSkill == .luckyDrop
+            ? LegendaryDropRoll.defaultRate * 2
+            : LegendaryDropRoll.defaultRate
+        guard let drop = LegendaryDropRoll.roll(rate: rate, rng: &rng) else { return }
         lastLegendaryDrop = drop
         let profile = garden.profile
         if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {

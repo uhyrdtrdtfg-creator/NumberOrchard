@@ -44,10 +44,15 @@ final class PetGardenViewModel {
     }
 
     /// Feed `fruitId` to the active pet. Returns the XP gained, whether it was preferred, and whether evolved.
+    /// If the active pet has an unlocked `xpBoost` skill, XP is multiplied by 1.5×.
     @discardableResult
     func feedActivePet(fruitId: String) -> (xp: Int, preferred: Bool, didEvolve: Bool) {
         guard let pet = activePet else { return (0, false, false) }
-        let xp = xpCalculator.xpFor(fruitId: fruitId, noomNumber: pet.noomNumber)
+        var xp = xpCalculator.xpFor(fruitId: fruitId, noomNumber: pet.noomNumber)
+        let skill = NoomSkillCatalog.skill(for: pet.noomNumber)
+        if skill == .xpBoost && NoomSkill.isUnlocked(stage: pet.stage) {
+            xp = Int(Double(xp) * 1.5)
+        }
         let oldStage = pet.stage
         pet.xp += xp
         let newStage = evolutionLogic.stage(for: pet.xp)
@@ -64,6 +69,12 @@ final class PetGardenViewModel {
         lastFedXP = xp
         lastFedWasPreferred = preferred
         return (xp, preferred, didEvolve)
+    }
+
+    /// The active pet's unlocked skill, or nil if no active pet / still a baby.
+    var activeSkill: NoomSkill? {
+        guard let pet = activePet, NoomSkill.isUnlocked(stage: pet.stage) else { return nil }
+        return NoomSkillCatalog.skill(for: pet.noomNumber)
     }
 
     /// Mature small Nooms eligible for hatching (1-10 only).

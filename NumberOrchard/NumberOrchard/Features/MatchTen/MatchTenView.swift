@@ -18,10 +18,23 @@ final class MatchTenViewModel {
          rows: Int = 4, cols: Int = 5, targetClears: Int = 10) {
         self.profile = profile
         self.modelContext = modelContext
-        self.game = MatchTenGame(rows: rows, cols: cols, targetClears: targetClears)
+        // If the active Noom has the `comboSeed` skill, start the game
+        // with a built-in ×1 combo so the very first clear scores double.
+        let active = profile.petProgress.first(where: { $0.isActive })
+            ?? profile.petProgress.first
+        var starting = 0
+        if let pet = active, NoomSkill.isUnlocked(stage: pet.stage),
+           NoomSkillCatalog.skill(for: pet.noomNumber) == .comboSeed {
+            starting = 1
+        }
+        self.game = MatchTenGame(rows: rows, cols: cols,
+                                 targetClears: targetClears,
+                                 startingCombo: starting)
     }
 
     /// Tap wrapper: runs game logic + awards stars on completion.
+    /// Combo milestones (3 / 5 / 10) trigger escalating SFX tiers so
+    /// children feel the streak rather than just seeing the number rise.
     func tap(_ r: Int, _ c: Int) {
         var rng = SystemRandomNumberGenerator()
         let result = game.tap(r, c, rng: &rng)
@@ -29,6 +42,7 @@ final class MatchTenViewModel {
         case .cleared(let pts, let combo, _):
             lastClearAt = (r, c)
             lastClearBurst = combo >= 2 ? "+\(pts) x\(combo) 连击!" : "+\(pts)"
+            playComboSfx(combo: combo)
         case .invalidPair, .notAdjacent:
             feedbackTile = (r, c)
         default:
@@ -38,6 +52,22 @@ final class MatchTenViewModel {
             completionRewarded = true
             profile.stars += 3
         }
+    }
+
+    /// Pick an SFX asset based on the current combo tier. 1-2: soft pickup
+    /// chime, 3-4: brighter star-collect, 5-9: the "correct answer"
+    /// fanfare, 10+: level-up trumpet. All asset files already ship with
+    /// the app — no new resources needed.
+    private func playComboSfx(combo: Int) {
+        let file: String
+        switch combo {
+        case 0...1: file = "fruit_pick.wav"
+        case 2...2: file = "star_collect.wav"
+        case 3...4: file = "star_collect.wav"
+        case 5...9: file = "correct.wav"
+        default:    file = "level_up.wav"
+        }
+        AudioManager.shared.playSound(file)
     }
 
     private var completionRewarded = false

@@ -28,6 +28,7 @@ final class FishingScene: SKScene {
 
         layoutPond()
         drawPondBackground()
+        startBubbleStream()
         bucketCenter = bucketCenterInScene
 
         for (idx, value) in pondFish.enumerated() {
@@ -41,6 +42,44 @@ final class FishingScene: SKScene {
             fishNodes.append(fish)
             startSwim(fish)
         }
+    }
+
+    // MARK: - Bubbles
+
+    /// Spawn tiny rising bubbles at random intervals from the pond floor.
+    /// Uses a self-repeating SKAction on the scene so bubbles keep flowing
+    /// even as fish are caught — no emitter file needed.
+    private func startBubbleStream() {
+        removeAction(forKey: "bubble_stream")
+        let spawn = SKAction.run { [weak self] in self?.spawnBubble() }
+        let wait = SKAction.wait(forDuration: 0.28, withRange: 0.25)
+        let loop = SKAction.repeatForever(SKAction.sequence([spawn, wait]))
+        run(loop, withKey: "bubble_stream")
+    }
+
+    private func spawnBubble() {
+        guard pondRect != .zero else { return }
+        let radius = CGFloat.random(in: 3...8)
+        let bubble = SKShapeNode(circleOfRadius: radius)
+        bubble.fillColor = .white.withAlphaComponent(0.55)
+        bubble.strokeColor = .white.withAlphaComponent(0.85)
+        bubble.lineWidth = 1
+        bubble.zPosition = -7
+        let startX = CGFloat.random(in: (pondRect.minX + 12)...(pondRect.maxX - 12))
+        bubble.position = CGPoint(x: startX, y: pondRect.minY + 4)
+        addChild(bubble)
+
+        let rise = CGFloat.random(in: pondRect.height * 0.65 ... pondRect.height * 0.95)
+        let wobble = CGFloat.random(in: -20...20)
+        let duration = TimeInterval.random(in: 2.8...4.2)
+        let anim = SKAction.group([
+            SKAction.moveBy(x: wobble, y: rise, duration: duration),
+            SKAction.sequence([
+                SKAction.wait(forDuration: duration * 0.7),
+                SKAction.fadeOut(withDuration: duration * 0.3)
+            ])
+        ])
+        bubble.run(SKAction.sequence([anim, SKAction.removeFromParent()]))
     }
 
     /// Remove the fish node at `pondIndex` with a celebratory fly-to-bucket
@@ -115,6 +154,16 @@ final class FishingScene: SKScene {
     private func makeFishNode(value: Int, index: Int) -> SKNode {
         let container = SKNode()
         container.name = "fish_\(index)"
+
+        // Underwater shadow — cast below the fish onto the pond floor.
+        // Kept flat (ellipse, no gradient) so it reads as "depth under water"
+        // without stealing attention from the fish itself.
+        let shadow = SKShapeNode(ellipseOf: CGSize(width: 74, height: 12))
+        shadow.fillColor = .black.withAlphaComponent(0.22)
+        shadow.strokeColor = .clear
+        shadow.position = CGPoint(x: 0, y: -28)
+        shadow.zPosition = -1
+        container.addChild(shadow)
 
         let body = SKShapeNode(ellipseOf: CGSize(width: 70, height: 44))
         body.fillColor = UIColor(red: 1.00, green: 0.72, blue: 0.42, alpha: 1.0)

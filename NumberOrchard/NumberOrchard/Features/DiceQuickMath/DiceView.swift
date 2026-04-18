@@ -10,32 +10,52 @@ struct DiceView: View {
     @State private var displayFace: Int = 1
     @State private var rollerTask: Task<Void, Never>? = nil
 
+    // Per-axis accumulated rotation in degrees. When `rolling` flips on, a
+    // Task drives these up by random increments every frame, giving the
+    // die a 3D tumble look via `rotation3DEffect`. SwiftUI smoothly
+    // interpolates each step, so the cube really appears to spin.
+    @State private var rotX: Double = 0
+    @State private var rotY: Double = 0
+    @State private var rotZ: Double = 0
+
     var body: some View {
         ZStack {
-            // Shadow
+            // Shadow — stays flat on the ground, doesn't rotate with die.
             RoundedRectangle(cornerRadius: size * 0.22)
-                .fill(CartoonColor.ink.opacity(0.9))
-                .frame(width: size, height: size)
-                .offset(y: 4)
-            // Face
-            RoundedRectangle(cornerRadius: size * 0.22)
-                .fill(Color.white)
-                .frame(width: size, height: size)
-            RoundedRectangle(cornerRadius: size * 0.22)
-                .stroke(CartoonColor.ink.opacity(0.85), lineWidth: size * 0.04)
-                .frame(width: size, height: size)
+                .fill(CartoonColor.ink.opacity(0.85))
+                .frame(width: size, height: size * 0.35)
+                .blur(radius: 2)
+                .offset(y: size * 0.55)
+                .opacity(rolling ? 0.35 : 0.6)
 
-            // Pips — drawn in a 3x3 grid whose cells are used per face.
-            pipsLayer(face: rolling ? displayFace : face, size: size)
+            // Cube face — the content that tumbles.
+            ZStack {
+                RoundedRectangle(cornerRadius: size * 0.22)
+                    .fill(Color.white)
+                    .frame(width: size, height: size)
+                RoundedRectangle(cornerRadius: size * 0.22)
+                    .stroke(CartoonColor.ink.opacity(0.85), lineWidth: size * 0.04)
+                    .frame(width: size, height: size)
+                pipsLayer(face: rolling ? displayFace : face, size: size)
+            }
+            .rotation3DEffect(.degrees(rotX), axis: (1, 0, 0))
+            .rotation3DEffect(.degrees(rotY), axis: (0, 1, 0))
+            .rotation3DEffect(.degrees(rotZ), axis: (0, 0, 1))
+            .offset(y: rolling ? -size * 0.05 : 0)
         }
-        .rotationEffect(.degrees(rolling ? 8 : 0))
-        .animation(.easeInOut(duration: 0.08).repeatForever(autoreverses: true),
-                   value: rolling)
+        .animation(.linear(duration: 0.08), value: rotX)
+        .animation(.linear(duration: 0.08), value: rotY)
+        .animation(.linear(duration: 0.08), value: rotZ)
         .onChange(of: rolling, initial: true) { _, newValue in
             rollerTask?.cancel()
             if newValue {
                 rollerTask = Task { @MainActor in
                     while !Task.isCancelled {
+                        // Tumble on all three axes at different rates so the
+                        // rotation never falls into a visually flat loop.
+                        rotX += Double.random(in: 40...90)
+                        rotY += Double.random(in: 40...90)
+                        rotZ += Double.random(in: 20...40)
                         displayFace = Int.random(in: 1...6)
                         try? await Task.sleep(nanoseconds: 80_000_000)
                     }
@@ -43,6 +63,12 @@ struct DiceView: View {
             } else {
                 rollerTask = nil
                 displayFace = face
+                // Settle back to upright so the final face reads cleanly.
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.65)) {
+                    rotX = 0
+                    rotY = 0
+                    rotZ = 0
+                }
             }
         }
     }

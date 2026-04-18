@@ -63,7 +63,11 @@ final class DiceQuickMathViewModel {
 
     /// Submit the child's typed answer. Returns true if correct.
     /// Correct answers additionally roll for a legendary-fruit easter-egg
-    /// drop (1% chance) and add it to the profile's collection if won.
+    /// drop (1% chance, or 2% if the active Noom has the luckyDrop skill)
+    /// and add it to the profile's collection if won.
+    ///
+    /// The active Noom's `diceBonus` skill adds a flat +5 points on every
+    /// correct answer; `luckyDrop` doubles the easter-egg drop rate.
     @discardableResult
     func submit(_ answer: Int) -> Bool {
         guard phase == .answering else { return false }
@@ -73,7 +77,9 @@ final class DiceQuickMathViewModel {
         lastResult = correct
         if correct {
             correctCount += 1
-            totalPoints += Self.points(for: elapsed, correct: true)
+            var pts = Self.points(for: elapsed, correct: true)
+            if activeSkill == .diceBonus { pts += 5 }
+            totalPoints += pts
             if elapsed < fastestSeconds { fastestSeconds = elapsed }
             rollLegendaryDrop()
         }
@@ -81,9 +87,22 @@ final class DiceQuickMathViewModel {
         return correct
     }
 
+    /// Currently-active Noom's unlocked skill, if any. Resolved lazily
+    /// against the profile at call time so switching the active pet while
+    /// the game is open takes effect on the next submission.
+    private var activeSkill: NoomSkill? {
+        let active = profile.petProgress.first(where: { $0.isActive })
+            ?? profile.petProgress.first
+        guard let pet = active, NoomSkill.isUnlocked(stage: pet.stage) else { return nil }
+        return NoomSkillCatalog.skill(for: pet.noomNumber)
+    }
+
     private func rollLegendaryDrop() {
         var rng = SystemRandomNumberGenerator()
-        guard let drop = LegendaryDropRoll.roll(rng: &rng) else { return }
+        let rate = activeSkill == .luckyDrop
+            ? LegendaryDropRoll.defaultRate * 2
+            : LegendaryDropRoll.defaultRate
+        guard let drop = LegendaryDropRoll.roll(rate: rate, rng: &rng) else { return }
         lastLegendaryDrop = drop
         if !profile.collectedFruits.contains(where: { $0.fruitId == drop.id }) {
             let cf = CollectedFruit(fruitId: drop.id)
