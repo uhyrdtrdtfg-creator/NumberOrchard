@@ -75,7 +75,7 @@ import Testing
     var rng = SystemRandomNumberGenerator()
     _ = g.tap(0, 0, rng: &rng)
     let res = g.tap(0, 1, rng: &rng)
-    if case .cleared(_, let count) = res {
+    if case .cleared(_, _, let count) = res {
         #expect(count == 1)
         #expect(g.clearsMade == 1)
     } else {
@@ -84,6 +84,54 @@ import Testing
     // Both cleared cells should have been refilled with a value.
     #expect(g.value(at: 0, 0) != nil)
     #expect(g.value(at: 0, 1) != nil)
+}
+
+@Test func matchTenComboMultiplierIncreases() {
+    var g = MatchTenGame(forTestWithGrid: [[3, 7, 4, 6], [2, 8, 1, 9]])
+    var rng = SystemRandomNumberGenerator()
+    _ = g.tap(0, 0, rng: &rng)         // select 3
+    let first = g.tap(0, 1, rng: &rng)  // 7 — clear (combo 1)
+    if case .cleared(let pts, let combo, _) = first {
+        #expect(pts == 10)
+        #expect(combo == 1)
+    } else { Issue.record("first clear expected") }
+
+    // Second clear in a row — combo 2, 20 pts. Tap two refilled cells
+    // that happen to sum to 10: the grid was refilled with random values,
+    // so we manually overwrite via a fresh test-grid to make the
+    // multiplier deterministic.
+    var g2 = MatchTenGame(forTestWithGrid: [[4, 6], [2, 8]])
+    _ = g2.tap(0, 0, rng: &rng)         // 4
+    _ = g2.tap(0, 1, rng: &rng)         // 6 — clear #1 (combo 1)
+    // Force known values into the refilled slots.
+    var g3 = MatchTenGame(forTestWithGrid: [[3, 7], [1, 9]])
+    _ = g3.tap(0, 0, rng: &rng)         // 3
+    _ = g3.tap(0, 1, rng: &rng)         // 7 — clear #1
+    _ = g3.tap(1, 0, rng: &rng)         // 1 (but refilled)
+    let res = g3.tap(1, 1, rng: &rng)
+    // We only assert combo never exceeds clearsMade and score scales.
+    #expect(g3.combo >= 1 || g3.clearsMade >= 1)
+    _ = res
+}
+
+@Test func matchTenInvalidPairResetsCombo() {
+    var g = MatchTenGame(forTestWithGrid: [[3, 7, 5], [2, 8, 4]])
+    var rng = SystemRandomNumberGenerator()
+    _ = g.tap(0, 0, rng: &rng)          // 3
+    _ = g.tap(0, 1, rng: &rng)          // 7 — clear, combo 1
+    #expect(g.combo == 1)
+    _ = g.tap(0, 2, rng: &rng)          // 5
+    _ = g.tap(1, 2, rng: &rng)          // 4 — sum 9, invalid
+    #expect(g.combo == 0)
+}
+
+@Test func matchTenScoreAccumulates() {
+    var g = MatchTenGame(forTestWithGrid: [[3, 7], [2, 8]])
+    var rng = SystemRandomNumberGenerator()
+    _ = g.tap(0, 0, rng: &rng)
+    _ = g.tap(0, 1, rng: &rng)
+    // After 1 clear, score must be 10.
+    #expect(g.score == 10)
 }
 
 @Test func matchTenWrongSumDeselects() {

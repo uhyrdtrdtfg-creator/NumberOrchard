@@ -22,13 +22,21 @@ struct MatchTenGame: Sendable {
     /// selected on first tap; a second tap on an adjacent complementary
     /// cell clears the pair.
     private(set) var selected: (Int, Int)? = nil
+    /// Consecutive successful clears without an intervening invalid tap.
+    /// Resets to 0 on `.invalidPair`. Exposed so the view layer can show
+    /// combo badges and the score formula can apply a multiplier.
+    private(set) var combo: Int = 0
+    /// Total score earned this session. Each clear is worth
+    /// `10 * max(1, combo)` — so 1st clear = 10, 2nd = 20, 3rd = 30...
+    /// Mistakes reset the combo but don't deduct score.
+    private(set) var score: Int = 0
 
     enum TapResult: Sendable, Equatable {
         case selected
         case deselected
-        case invalidPair            // adjacent but wrong sum
-        case notAdjacent            // anywhere else
-        case cleared(Int, Int)       // count, clearsSoFar
+        case invalidPair            // adjacent but wrong sum (resets combo)
+        case notAdjacent            // anywhere else (no combo change)
+        case cleared(points: Int, combo: Int, clearsSoFar: Int)
         case ignored                 // empty cell tapped
     }
 
@@ -123,9 +131,10 @@ struct MatchTenGame: Sendable {
         let v1 = value(at: sr, sc) ?? 0
         let v2 = value(at: r, c) ?? 0
         guard v1 + v2 == 10 else {
-            // Wrong sum: deselect so the next tap becomes a fresh selection
-            // rather than compounding confusion.
+            // Wrong sum: deselect and reset combo so the next tap becomes a
+            // fresh selection rather than compounding confusion.
             selected = nil
+            combo = 0
             return .invalidPair
         }
 
@@ -133,7 +142,10 @@ struct MatchTenGame: Sendable {
         grid[r][c] = .value(Int.random(in: 1...9, using: &rng))
         selected = nil
         clearsMade += 1
-        return .cleared(1, clearsMade)
+        combo += 1
+        let points = 10 * combo
+        score += points
+        return .cleared(points: points, combo: combo, clearsSoFar: clearsMade)
     }
 
     var isComplete: Bool { clearsMade >= targetClears }

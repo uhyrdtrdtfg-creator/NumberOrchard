@@ -17,6 +17,7 @@ struct ParentCenterView: View {
                 Group {
                     switch selectedTab {
                     case 0: BasicReportView(profile: profile)
+                    case 1: NoomWeeklyReportView(profile: profile)
                     default: SettingsView(profile: profile)
                     }
                 }
@@ -39,11 +40,12 @@ struct ParentCenterView: View {
             Spacer()
 
             Picker("", selection: $selectedTab) {
-                Label("学习报告", systemImage: "chart.bar").tag(0)
-                Label("设置", systemImage: "gearshape").tag(1)
+                Label("学习", systemImage: "chart.bar").tag(0)
+                Label("小精灵", systemImage: "pawprint").tag(1)
+                Label("设置", systemImage: "gearshape").tag(2)
             }
             .pickerStyle(.segmented)
-            .frame(maxWidth: 260)
+            .frame(maxWidth: 320)
 
             Spacer()
 

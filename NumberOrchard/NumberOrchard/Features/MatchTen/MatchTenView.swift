@@ -10,6 +10,9 @@ final class MatchTenViewModel {
     var game: MatchTenGame
     var feedbackTile: (Int, Int)? = nil       // last invalid-pair or non-adjacent tile (for flash)
     var lastClearAt: (Int, Int)? = nil        // last cleared cell (for sparkle)
+    /// Transient "+10 x2" style floating score text from the last clear.
+    /// Cleared after a short delay in the view.
+    var lastClearBurst: String? = nil
 
     init(profile: ChildProfile, modelContext: ModelContext,
          rows: Int = 4, cols: Int = 5, targetClears: Int = 10) {
@@ -23,8 +26,9 @@ final class MatchTenViewModel {
         var rng = SystemRandomNumberGenerator()
         let result = game.tap(r, c, rng: &rng)
         switch result {
-        case .cleared:
+        case .cleared(let pts, let combo, _):
             lastClearAt = (r, c)
+            lastClearBurst = combo >= 2 ? "+\(pts) x\(combo) 连击!" : "+\(pts)"
         case .invalidPair, .notAdjacent:
             feedbackTile = (r, c)
         default:
@@ -60,6 +64,21 @@ struct MatchTenView: View {
                 Spacer(minLength: 10)
             }
             .padding(.horizontal, 24)
+
+            if let burst = viewModel.lastClearBurst {
+                Text(burst)
+                    .font(CartoonFont.title)
+                    .foregroundStyle(viewModel.game.combo >= 2 ? CartoonColor.coral : CartoonColor.gold)
+                    .shadow(color: CartoonColor.ink, radius: 0, x: 0, y: 2)
+                    .transition(.scale.combined(with: .opacity))
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            withAnimation(CartoonAnim.fadeFast) {
+                                viewModel.lastClearBurst = nil
+                            }
+                        }
+                    }
+            }
         }
     }
 
@@ -85,9 +104,21 @@ struct MatchTenView: View {
     }
 
     private var progressPill: some View {
-        Text("消除 \(viewModel.game.clearsMade) / \(viewModel.game.targetClears)")
-            .font(CartoonFont.bodyLarge)
-            .foregroundStyle(CartoonColor.text.opacity(0.8))
+        HStack(spacing: 20) {
+            Text("消除 \(viewModel.game.clearsMade) / \(viewModel.game.targetClears)")
+                .font(CartoonFont.bodyLarge)
+                .foregroundStyle(CartoonColor.text.opacity(0.8))
+            Text("得分 \(viewModel.game.score)")
+                .font(CartoonFont.bodyLarge)
+                .foregroundStyle(CartoonColor.gold)
+            if viewModel.game.combo >= 2 {
+                Text("连击 ×\(viewModel.game.combo)")
+                    .font(CartoonFont.bodyLarge)
+                    .foregroundStyle(CartoonColor.coral)
+                    .transition(.scale.combined(with: .opacity))
+            }
+        }
+        .animation(CartoonAnim.snappy, value: viewModel.game.combo)
     }
 
     private var gridView: some View {

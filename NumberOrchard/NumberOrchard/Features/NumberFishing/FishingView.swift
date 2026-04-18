@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import Observation
+import SpriteKit
 
 @Observable
 @MainActor
@@ -130,45 +131,17 @@ struct FishingView: View {
 
     private var pondView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("🌊 池塘")
+            Text("🌊 池塘 — 点一条鱼把它捞进桶里")
                 .font(CartoonFont.bodySmall)
                 .foregroundStyle(CartoonColor.text.opacity(0.75))
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4),
-                spacing: 12
-            ) {
-                ForEach(Array(viewModel.state.pondFish.enumerated()), id: \.offset) { idx, value in
-                    if let v = value {
-                        fishButton(value: v) {
-                            viewModel.catchFish(at: idx)
-                        }
-                    } else {
-                        Color.clear.frame(height: 72)
-                    }
-                }
-            }
+            FishingSceneContainer(viewModel: viewModel)
+                .frame(height: 320)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24)
+                        .stroke(CartoonColor.ink.opacity(0.55), lineWidth: 3)
+                )
         }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 24)
-                .fill(CartoonColor.sky.opacity(0.35))
-                .overlay(RoundedRectangle(cornerRadius: 24)
-                    .stroke(CartoonColor.ink.opacity(0.55), lineWidth: 3))
-        )
-    }
-
-    private func fishButton(value: Int, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            ZStack {
-                Text("🐟").font(.system(size: 56))
-                Text("\(value)")
-                    .font(CartoonFont.titleSmall)
-                    .foregroundStyle(.white)
-                    .shadow(color: CartoonColor.ink, radius: 0, x: 0, y: 2)
-            }
-            .frame(height: 72)
-        }
-        .buttonStyle(.plain)
     }
 
     private var bucketView: some View {
@@ -231,6 +204,8 @@ struct FishingView: View {
         }
     }
 
+    // MARK: - SpriteKit bridge
+
     private var completeView: some View {
         VStack(spacing: 18) {
             Spacer().frame(height: 40)
@@ -251,6 +226,85 @@ struct FishingView: View {
                     .foregroundStyle(.white)
                     .frame(width: 200, height: 60)
             }
+        }
+    }
+}
+
+// MARK: - SpriteKit bridge
+
+/// Hosts the FishingScene and syncs it with the view model. When the pond
+/// contents change (new round / fish caught) the scene is reconfigured or
+/// asked to animate the caught fish out.
+private struct FishingSceneContainer: View {
+    @Bindable var viewModel: FishingViewModel
+    @State private var coordinator = FishingSceneCoordinator()
+
+    var body: some View {
+        GeometryReader { geo in
+            SpriteView(scene: coordinator.scene(size: geo.size))
+                .onAppear {
+                    coordinator.bind(viewModel: viewModel, sceneSize: geo.size)
+                }
+                .onChange(of: viewModel.currentRound) { _, _ in
+                    coordinator.syncPond()
+                }
+                .onChange(of: viewModel.state.pondFish.compactMap { $0 }.count) { _, _ in
+                    coordinator.syncPond()
+                }
+        }
+    }
+}
+
+@MainActor
+private final class FishingSceneCoordinator: NSObject, FishingSceneDelegate {
+    private let fishingScene = FishingScene(size: CGSize(width: 600, height: 320))
+    private weak var viewModel: FishingViewModel?
+    private var lastSeenIndices: Set<Int> = []
+
+    override init() {
+        super.init()
+        fishingScene.scaleMode = .resizeFill
+        fishingScene.gameDelegate = self
+    }
+
+    func scene(size: CGSize) -> FishingScene {
+        fishingScene.size = size
+        return fishingScene
+    }
+
+    func bind(viewModel: FishingViewModel, sceneSize: CGSize) {
+        self.viewModel = viewModel
+        fishingScene.size = sceneSize
+        syncPond(fullRebuild: true)
+    }
+
+    /// Detect the delta between the VM's pond state and what the scene is
+    /// showing, then either animate caught fish or rebuild on round change.
+    func syncPond(fullRebuild: Bool = false) {
+        guard let vm = viewModel else { return }
+        let currentIndices = Set(vm.state.pondFish.enumerated().compactMap { $0.element == nil ? nil : $0.offset })
+
+        if fullRebuild || currentIndices.count > lastSeenIndices.count {
+            // Round changed (or first bind): rebuild everything.
+            fishingScene.configure(
+                pondFish: vm.state.pondFish,
+                bucketCenterInScene: CGPoint(x: fishingScene.size.width / 2,
+                                             y: 30)
+            )
+            lastSeenIndices = currentIndices
+            return
+        }
+
+        let newlyRemoved = lastSeenIndices.subtracting(currentIndices)
+        for idx in newlyRemoved {
+            fishingScene.animateCatch(at: idx)
+        }
+        lastSeenIndices = currentIndices
+    }
+
+    nonisolated func fishingScene(_ scene: FishingScene, didCatchFishAt pondIndex: Int) {
+        Task { @MainActor in
+            self.viewModel?.catchFish(at: pondIndex)
         }
     }
 }
