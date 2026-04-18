@@ -89,7 +89,7 @@ enum NoomRenderer {
         }
         ctx.restoreGState()
 
-        UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85).setStroke()
+        UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85).setStroke()
         body.lineWidth = 4
         body.stroke()
 
@@ -203,7 +203,7 @@ enum NoomRenderer {
         )
         UIColor.white.setFill()
         UIBezierPath(ovalIn: scleraRect).fill()
-        UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85).setStroke()
+        UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85).setStroke()
         let scleraPath = UIBezierPath(ovalIn: scleraRect)
         scleraPath.lineWidth = 1.5 * scale
         scleraPath.stroke()
@@ -239,7 +239,7 @@ enum NoomRenderer {
 
         // Sleepy: top half eyelid (arc covering top of sclera).
         if shape == .sleepy {
-            UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85).setFill()
+            UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85).setFill()
             let lid = UIBezierPath()
             lid.move(to: CGPoint(x: scleraRect.minX, y: scleraRect.midY))
             lid.addQuadCurve(
@@ -289,7 +289,7 @@ enum NoomRenderer {
             path.addLine(to: outer)
         }
 
-        UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.95).setStroke()
+        UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.95).setStroke()
         path.lineWidth = 3.5 * scale
         path.lineCapStyle = .round
         path.stroke()
@@ -310,7 +310,7 @@ enum NoomRenderer {
                 to: CGPoint(x: center.x + 8 * scale, y: center.y),
                 controlPoint: CGPoint(x: center.x, y: center.y + 5 * scale)
             )
-            UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.95).setStroke()
+            UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.95).setStroke()
             mouth.lineWidth = 3 * scale
             mouth.lineCapStyle = .round
             mouth.stroke()
@@ -326,7 +326,7 @@ enum NoomRenderer {
             )
             smile.addLine(to: CGPoint(x: center.x - halfW, y: center.y))
             smile.close()
-            UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.95).setFill()
+            UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.95).setFill()
             smile.fill()
 
             // Pink tongue.
@@ -339,7 +339,7 @@ enum NoomRenderer {
             UIBezierPath(ovalIn: tongueRect).fill()
 
         case .surprised:
-            UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.95).setFill()
+            UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.95).setFill()
             UIBezierPath(ovalIn: CGRect(
                 x: center.x - 7 * scale, y: center.y - 4 * scale,
                 width: 14 * scale, height: 18 * scale
@@ -379,7 +379,7 @@ enum NoomRenderer {
         let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont(name: "PingFangSC-Heavy", size: badgeRadius * 1.3)
                 ?? UIFont.systemFont(ofSize: badgeRadius * 1.3, weight: .heavy),
-            .foregroundColor: UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 1.0)
+            .foregroundColor: UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 1.0)
         ]
         let text = "\(number)"
         let textSize = text.size(withAttributes: attrs)

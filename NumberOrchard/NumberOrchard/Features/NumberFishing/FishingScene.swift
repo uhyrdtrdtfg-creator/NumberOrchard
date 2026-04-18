@@ -115,7 +115,7 @@ final class FishingScene: SKScene {
                              cornerRadius: 32)
         bg.position = CGPoint(x: pondRect.midX, y: pondRect.midY)
         bg.fillColor = UIColor(red: 0.48, green: 0.80, blue: 0.96, alpha: 1.0)
-        bg.strokeColor = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.6)
+        bg.strokeColor = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.6)
         bg.lineWidth = 3
         bg.zPosition = -10
         addChild(bg)
@@ -167,7 +167,7 @@ final class FishingScene: SKScene {
 
         let body = SKShapeNode(ellipseOf: CGSize(width: 70, height: 44))
         body.fillColor = UIColor(red: 1.00, green: 0.72, blue: 0.42, alpha: 1.0)
-        body.strokeColor = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85)
+        body.strokeColor = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85)
         body.lineWidth = 3
         container.addChild(body)
 
@@ -180,19 +180,19 @@ final class FishingScene: SKScene {
         tp.closeSubpath()
         tail.path = tp
         tail.fillColor = UIColor(red: 0.94, green: 0.58, blue: 0.30, alpha: 1.0)
-        tail.strokeColor = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85)
+        tail.strokeColor = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85)
         tail.lineWidth = 3
         container.addChild(tail)
 
         // Eye.
         let eye = SKShapeNode(circleOfRadius: 5)
         eye.fillColor = .white
-        eye.strokeColor = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.85)
+        eye.strokeColor = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.85)
         eye.lineWidth = 1.5
         eye.position = CGPoint(x: 18, y: 6)
         container.addChild(eye)
         let pupil = SKShapeNode(circleOfRadius: 2.5)
-        pupil.fillColor = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 1.0)
+        pupil.fillColor = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 1.0)
         pupil.position = CGPoint(x: 19, y: 6)
         container.addChild(pupil)
 

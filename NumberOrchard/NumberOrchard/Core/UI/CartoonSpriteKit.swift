@@ -4,19 +4,26 @@ import UIKit
 // MARK: - Cartoon palette for SpriteKit
 
 enum CartoonSK {
-    static let skyTop      = UIColor(red: 1.00, green: 0.96, blue: 0.82, alpha: 1.0)
-    static let skyBottom   = UIColor(red: 1.00, green: 0.84, blue: 0.62, alpha: 1.0)
-    static let ink         = UIColor(red: 0.20, green: 0.12, blue: 0.08, alpha: 0.9)
-    static let text        = UIColor(red: 0.32, green: 0.20, blue: 0.12, alpha: 1.0)
-    static let paper       = UIColor(red: 1.00, green: 0.98, blue: 0.91, alpha: 1.0)
-    static let gold        = UIColor(red: 1.00, green: 0.76, blue: 0.20, alpha: 1.0)
-    static let coral       = UIColor(red: 1.00, green: 0.53, blue: 0.44, alpha: 1.0)
-    static let sky         = UIColor(red: 0.42, green: 0.75, blue: 1.00, alpha: 1.0)
-    static let leaf        = UIColor(red: 0.32, green: 0.75, blue: 0.42, alpha: 1.0)
-    static let berry       = UIColor(red: 0.70, green: 0.40, blue: 0.90, alpha: 1.0)
-    static let wood        = UIColor(red: 0.55, green: 0.38, blue: 0.22, alpha: 1.0)
-    static let grassTop    = UIColor(red: 0.62, green: 0.84, blue: 0.45, alpha: 1.0)
-    static let grassBottom = UIColor(red: 0.40, green: 0.66, blue: 0.30, alpha: 1.0)
+    // IMPORTANT: every value here must mirror the corresponding
+    // CartoonColor constant in CartoonUI.swift. The two exist only
+    // because SpriteKit needs UIColor and SwiftUI wants Color; they
+    // are the same palette. Whenever CartoonColor changes, update
+    // these literals to match (no auto-sync possible because Color is
+    // struct-based and resolves in SwiftUI env, not available to
+    // SpriteKit).
+    static let skyTop      = UIColor(red: 0.91, green: 0.96, blue: 1.00, alpha: 1.0)
+    static let skyBottom   = UIColor(red: 0.72, green: 0.88, blue: 1.00, alpha: 1.0)
+    static let ink         = UIColor(red: 0.18, green: 0.14, blue: 0.22, alpha: 0.9)
+    static let text        = UIColor(red: 0.22, green: 0.18, blue: 0.28, alpha: 1.0)
+    static let paper       = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.0)
+    static let gold        = UIColor(red: 1.00, green: 0.80, blue: 0.24, alpha: 1.0)
+    static let coral       = UIColor(red: 1.00, green: 0.50, blue: 0.52, alpha: 1.0)
+    static let sky         = UIColor(red: 0.36, green: 0.70, blue: 0.98, alpha: 1.0)
+    static let leaf        = UIColor(red: 0.37, green: 0.82, blue: 0.32, alpha: 1.0)
+    static let berry       = UIColor(red: 0.66, green: 0.48, blue: 0.96, alpha: 1.0)
+    static let wood        = UIColor(red: 0.64, green: 0.44, blue: 0.26, alpha: 1.0)
+    static let grassTop    = UIColor(red: 0.66, green: 0.92, blue: 0.70, alpha: 1.0)
+    static let grassBottom = UIColor(red: 0.36, green: 0.78, blue: 0.44, alpha: 1.0)
 
     static let cartoonFont = "Avenir-Black"
     static let cartoonHeavyFont = "Avenir-Black"
