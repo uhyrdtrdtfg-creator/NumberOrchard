@@ -6,21 +6,37 @@ struct PetGardenView: View {
 
     @Environment(\.modelContext) private var modelContext
     @State private var viewModel: PetGardenViewModel?
-    @State private var theaterViewModel: PetTheaterViewModel?
-    @State private var diceViewModel: DiceQuickMathViewModel?
-    @State private var matchTenViewModel: MatchTenViewModel?
-    @State private var fishingViewModel: FishingViewModel?
-    @State private var rhythmViewModel: RhythmMathViewModel?
-    @State private var kitchenViewModel: KitchenViewModel?
-    @State private var mazeViewModel: MazeViewModel?
-    @State private var showTheater = false
-    @State private var showDice = false
-    @State private var showMatchTen = false
-    @State private var showFishing = false
-    @State private var showDiary = false
-    @State private var showRhythm = false
-    @State private var showKitchen = false
-    @State private var showMaze = false
+
+    /// Stacking 8 separate `.fullScreenCover(isPresented:)` modifiers on
+    /// one view hit SwiftUI's ambiguous-cover bug: only the last one
+    /// attached reliably presented, the rest silently no-op'd — so most
+    /// mini-game tiles appeared to "open a blank screen". Consolidated
+    /// into a single `.fullScreenCover(item:)` driven by an enum.
+    @State private var activeGame: ActiveGame?
+
+    enum ActiveGame: Identifiable {
+        case theater(PetTheaterViewModel)
+        case dice(DiceQuickMathViewModel)
+        case matchTen(MatchTenViewModel)
+        case fishing(FishingViewModel)
+        case rhythm(RhythmMathViewModel)
+        case kitchen(KitchenViewModel)
+        case maze(MazeViewModel)
+        case diary
+
+        var id: String {
+            switch self {
+            case .theater:  return "theater"
+            case .dice:     return "dice"
+            case .matchTen: return "matchTen"
+            case .fishing:  return "fishing"
+            case .rhythm:   return "rhythm"
+            case .kitchen:  return "kitchen"
+            case .maze:     return "maze"
+            case .diary:    return "diary"
+            }
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -41,63 +57,24 @@ struct PetGardenView: View {
                 viewModel = PetGardenViewModel(profile: profile, modelContext: modelContext)
             }
         }
-        .fullScreenCover(isPresented: $showTheater) {
-            if let vm = theaterViewModel {
-                PetTheaterView(viewModel: vm, onDismiss: {
-                    showTheater = false
-                    theaterViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showDice) {
-            if let vm = diceViewModel {
-                DiceQuickMathView(viewModel: vm, onDismiss: {
-                    showDice = false
-                    diceViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showMatchTen) {
-            if let vm = matchTenViewModel {
-                MatchTenView(viewModel: vm, onDismiss: {
-                    showMatchTen = false
-                    matchTenViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showFishing) {
-            if let vm = fishingViewModel {
-                FishingView(viewModel: vm, onDismiss: {
-                    showFishing = false
-                    fishingViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showDiary) {
-            NoomDiaryView(profile: profile, onDismiss: { showDiary = false })
-        }
-        .fullScreenCover(isPresented: $showRhythm) {
-            if let vm = rhythmViewModel {
-                RhythmMathView(viewModel: vm, onDismiss: {
-                    showRhythm = false
-                    rhythmViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showKitchen) {
-            if let vm = kitchenViewModel {
-                KitchenView(viewModel: vm, onDismiss: {
-                    showKitchen = false
-                    kitchenViewModel = nil
-                })
-            }
-        }
-        .fullScreenCover(isPresented: $showMaze) {
-            if let vm = mazeViewModel {
-                MazeView(viewModel: vm, onDismiss: {
-                    showMaze = false
-                    mazeViewModel = nil
-                })
+        .fullScreenCover(item: $activeGame) { game in
+            switch game {
+            case .theater(let vm):
+                PetTheaterView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .dice(let vm):
+                DiceQuickMathView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .matchTen(let vm):
+                MatchTenView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .fishing(let vm):
+                FishingView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .rhythm(let vm):
+                RhythmMathView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .kitchen(let vm):
+                KitchenView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .maze(let vm):
+                MazeView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .diary:
+                NoomDiaryView(profile: profile, onDismiss: { activeGame = nil })
             }
         }
     }
@@ -115,42 +92,35 @@ struct PetGardenView: View {
             // Row 1 — Noom-centric math (theater needs an owned pet)
             if gardenVM.activePet != nil {
                 tile(emoji: "🎭", label: "数学剧场", tint: CartoonColor.berry) {
-                    theaterViewModel = PetTheaterViewModel(garden: gardenVM)
-                    showTheater = true
+                    activeGame = .theater(PetTheaterViewModel(garden: gardenVM))
                 }
             } else {
                 tileLocked(emoji: "🎭", label: "剧场")
             }
             tile(emoji: "🎲", label: "骰子速算", tint: CartoonColor.sky) {
-                diceViewModel = DiceQuickMathViewModel(profile: profile, modelContext: modelContext)
-                showDice = true
+                activeGame = .dice(DiceQuickMathViewModel(profile: profile, modelContext: modelContext))
             }
             tile(emoji: "🎵", label: "节奏数学", tint: CartoonColor.berry) {
-                rhythmViewModel = RhythmMathViewModel(profile: profile, modelContext: modelContext)
-                showRhythm = true
+                activeGame = .rhythm(RhythmMathViewModel(profile: profile, modelContext: modelContext))
             }
 
             // Row 2 — combination / applied math
             tile(emoji: "🍭", label: "凑十消消", tint: CartoonColor.coral) {
-                matchTenViewModel = MatchTenViewModel(profile: profile, modelContext: modelContext)
-                showMatchTen = true
+                activeGame = .matchTen(MatchTenViewModel(profile: profile, modelContext: modelContext))
             }
             tile(emoji: "🎣", label: "数字钓鱼", tint: CartoonColor.leaf) {
-                fishingViewModel = FishingViewModel(profile: profile, modelContext: modelContext)
-                showFishing = true
+                activeGame = .fishing(FishingViewModel(profile: profile, modelContext: modelContext))
             }
             tile(emoji: "🧩", label: "数字迷宫", tint: CartoonColor.leaf) {
-                mazeViewModel = MazeViewModel(profile: profile, modelContext: modelContext)
-                showMaze = true
+                activeGame = .maze(MazeViewModel(profile: profile, modelContext: modelContext))
             }
 
             // Row 3 — applied math + memory
             tile(emoji: "🍳", label: "烹饪厨房", tint: CartoonColor.coral) {
-                kitchenViewModel = KitchenViewModel(profile: profile, modelContext: modelContext)
-                showKitchen = true
+                activeGame = .kitchen(KitchenViewModel(profile: profile, modelContext: modelContext))
             }
             tile(emoji: "📓", label: "成长日记", tint: CartoonColor.wood) {
-                showDiary = true
+                activeGame = .diary
             }
             // 9th slot reserved for future mini-games; shown as a
             // "more coming" placeholder so the grid stays visually

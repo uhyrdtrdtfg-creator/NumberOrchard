@@ -147,7 +147,37 @@ struct MatchTenGame: Sendable {
         combo += 1
         let points = 10 * combo
         score += points
+        // Random refills can leave the board without any adjacent pair
+        // summing to 10 — a silent dead-end that leaves the child stuck.
+        // Detect + reshuffle so play always has a solution.
+        reseedIfDeadEnd(rng: &rng)
         return .cleared(points: points, combo: combo, clearsSoFar: clearsMade)
+    }
+
+    /// True iff at least one orthogonally-adjacent pair of cells sums
+    /// to 10 somewhere on the board. Cheap O(rows·cols).
+    func hasSolvablePair() -> Bool {
+        for r in 0..<rows {
+            for c in 0..<cols {
+                let v = value(at: r, c) ?? 0
+                if let right = value(at: r, c + 1), v + right == 10 { return true }
+                if let down = value(at: r + 1, c), v + down == 10 { return true }
+            }
+        }
+        return false
+    }
+
+    /// When a random refill has stranded the board, regenerate the grid
+    /// (preserving clearsMade / combo / score / targetClears) so play
+    /// can continue. Bounded retries so tests can't hang on pathological
+    /// RNG sequences.
+    mutating func reseedIfDeadEnd(rng: inout some RandomNumberGenerator) {
+        guard !hasSolvablePair() else { return }
+        var tries = 0
+        repeat {
+            grid = Self.makeGrid(rows: rows, cols: cols, rng: &rng)
+            tries += 1
+        } while !hasSolvablePair() && tries < 20
     }
 
     var isComplete: Bool { clearsMade >= targetClears }

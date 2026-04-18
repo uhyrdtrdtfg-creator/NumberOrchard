@@ -25,6 +25,11 @@ struct NoomForestView: View {
                 tabPicker
 
                 if viewModel?.selectedTab == .garden, let profile {
+                    // Pet garden owns its own ScrollView; let it expand
+                    // into the remaining height. Before this, a legacy
+                    // "🎮 开始挑战" button + Spacer below the garden ate
+                    // ~30% of the viewport, hiding the 3×3 mini-game grid
+                    // and clipping the fruit inventory.
                     PetGardenView(profile: profile)
                 } else {
                     Text("图鉴: \(viewModel?.unlockedCount ?? 0) / 20")
@@ -32,23 +37,28 @@ struct NoomForestView: View {
                         .foregroundStyle(CartoonColor.text.opacity(0.7))
 
                     dexGrid
+
+                    Spacer()
+
+                    // The classic NoomChallenge entry only makes sense on
+                    // the dex tab now that the garden has its own 3×3
+                    // grid of mini-games. Keeping it here so the dex
+                    // still has a primary action.
+                    CartoonButton(
+                        tint: CartoonColor.gold,
+                        cornerRadius: CartoonRadius.chunky,
+                        accessibilityLabel: "开始挑战",
+                        action: onStartChallenge
+                    ) {
+                        Text("🎮 开始挑战")
+                            .font(CartoonFont.titleSmall)
+                            .foregroundStyle(.white)
+                            .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
+                            .frame(width: 260, height: 76)
+                    }
+
+                    Spacer().frame(height: 30)
                 }
-
-                Spacer()
-
-                CartoonButton(
-                    tint: CartoonColor.gold,
-                    accessibilityLabel: "开始挑战",
-                    action: onStartChallenge
-                ) {
-                    Text("🎮 开始挑战")
-                        .font(CartoonFont.titleSmall)
-                        .foregroundStyle(.white)
-                        .shadow(color: CartoonColor.ink.opacity(0.5), radius: 0, x: 0, y: 2)
-                        .frame(width: 260, height: 76)
-                }
-
-                Spacer().frame(height: 30)
             }
             .padding(.horizontal, 30)
         }

@@ -3,47 +3,58 @@ import SwiftUI
 // MARK: - Cartoon Color Palette
 
 enum CartoonColor {
-    /// Sky top (cream)
-    static let skyTop      = Color(red: 1.00, green: 0.96, blue: 0.82)
-    /// Sky bottom (peach)
-    static let skyBottom   = Color(red: 1.00, green: 0.84, blue: 0.62)
-    /// Grass top
-    static let grassTop    = Color(red: 0.62, green: 0.84, blue: 0.45)
-    /// Grass bottom
-    static let grassBottom = Color(red: 0.40, green: 0.66, blue: 0.30)
-    /// Dark outline (like comic-book ink)
-    static let ink         = Color(red: 0.20, green: 0.12, blue: 0.08)
-    /// Primary brown text
-    static let text        = Color(red: 0.32, green: 0.20, blue: 0.12)
-    /// Paper cream for panels
-    static let paper       = Color(red: 1.00, green: 0.98, blue: 0.91)
-    /// Check-in / soft paper variant (slightly warmer)
-    static let paperWarm   = Color(red: 1.00, green: 0.97, blue: 0.88)
-    /// Gold accent
-    static let gold        = Color(red: 1.00, green: 0.76, blue: 0.20)
-    /// Coral
-    static let coral       = Color(red: 1.00, green: 0.53, blue: 0.44)
-    /// Sky blue
-    static let sky         = Color(red: 0.42, green: 0.75, blue: 1.00)
-    /// Leaf green
-    static let leaf        = Color(red: 0.32, green: 0.75, blue: 0.42)
-    /// Berry purple
-    static let berry       = Color(red: 0.70, green: 0.40, blue: 0.90)
-    /// Wood brown (for pivots, tracks, barriers)
-    static let wood        = Color(red: 0.55, green: 0.38, blue: 0.22)
+    // MARK: - Backgrounds
+    //
+    // Previous palette was warm cream + peach everywhere, so the sky
+    // and the paper-cream cards nearly blended together and nothing
+    // popped. New palette: soft blue sky (fresh & clean) + crisp white
+    // paper so panels float clearly over any scene.
 
-    // MARK: Map regions
-    static let regionSeed      = Color(red: 0.95, green: 0.85, blue: 0.55) // pale yellow
-    static let regionSprout    = Color(red: 0.80, green: 0.92, blue: 0.55) // lime
-    static let regionSmallTree = Color(red: 0.70, green: 0.90, blue: 0.80) // mint
-    static let regionBigTree   = Color(red: 0.70, green: 0.85, blue: 1.00) // sky
-    static let regionBloom     = Color(red: 0.90, green: 0.72, blue: 1.00) // lavender
-    static let regionHarvest   = Color(red: 1.00, green: 0.70, blue: 0.70) // coral
+    /// Sky top — very light sky blue.
+    static let skyTop      = Color(red: 0.91, green: 0.96, blue: 1.00)
+    /// Sky bottom — richer sky blue for gradient depth.
+    static let skyBottom   = Color(red: 0.72, green: 0.88, blue: 1.00)
 
-    /// Locked path fill (desaturated tan)
-    static let lockedPath    = Color(red: 0.88, green: 0.80, blue: 0.62)
-    /// Locked station surface (desaturated tan)
-    static let lockedStation = Color(red: 0.82, green: 0.76, blue: 0.68)
+    /// Grass top — bright pastel green.
+    static let grassTop    = Color(red: 0.66, green: 0.92, blue: 0.70)
+    /// Grass bottom — saturated meadow green.
+    static let grassBottom = Color(red: 0.36, green: 0.78, blue: 0.44)
+
+    /// Dark outline (like comic-book ink) — cool-black, less brown.
+    static let ink         = Color(red: 0.18, green: 0.14, blue: 0.22)
+    /// Primary text — dark plum for warmth without yellowing.
+    static let text        = Color(red: 0.22, green: 0.18, blue: 0.28)
+
+    /// Paper — crisp near-white so cards/panels pop off the sky.
+    static let paper       = Color(red: 1.00, green: 1.00, blue: 1.00)
+    /// Soft warm paper — for check-in pages / warm sections.
+    static let paperWarm   = Color(red: 1.00, green: 0.97, blue: 0.92)
+
+    /// Gold accent — sunny yellow (a touch less orange than before).
+    static let gold        = Color(red: 1.00, green: 0.80, blue: 0.24)
+    /// Coral / hot pink — brighter, more candy-like.
+    static let coral       = Color(red: 1.00, green: 0.50, blue: 0.52)
+    /// Sky blue accent — crisp mid-sky.
+    static let sky         = Color(red: 0.36, green: 0.70, blue: 0.98)
+    /// Leaf green — vivid, Duolingo-like for learning contexts.
+    static let leaf        = Color(red: 0.37, green: 0.82, blue: 0.32)
+    /// Berry purple — softer lavender, less saturated.
+    static let berry       = Color(red: 0.66, green: 0.48, blue: 0.96)
+    /// Wood brown — warmer, more caramel.
+    static let wood        = Color(red: 0.64, green: 0.44, blue: 0.26)
+
+    // MARK: Map regions — retuned for fresher feel
+    static let regionSeed      = Color(red: 1.00, green: 0.94, blue: 0.70) // pale butter
+    static let regionSprout    = Color(red: 0.82, green: 0.95, blue: 0.66) // lime mint
+    static let regionSmallTree = Color(red: 0.72, green: 0.93, blue: 0.84) // fresh mint
+    static let regionBigTree   = Color(red: 0.72, green: 0.88, blue: 1.00) // sky
+    static let regionBloom     = Color(red: 0.92, green: 0.80, blue: 1.00) // lavender
+    static let regionHarvest   = Color(red: 1.00, green: 0.76, blue: 0.78) // soft rose
+
+    /// Locked path fill (desaturated cool-tan)
+    static let lockedPath    = Color(red: 0.85, green: 0.82, blue: 0.76)
+    /// Locked station surface
+    static let lockedStation = Color(red: 0.78, green: 0.76, blue: 0.76)
 
     /// Overlay dark backdrop (for modals, eye-care)
     static let overlayDark   = Color.black.opacity(0.7)
