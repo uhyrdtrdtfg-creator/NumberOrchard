@@ -27,17 +27,25 @@ struct MiniGameGrid: View {
         case kitchen(KitchenViewModel)
         case maze(MazeViewModel)
         case diary
+        case storybook
+        case rhymes
+        case subitizing(SubitizingViewModel)
+        case compare(CompareViewModel)
 
         var id: String {
             switch self {
-            case .theater:  return "theater"
-            case .dice:     return "dice"
-            case .matchTen: return "matchTen"
-            case .fishing:  return "fishing"
-            case .rhythm:   return "rhythm"
-            case .kitchen:  return "kitchen"
-            case .maze:     return "maze"
-            case .diary:    return "diary"
+            case .theater:    return "theater"
+            case .dice:       return "dice"
+            case .matchTen:   return "matchTen"
+            case .fishing:    return "fishing"
+            case .rhythm:     return "rhythm"
+            case .kitchen:    return "kitchen"
+            case .maze:       return "maze"
+            case .diary:      return "diary"
+            case .storybook:  return "storybook"
+            case .rhymes:     return "rhymes"
+            case .subitizing: return "subitizing"
+            case .compare:    return "compare"
             }
         }
     }
@@ -78,9 +86,21 @@ struct MiniGameGrid: View {
             tile(emoji: "📓", label: "成长日记", tint: CartoonColor.wood) {
                 activeGame = .diary
             }
-            // Placeholder slot so the 3×3 layout doesn't jump around when
-            // new games ship.
-            tileLocked(emoji: "✨", label: "更多…")
+            tile(emoji: "📖", label: "故事书", tint: CartoonColor.berry) {
+                activeGame = .storybook
+            }
+
+            // Row 4 — new number-sense + story content. Rhymes uses 🎶
+            // to stay distinct from 节奏数学 (🎵) in row 1.
+            tile(emoji: "🎶", label: "数字儿歌", tint: CartoonColor.gold) {
+                activeGame = .rhymes
+            }
+            tile(emoji: "👀", label: "瞄一眼", tint: CartoonColor.coral) {
+                activeGame = .subitizing(SubitizingViewModel(profile: profile))
+            }
+            tile(emoji: "⚖️", label: "谁多谁少", tint: CartoonColor.sky) {
+                activeGame = .compare(CompareViewModel(profile: profile))
+            }
         }
         .fullScreenCover(item: $activeGame) { game in
             switch game {
@@ -100,6 +120,14 @@ struct MiniGameGrid: View {
                 MazeView(viewModel: vm, onDismiss: { activeGame = nil })
             case .diary:
                 NoomDiaryView(profile: profile, onDismiss: { activeGame = nil })
+            case .storybook:
+                StorybookView(onDismiss: { activeGame = nil })
+            case .rhymes:
+                RhymesView(onDismiss: { activeGame = nil })
+            case .subitizing(let vm):
+                SubitizingGameView(viewModel: vm, onDismiss: { activeGame = nil })
+            case .compare(let vm):
+                CompareGameView(viewModel: vm, onDismiss: { activeGame = nil })
             }
         }
     }
