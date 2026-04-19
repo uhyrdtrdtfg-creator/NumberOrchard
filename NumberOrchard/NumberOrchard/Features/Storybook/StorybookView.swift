@@ -1,43 +1,47 @@
 import SwiftUI
 import SwiftData
 
-/// Full-screen Noom storybook. One page per Noom that has a NoomStory
-/// written, paged with a TabView. Each page is a narrated scene + an
-/// embedded math question — the child taps the correct answer to earn
-/// the story's "seal of reading".
+/// Full-screen storybook. Top picker switches between the 🐾 小精灵
+/// and 🚒 汪汮队 collections; each collection paginates with a
+/// TabView. Each page is a narrated scene + an embedded math question
+/// — the child taps the correct answer to earn a star.
 struct StorybookView: View {
     let onDismiss: () -> Void
 
     @Query private var profiles: [ChildProfile]
-    @State private var currentIndex = 0
-    @State private var answered: [Int: Bool] = [:]   // noomNumber → correct?
+    @State private var selectedBook: StoryBook = .noom
+    @State private var indexByBook: [StoryBook: Int] = [:]
+    @State private var answered: [String: Bool] = [:]   // entry id → correct?
 
     private var profile: ChildProfile? { profiles.first }
 
-    /// Stories ordered by Noom number. Locked pages still appear (to
-    /// show "next story coming!") but their question is disabled.
-    private var stories: [NoomStory] {
-        NoomStoryCatalog.all.sorted { $0.noomNumber < $1.noomNumber }
+    private var entries: [StoryEntry] {
+        StoryCatalog.entries(in: selectedBook)
+    }
+
+    private var currentIndex: Binding<Int> {
+        Binding(
+            get: { indexByBook[selectedBook] ?? 0 },
+            set: { indexByBook[selectedBook] = $0 }
+        )
     }
 
     var body: some View {
         ZStack {
             CartoonSkyBackground()
             VStack(spacing: 14) {
-                MiniGameTopBar(title: "📖 数字故事书", onClose: onDismiss) {
-                    Text("\(currentIndex + 1) / \(stories.count)")
+                MiniGameTopBar(title: "📖 故事书", onClose: onDismiss) {
+                    Text("\((indexByBook[selectedBook] ?? 0) + 1) / \(entries.count)")
                         .font(CartoonFont.bodySmall)
                         .foregroundStyle(CartoonColor.text.opacity(0.7))
                 }
-
-                TabView(selection: $currentIndex) {
-                    ForEach(Array(stories.enumerated()), id: \.offset) { idx, story in
+                bookPicker
+                TabView(selection: currentIndex) {
+                    ForEach(Array(entries.enumerated()), id: \.element.id) { idx, entry in
                         StoryPage(
-                            story: story,
-                            alreadyCorrect: answered[story.noomNumber] == true,
-                            onAnswer: { chosen in
-                                handleAnswer(story: story, chosen: chosen)
-                            }
+                            entry: entry,
+                            alreadyCorrect: answered[entry.id] == true,
+                            onAnswer: { chosen in handleAnswer(entry: entry, chosen: chosen) }
                         )
                         .tag(idx)
                     }
@@ -48,9 +52,32 @@ struct StorybookView: View {
         }
     }
 
-    private func handleAnswer(story: NoomStory, chosen: Int) {
-        let correct = chosen == story.answer
-        answered[story.noomNumber] = correct
+    private var bookPicker: some View {
+        HStack(spacing: 10) {
+            ForEach(StoryBook.allCases) { book in
+                let selected = book == selectedBook
+                Button {
+                    selectedBook = book
+                } label: {
+                    Text(book.rawValue)
+                        .font(CartoonFont.body)
+                        .foregroundStyle(selected ? .white : CartoonColor.text)
+                        .padding(.horizontal, 18).padding(.vertical, 8)
+                        .background(
+                            Capsule().fill(selected ? CartoonColor.coral : CartoonColor.paper)
+                        )
+                        .overlay(
+                            Capsule().stroke(CartoonColor.ink.opacity(0.6), lineWidth: 2)
+                        )
+                }
+                .buttonStyle(PressableButtonStyle())
+            }
+        }
+    }
+
+    private func handleAnswer(entry: StoryEntry, chosen: Int) {
+        let correct = chosen == entry.answer
+        answered[entry.id] = correct
         if correct {
             Haptics.success()
             AudioManager.shared.playSound("correct.wav")
@@ -64,34 +91,27 @@ struct StorybookView: View {
     }
 }
 
-/// Single storybook page — big Noom portrait at the top, narrative
-/// beats stacked below, then an inline question with 3 tap-choices.
+/// Single storybook page — hero illustration (Noom portrait or emoji),
+/// narrative beats, then an inline question with 3 tap-choices.
 private struct StoryPage: View {
-    let story: NoomStory
+    let entry: StoryEntry
     let alreadyCorrect: Bool
     let onAnswer: (Int) -> Void
 
     @State private var selectedChoice: Int?
 
-    private var noom: Noom? { NoomCatalog.noom(for: story.noomNumber) }
+    private var noom: Noom? {
+        guard let n = entry.noomNumber else { return nil }
+        return NoomCatalog.noom(for: n)
+    }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 18) {
-                if let noom {
-                    Image(uiImage: NoomRenderer.image(
-                        for: noom, expression: .happy,
-                        size: CGSize(width: 140, height: 140)
-                    ))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 140, height: 140)
-                    .padding(.top, 8)
-                }
-
+                hero
                 CartoonPanel(cornerRadius: CartoonRadius.chunky) {
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(Array(story.lines.enumerated()), id: \.offset) { _, line in
+                        ForEach(Array(entry.lines.enumerated()), id: \.offset) { _, line in
                             Text(line)
                                 .font(CartoonFont.bodyLarge)
                                 .foregroundStyle(CartoonColor.text)
@@ -102,14 +122,14 @@ private struct StoryPage: View {
                     .padding(20)
                 }
 
-                Text(story.question)
+                Text(entry.question)
                     .font(CartoonFont.title)
                     .foregroundStyle(CartoonColor.text)
                     .multilineTextAlignment(.center)
                     .padding(.top, 4)
 
                 HStack(spacing: 14) {
-                    ForEach(story.choices, id: \.self) { choice in
+                    ForEach(entry.choices, id: \.self) { choice in
                         choiceButton(choice)
                     }
                 }
@@ -127,10 +147,42 @@ private struct StoryPage: View {
         }
     }
 
+    /// Either the Noom portrait (when the page belongs to the Noom
+    /// book) or the emoji glyph (汪汪队 etc.).
+    @ViewBuilder
+    private var hero: some View {
+        if let noom {
+            Image(uiImage: NoomRenderer.image(
+                for: noom, expression: .happy,
+                size: CGSize(width: 140, height: 140)
+            ))
+            .resizable()
+            .scaledToFit()
+            .frame(width: 140, height: 140)
+            .padding(.top, 8)
+        } else if let glyph = entry.illustration {
+            Text(glyph)
+                .font(.system(size: 110))
+                .padding(20)
+                .background(
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [.white, CartoonColor.paper],
+                                startPoint: .top, endPoint: .bottom
+                            )
+                        )
+                        .overlay(Circle().stroke(CartoonColor.ink.opacity(0.55), lineWidth: 3))
+                        .shadow(color: CartoonColor.ink.opacity(0.3), radius: 0, x: 0, y: 4)
+                )
+                .padding(.top, 8)
+        }
+    }
+
     private func choiceButton(_ value: Int) -> some View {
         let isChosen = selectedChoice == value
-        let isCorrect = isChosen && value == story.answer
-        let isWrong = isChosen && value != story.answer
+        let isCorrect = isChosen && value == entry.answer
+        let isWrong = isChosen && value != entry.answer
         let tint: Color = {
             if isCorrect { return CartoonColor.leaf }
             if isWrong   { return CartoonColor.coral }
