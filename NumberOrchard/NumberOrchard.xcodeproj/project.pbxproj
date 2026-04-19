@@ -79,6 +79,7 @@
 		5838DE7F03C5C7037EF0C7D1 /* RewardCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B3DE3B2195B1878609A78 /* RewardCalculatorTests.swift */; };
 		59CEED9C0DB2C64746AEB92B /* NoomMergeLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0574632CFB25276D06066DA8 /* NoomMergeLogic.swift */; };
 		5D07A6D24DEC9AB1C988C905 /* adventure_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = F84E6B8AED86EEA2DD5911B1 /* adventure_bgm.wav */; };
+		6211B8955131FDA1CD95F8C1 /* MiniGameGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26AA975029A48E3F37BE4CE /* MiniGameGrid.swift */; };
 		624B9131944B2E9FF1084B69 /* MatchTenGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74283F4BCF76FAFC616E1FB /* MatchTenGameTests.swift */; };
 		62F9C980FD2360EF6C18AF4C /* MazeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D37C9FA07581D6F5A3F887 /* MazeView.swift */; };
 		63718C4E5BC50E0B5A89F640 /* DailyGachaLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4EB5A085CE8574B8ABA335 /* DailyGachaLogicTests.swift */; };
@@ -126,6 +127,7 @@
 		A94356DA488706E28EFDF4BC /* RhythmMathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5AD52B3F13028A3CCF612 /* RhythmMathView.swift */; };
 		AAFFEAC4052DB9F4C7FD0273 /* EggHatchingArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CBCC0ACCD35CD788FAC7D93 /* EggHatchingArea.swift */; };
 		ABE6DB8A6D79E6B75F4D76B3 /* RhythmMathGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659CADFF36E4BEED01BBD64E /* RhythmMathGameTests.swift */; };
+		AD64ECEB6654E2F49487F07C /* MiniGameHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B4EFC4FCED2E7BB1CF698D /* MiniGameHubView.swift */; };
 		AF3DA833257BB1897FABE7C1 /* CookingRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04734E9906306DE8CF983DCC /* CookingRecipe.swift */; };
 		B05FC88B0DCC9438BE27F120 /* FruitBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E620162D69128F50A6934CE2 /* FruitBadge.swift */; };
 		B0A143F5AF18EFF07724DCC6 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6A259DE212DCA85208D39566 /* level_up.wav */; };
@@ -218,6 +220,7 @@
 		31873A70D02219C3C54E64A9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		32D37C9FA07581D6F5A3F887 /* MazeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MazeView.swift; sourceTree = "<group>"; };
 		348682DB8233AD6BD04A6B65 /* NoomSplitLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoomSplitLogicTests.swift; sourceTree = "<group>"; };
+		36B4EFC4FCED2E7BB1CF698D /* MiniGameHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGameHubView.swift; sourceTree = "<group>"; };
 		3A6F591402A2A70FC6588965 /* ExplorationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorationMapViewModel.swift; sourceTree = "<group>"; };
 		3B154C05F8380DD1EA0BA3BD /* CartoonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonUI.swift; sourceTree = "<group>"; };
 		41E80F72FC3867F22830FC41 /* ParentBattleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentBattleTests.swift; sourceTree = "<group>"; };
@@ -342,6 +345,7 @@
 		DE18C6ECC0DA191A89CA915E /* fruit_pick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fruit_pick.wav; sourceTree = "<group>"; };
 		DE5B8E72D6F00598E53BBEE8 /* PlacedDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacedDecorationView.swift; sourceTree = "<group>"; };
 		E0D312CD201087A41E437EE1 /* TreeGrowthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeGrowthView.swift; sourceTree = "<group>"; };
+		E26AA975029A48E3F37BE4CE /* MiniGameGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniGameGrid.swift; sourceTree = "<group>"; };
 		E2DA8F3B08371E6244910548 /* DecorationInventoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorationInventoryTests.swift; sourceTree = "<group>"; };
 		E620162D69128F50A6934CE2 /* FruitBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitBadge.swift; sourceTree = "<group>"; };
 		E642990B596F9E2E96ACBCCE /* SessionCompleteCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCompleteCard.swift; sourceTree = "<group>"; };
@@ -784,6 +788,7 @@
 				495F0B04FE2A72EB1D9A516C /* Home */,
 				D1479C52AE7F4DFF7F7710A2 /* Kitchen */,
 				86E40BCBCC982AECBE7F2A61 /* MatchTen */,
+				DC291127A171D6C064D33B43 /* MiniGameHub */,
 				AFAD56A89E14823269D3A0EF /* NoomForest */,
 				34789A3205E7C11356EFB441 /* NumberFishing */,
 				78D736F7B7195AB28536C1ED /* NumberMaze */,
@@ -905,6 +910,15 @@
 				348682DB8233AD6BD04A6B65 /* NoomSplitLogicTests.swift */,
 			);
 			path = NoomLogic;
+			sourceTree = "<group>";
+		};
+		DC291127A171D6C064D33B43 /* MiniGameHub */ = {
+			isa = PBXGroup;
+			children = (
+				E26AA975029A48E3F37BE4CE /* MiniGameGrid.swift */,
+				36B4EFC4FCED2E7BB1CF698D /* MiniGameHubView.swift */,
+			);
+			path = MiniGameHub;
 			sourceTree = "<group>";
 		};
 		E1C7078DC24C904AFF24CCCC /* Kitchen */ = {
@@ -1221,6 +1235,8 @@
 				D0847A5A7F26D9F1A39EB230 /* MathQuestion.swift in Sources */,
 				C6CD9DAEF76EECA7438C8E81 /* MazeGrid.swift in Sources */,
 				62F9C980FD2360EF6C18AF4C /* MazeView.swift in Sources */,
+				6211B8955131FDA1CD95F8C1 /* MiniGameGrid.swift in Sources */,
+				AD64ECEB6654E2F49487F07C /* MiniGameHubView.swift in Sources */,
 				CD44E0FFDFE98F31FCF97625 /* MiniGameTopBar.swift in Sources */,
 				6B9820C7D6EA2726A0C9E65E /* Noom.swift in Sources */,
 				0D863C203BECF6C3D3EA13DD /* NoomChallengeScene.swift in Sources */,

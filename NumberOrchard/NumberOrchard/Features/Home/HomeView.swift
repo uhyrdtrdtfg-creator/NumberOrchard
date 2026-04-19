@@ -9,6 +9,7 @@ struct HomeView: View {
     let onOpenDecorate: () -> Void
     let onOpenBattle: () -> Void
     let onOpenNoomForest: () -> Void
+    let onOpenMiniGames: () -> Void
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -62,7 +63,8 @@ struct HomeView: View {
                     onOpenBattle: {
                         viewModel.showParentalGate = true
                         viewModel.parentGateIntent = .battle
-                    }
+                    },
+                    onOpenMiniGames: onOpenMiniGames
                 )
                 .padding(.horizontal, CartoonDimensions.spacingRegular)
                 .padding(.bottom, 50)
@@ -197,13 +199,19 @@ private struct HomeFeatureRow: View {
     let onOpenCollection: () -> Void
     let onOpenNoomForest: () -> Void
     let onOpenBattle: () -> Void
+    let onOpenMiniGames: () -> Void
 
     var body: some View {
-        HStack(spacing: 20) {
-            CartoonFeatureButton(emoji: "🗺️", label: "探险", tint: CartoonColor.gold, bobDelay: 0.0, action: onOpenMap)
-            CartoonFeatureButton(emoji: "🎨", label: "装饰", tint: CartoonColor.coral, bobDelay: 0.15, action: onOpenDecorate)
-            CartoonFeatureButton(emoji: "🍎", label: "图鉴", tint: CartoonColor.leaf, bobDelay: 0.30, action: onOpenCollection)
-            CartoonFeatureButton(emoji: "🐾", label: "小精灵", tint: CartoonColor.sky, bobDelay: 0.45, action: onOpenNoomForest)
+        // 6 buttons fit comfortably across an iPad landscape. Games
+        // gets the top-billing warm coral so it reads as the primary
+        // "something to play right now" entry; the old buttons keep
+        // their assigned colours so muscle memory survives.
+        HStack(spacing: 16) {
+            CartoonFeatureButton(emoji: "🎮", label: "游戏", tint: CartoonColor.coral, bobDelay: 0.0, action: onOpenMiniGames)
+            CartoonFeatureButton(emoji: "🗺️", label: "探险", tint: CartoonColor.gold, bobDelay: 0.12, action: onOpenMap)
+            CartoonFeatureButton(emoji: "🎨", label: "装饰", tint: CartoonColor.coral, bobDelay: 0.24, action: onOpenDecorate)
+            CartoonFeatureButton(emoji: "🍎", label: "图鉴", tint: CartoonColor.leaf, bobDelay: 0.36, action: onOpenCollection)
+            CartoonFeatureButton(emoji: "🐾", label: "小精灵", tint: CartoonColor.sky, bobDelay: 0.48, action: onOpenNoomForest)
             CartoonFeatureButton(emoji: "👨‍👦", label: "对战", tint: CartoonColor.berry, bobDelay: 0.60, action: onOpenBattle)
         }
     }
@@ -304,7 +312,8 @@ private struct TreeProgressBar: View {
         onOpenCollection: {},
         onOpenDecorate: {},
         onOpenBattle: {},
-        onOpenNoomForest: {}
+        onOpenNoomForest: {},
+        onOpenMiniGames: {}
     )
     .modelContainer(for: ChildProfile.self, inMemory: true)
 }

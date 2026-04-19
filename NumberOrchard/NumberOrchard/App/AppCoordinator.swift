@@ -11,6 +11,7 @@ enum AppScreen: Equatable {
     case battle
     case noomForest
     case noomChallenge
+    case miniGames
 }
 
 struct AppCoordinator: View {
@@ -33,7 +34,8 @@ struct AppCoordinator: View {
                         onOpenCollection: { currentScreen = .collection },
                         onOpenDecorate: { currentScreen = .decorate },
                         onOpenBattle: { currentScreen = .battle },
-                        onOpenNoomForest: { currentScreen = .noomForest }
+                        onOpenNoomForest: { currentScreen = .noomForest },
+                        onOpenMiniGames: { currentScreen = .miniGames }
                     )
                 case .adventure(let station):
                     AdventureSessionView(
@@ -60,6 +62,8 @@ struct AppCoordinator: View {
                     )
                 case .noomChallenge:
                     NoomChallengeSessionView(onFinish: { currentScreen = .noomForest })
+                case .miniGames:
+                    MiniGameHubView(onDismiss: { currentScreen = .home })
                 }
             }
 
